@@ -6,6 +6,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use common\widgets\Alert;
+//use common\models\Tambo;
 
 
 AppAsset::register($this);
@@ -22,7 +23,7 @@ if (isset($this->params['breadcrumbs'])) {
 
 $usuario = Yii::$app->user->identity;
 
-$this->registerJs('Main.init()');
+//$this->registerJs('Main.init()');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -32,7 +33,7 @@ $this->registerJs('Main.init()');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode("Administración Tambo | {$this->title}") ?></title>
+    <title><?= Html::encode("Administración | {$this->title}") ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -40,8 +41,8 @@ $this->registerJs('Main.init()');
     <div class="dashboard-main-wrapper">
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="/tambogestion/backend/web/">
-                    Inicio
+                <a class="navbar-brand" href="/">
+                    Home
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
                     <span class="navbar-toggler-icon"><i class="fas fa-cog"></i></span>
@@ -52,22 +53,16 @@ $this->registerJs('Main.init()');
                             <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                            <!-- <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
-                                    <!-- <h5 class="mb-0 text-white nav-user-name">
-                                        <//?= "$usuario->Usuario" ?>
-                                    </h5> -->
+                                    <h5 class="mb-0 text-white nav-user-name">
+                                        <?= "$usuario->Usuario" ?>
+                                    </h5>
                                 </div>
-                                <?php if (!isset($usuario['Token'])): ?>
-                                    <a class="dropdown-item" href="/tambogestion/backend/web/index.php?r=usuarios%2Flogout">
-                                        <i class="fas fa-power-off mr-2"></i>Cerrar sesión
-                                    </a>
-                                <?php else: ?>
-                                    <a class="dropdown-item" href="/tambogestion/backend/web/index.php?r=usuarios%2Flogin">
-                                        <i class="fas fa-power-off mr-2"></i>Iniciar Sesión
-                                    </a>
-                                <?php endif; ?>
-                            </div>
+                                <a class="dropdown-item" href="/usuarios/logout">
+                                    <i class="fas fa-power-off mr-2"></i>Cerrar sesión
+                                </a>
+                            </div> -->
                         </li>
                     </ul>
                 </div>

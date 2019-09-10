@@ -2,10 +2,10 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Model;
+use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
-class Usuarios extends Model implements IdentityInterface
+class Usuarios extends ActiveRecord  implements IdentityInterface
 {
     public $IdUsuario;
     public $IdTambo;
@@ -16,7 +16,7 @@ class Usuarios extends Model implements IdentityInterface
     public $Token;
     public $IntentosPass;
     public $FechaAlta;
-    public $DebeCambiarPass;
+    // public $DebeCambiarPass;
     public $Estado;
 
     // Derivados
@@ -39,11 +39,16 @@ class Usuarios extends Model implements IdentityInterface
         'A' => 'Administración'
     ];
     
+    public static function tableName()
+    {
+        return 'Usuarios';
+    }
+
     public function attributeLabels()
     {
         return [
             'IdTipoUsuario' => 'Tipo de Usuario',
-            'IdEmpresa' => 'Tambo',
+            'IdTambo' => 'Tambo',
             'IdUsuario' => 'Usuario'
         ];
     }
@@ -346,6 +351,27 @@ class Usuarios extends Model implements IdentityInterface
 
     //     return $query->queryColumn();
     // }
+    /**
+     * Permite devolver en un arayy la lista de permisos que el
+     * usuario tiene habilitados. Segun su tipo de usuario.
+     * xsp_dame_permisos_usuario
+     */
+    public function DamePermisos()
+    {
+        $this->Dame();
+        if($this->Tipo == 'Administrador'){
+            return [
+                'Vacas',
+                'Sucursales',
+                'Producciones',
+                'Usuarios',
+            ];
+        }else{//Es Operador
+            return [
+                'Producciones',
+            ];
+        }
+    }
 
     // /**
     //  * Permite listar las sesiones de un usuario.
@@ -396,15 +422,13 @@ class Usuarios extends Model implements IdentityInterface
             $esValido = 'N';
         }
 
-        $sql = "CALL tsp_login( :host, :usuario, :esValido, :token, :IP, :userAgent, :app )";
+        $sql = "CALL tsp_login( :tambo, :usuario, :esValido, :token, :app )";
 
         $query = Yii::$app->db->createCommand($sql);
 
         $query->bindValues([
-            ':IP' => Yii::$app->request->userIP,
-            ':userAgent' => Yii::$app->request->userAgent,
             ':app' => $App,
-            ':host' => Yii::$app->request->headers->get('host'),
+            ':tambo' => 'Tambo Administracion',
             ':usuario' => $this->Usuario,
             ':esValido' => $esValido,
             ':token' => $Token
@@ -414,7 +438,7 @@ class Usuarios extends Model implements IdentityInterface
 
         $this->attributes = $result;
         if ($necesitaRehash && $result['Mensaje'] == 'OK') {
-            $this->CambiarPassword($this->Token, null, $Pass, 'R');
+            // $this->CambiarPassword($this->Token, null, $Pass, 'R');
         }
 
         return $result;

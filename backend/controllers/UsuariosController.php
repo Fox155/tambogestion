@@ -8,6 +8,7 @@ use common\models\GestorTipoUsuario;
 use common\models\forms\BuscarForm;
 // use common\models\forms\AuditoriaForm;
 // use common\components\PermisosHelper;
+use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -15,6 +16,58 @@ use yii\helpers\ArrayHelper;
 
 class UsuariosController extends Controller
 {
+    public function actionLogin()
+    {
+        // Si ya estoy logueado redirecciona al home
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        // Guardo también en la sesión los parámetros de Empresa
+        // $empresa = new Empresa();
+        // Yii::$app->session->open();
+
+        $usuario = new Usuarios();
+        $usuario->setScenario(Usuarios::_LOGIN);
+
+        // $this->layout = 'login';
+
+        if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
+            $login = $usuario->Login('A', $usuario->Password, Yii::$app->security->generateRandomString(300));
+
+            if ($login['Mensaje'] == 'OK') {
+                Yii::$app->user->login($usuario);
+                Yii::$app->session->set('Token', $usuario->Token);
+                Yii::$app->session->set('TipoUsuario', $usuario->Tipo);
+
+                //Guardo los permisos del tipo de usuario
+                //TiposUsuarioHelper::guardarPermisosTipoUsuarioSesion($usuario->DamePermisos());
+
+                // El usuario debe modificar el password
+                // if ($usuario->Estado == 'C') {
+                //     Yii::$app->session->setFlash('info', 'Debe modificar su contraseña antes de ingresar.');
+                //     return $this->redirect('/usuarios/cambiar-password');
+                // } else {
+                //     return $this->redirect(Yii::$app->user->returnUrl);
+                // }
+            } else {
+                $usuario->Password = null;
+                Yii::$app->session->setFlash('danger', $login['Mensaje']);
+            }
+        }
+
+        return $this->render('login', [
+            'model' => $usuario,
+        ]);
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->identity->Logout();
+        Yii::$app->user->logout();
+        return $this->goHome();
+    }
+
     public function actionIndex()
     {
         // $busqueda = new BuscarForm();

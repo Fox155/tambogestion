@@ -9,23 +9,32 @@ $conf = [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
-        // 'cache' => [
-        //     'class' => 'yii\caching\FileCache',
-        //     'user' => [
-        //         'identityClass' => 'common\models\Usuarios',
-        //         'loginUrl' => '/usuarios/login',
-        //         'authTimeout' => 60 * 60,
-        //     ],
-        // ], 
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '<controller>/<id:\d+>' => '<controller>',
-                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
-                '<controller>/index' => '<controller>',
-            ],
+        'assetManager' => [
+            'linkAssets' => true,
+            'appendTimestamp' => true,
         ],
+        'user' => [
+            'identityClass' => 'common\models\Usuarios',
+            'loginUrl' => 'usuarios/login',
+            'authTimeout' => 60 * 60,
+        ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+            'user' => [
+                'identityClass' => 'common\models\Usuarios',
+                'loginUrl' => '/usuarios/login',
+                'authTimeout' => 60 * 60,
+            ],
+        ], 
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'showScriptName' => false,
+        //     'rules' => [
+        //         '<controller>/<id:\d+>' => '<controller>',
+        //         '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
+        //         '<controller>/index' => '<controller>',
+        //     ],
+        // ],
     ],
 ];
 
