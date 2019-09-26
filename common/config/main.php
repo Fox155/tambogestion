@@ -1,31 +1,30 @@
 <?php
-$conf = [
+return [
     'timeZone' => 'America/Argentina/Tucuman',
     'language' => 'es',
-    'name' => 'Tambo Gestion',
+    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'assetManager' => [
             'linkAssets' => true,
             'appendTimestamp' => true,
         ],
-        'user' => [
-            'identityClass' => 'common\models\Usuarios',
-            'loginUrl' => 'usuarios/login',
-            'authTimeout' => 60 * 60,
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-            'user' => [
-                'identityClass' => 'common\models\Usuarios',
-                'loginUrl' => '/usuarios/login',
-                'authTimeout' => 60 * 60,
-            ],
-        ], 
+        // 'user' => [
+        //     'identityClass' => 'common\models\Usuarios',
+        //     'loginUrl' => 'usuarios/login',
+        //     'authTimeout' => 60 * 60,
+        // ],
+        // 'cache' => [
+        //     'class' => 'yii\caching\FileCache',
+        //     'user' => [
+        //         'identityClass' => 'common\models\Usuarios',
+        //         'loginUrl' => '/usuarios/login',
+        //         'authTimeout' => 60 * 60,
+        //     ],
+        // ], 
         // 'urlManager' => [
         //     'enablePrettyUrl' => true,
         //     'showScriptName' => false,
@@ -35,16 +34,13 @@ $conf = [
         //         '<controller>/index' => '<controller>',
         //     ],
         // ],
+        'formatter' => [
+            'defaultTimeZone' => 'America/Argentina/Tucuman',
+            'dateFormat' => 'dd/MM/yyyy',
+            'datetimeFormat' => 'dd/MM/yyyy H:mm',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => '.',
+            'locale' => 'es-AR'
+        ],
     ],
 ];
-
-// Si se encuentra en modo Desarrollo
-if (YII_ENV_DEV) {
-    $conf['bootstrap'][] = 'debug';
-    $conf['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        'allowedIPs' => ['*'],
-    ];
-}
-
-return $conf;

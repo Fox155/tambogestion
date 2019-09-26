@@ -28,6 +28,6 @@ class BowerAsset extends AssetBundle
     {
         parent::init();
 
-        //$this->js[] = YII_ENV_PROD ?  'vue/dist/vue.min.js' :  'vue/dist/vue.js';
+        // $this->js[] = YII_ENV_PROD ?  'vue/dist/vue.min.js' :  'vue/dist/vue.js';
     }
 }

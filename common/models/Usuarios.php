@@ -31,7 +31,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         'A' => 'Activo',
         'B' => 'Baja',
         'S' => 'Suspendido',
-        'S' => 'CambiaPass',
+        'C' => 'CambiaPass',
         'T' => 'Todos'
     ];
 

@@ -12,22 +12,22 @@ class Menu
         [
             'name' => 'Inicio',
             'icon' => 'fas fa-home',
-            'href' => '/',
+            'href' => '/backend/web/',
         ],
         [
             'name' => 'Usuarios',
             'icon' => 'fas fa-users',
-            'href' => '/usuarios',
+            'href' => '/backend/web/usuarios',
         ],
         [
             'name' => 'Vacas',
             'icon' => 'fas fa-store',
-            'href' => '/vacas'
+            'href' => '/backend/web/vacas'
         ],
         [
             'name' => 'Producciones',
             'icon' => 'fas fa-tag',
-            'href' => '/producciones'
+            'href' => '/backend/web/producciones'
         ],
     ];
 

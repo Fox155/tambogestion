@@ -39,6 +39,7 @@ class UsuariosController extends Controller
                 Yii::$app->user->login($usuario);
                 Yii::$app->session->set('Token', $usuario->Token);
                 Yii::$app->session->set('TipoUsuario', $usuario->Tipo);
+                Yii::$app->session->set('IdTambo', $usuario->IdTambo);
 
                 //Guardo los permisos del tipo de usuario
                 //TiposUsuarioHelper::guardarPermisosTipoUsuarioSesion($usuario->DamePermisos());
@@ -215,5 +216,4 @@ class UsuariosController extends Controller
         }
     }
 }
-
 ?>

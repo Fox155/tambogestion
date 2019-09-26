@@ -30,12 +30,7 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         // 'common\assets\CommonAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\web\YiiAsset',
         'yii\bootstrap4\BootstrapPluginAsset',
-        //'phpnt\slimscroll\SlimScrollAsset',
-        'yii\bootstrap4\BootstrapAsset',
-        'yii\bootstrap4\BootstrapPluginAsset',
-        // 'common\assets\BowerAsset',
+        'phpnt\slimscroll\SlimScrollAsset',
     ];
 }

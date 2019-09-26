@@ -10,14 +10,8 @@ use yii\web\AssetBundle;
 class CommonAsset extends AssetBundle
 {
     public $sourcePath = '@common';
-    public $js = [
-        'js/Main.js',
-        'js/VueDirectives.js',
-        'js/VueSelect.min.js'
-    ];
     public $css = [
-        'css/app.css',
-        'css/VueSelect.min.css'
+        'css/app.css'
     ];
     public $depends = [
         'yii\widgets\MaskedInputAsset',
