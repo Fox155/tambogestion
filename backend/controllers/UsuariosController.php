@@ -38,7 +38,8 @@ class UsuariosController extends Controller
             if ($login['Mensaje'] == 'OK') {
                 Yii::$app->user->login($usuario);
                 Yii::$app->session->set('Token', $usuario->Token);
-                Yii::$app->session->set('TipoUsuario', $usuario->Tipo);
+                $usuario->DameTipoUsuario();
+                Yii::$app->session->set('Tipo', $usuario->TipoUsuario);
                 Yii::$app->session->set('IdTambo', $usuario->IdTambo);
 
                 //Guardo los permisos del tipo de usuario
@@ -55,6 +56,8 @@ class UsuariosController extends Controller
                 $usuario->Password = null;
                 Yii::$app->session->setFlash('danger', $login['Mensaje']);
             }
+
+            return $this->goHome();
         }
 
         return $this->render('login', [

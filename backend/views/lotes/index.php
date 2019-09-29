@@ -1,6 +1,7 @@
 <?php
 
-use common\models\Sucursales;
+use common\models\Lotes;
+use common\models\Sucursal;
 use yii\web\View;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -9,7 +10,10 @@ use yii\helpers\Url;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-$this->title = 'Sucursales';
+/* @var $models Lotes */
+/* @var $sucursal Sucursales */
+$this->title = isset($sucursal['Nombre']) ? 'Lotes de la Sucursal: ' . $sucursal['Nombre'] : 'Lotes';
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -18,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
+
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
 
@@ -28,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
         
             <div class="alta--button">
                 <button type="button" class="btn btn-primary"
-                        data-modal="<?= Url::to(['/sucursales/alta']) ?>" 
-                        data-hint="Nueva Sucursal">
-                    Nueva Sucursal
+                        data-modal="<?= Url::to(['/lotes/alta/', 'id' => $sucursal['IdSucursal']]) ?>" 
+                        data-hint="Nuevo Lote">
+                    Nuevo Lote
                 </button>
             </div>
 
@@ -43,8 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table">
                         <thead class="bg-light">
                             <tr class="border-0">
-                                <th>Sucursal</th>
-                                <th>Datos</th>
+                                <th>Lote</th>
+                                <th>Ganado Total</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -52,41 +59,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php foreach ($models as $model): ?>
                                 <tr>
                                     <td><?= Html::encode($model['Nombre']) ?></td>
-                                    <td>
-                                        <ul>
-                                        <?php foreach (json_decode($model['Datos']) as $nombre => $valor): ?>
-                                            <li><?= Html::encode($nombre) ?>: <?= Html::encode($valor) ?></li>
-                                        <?php endforeach; ?>
-                                        </ul>
-                                    </td>
+                                    <td><?= 25 ?></td>
+                                    <td><?= Html::encode(Lotes::ESTADOS[$model['Estado']]) ?></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
-
-                                            
                                                 <button type="button" class="btn btn-default"
-                                                        data-modal="<?= Url::to(['/sucursales/editar', 'id' => $model['IdSucursal']]) ?>" 
+                                                        data-modal="<?= Url::to(['/lotes/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
                                                         data-hint="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/sucursales/borrar', 'id' => $model['IdSucursal']]) ?>"
+                                                        data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
                                                         data-hint="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
-                                            
-                                                <a class="btn btn-default"
-                                                        href="<?= Url::to(['/lotes/', 'id' => $model['IdSucursal']]) ?>"
-                                                        data-hint="Lotes">
-                                                    <i class="fas fa-sitemap" style="color: Green"></i>
-                                                </a>
 
                                                 <a class="btn btn-default"
-                                                        href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => 0]) ?>"
+                                                        href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>"
                                                         data-hint="Vacas">
                                                     <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                                 </a>
-
                                         </div>
                                     </td> 
                                 </tr>

@@ -15,10 +15,10 @@ $config = [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-        // 'assetManager' => [
-        //     'linkAssets' => true,
-        //     'appendTimestamp' => true,
-        // ],
+        'assetManager' => [
+            'linkAssets' => true,
+            'appendTimestamp' => true,
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'class' => 'yii\web\Request',

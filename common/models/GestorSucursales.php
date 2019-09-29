@@ -45,11 +45,11 @@ class GestorSucursales
     }
 
     /**
-     * tsp_modifica_sucursal
+     * tsp_modificar_sucursal
      */
     public function Modificar(Sucursales $sucursal)
     {
-        $sql = "call tsp_modifica_sucursal( :idsucursal, :nombre, :datos)";
+        $sql = "call tsp_modificar_sucursal( :idsucursal, :nombre, :datos)";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -66,11 +66,11 @@ class GestorSucursales
     }
 
     /**
-     * tsp_borra_sucursal
+     * tsp_borrar_sucursal
      */
     public function Borrar(Sucursales $sucursal)
     {
-        $sql = "call tsp_borra_sucursal(:idpuntoventa)";
+        $sql = "call tsp_borrar_sucursal(:idsucursal)";
 
         $query = Yii::$app->db->createCommand($sql);
         

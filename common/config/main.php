@@ -34,6 +34,12 @@ return [
         //         '<controller>/index' => '<controller>',
         //     ],
         // ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'formatter' => [
             'defaultTimeZone' => 'America/Argentina/Tucuman',
             'dateFormat' => 'dd/MM/yyyy',

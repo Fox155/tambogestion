@@ -10,6 +10,9 @@ use yii\web\AssetBundle;
 class CommonAsset extends AssetBundle
 {
     public $sourcePath = '@common';
+    public $js = [
+        'js/Main.js',
+    ];
     public $css = [
         'css/app.css'
     ];

@@ -5,9 +5,6 @@ use backend\models\Menu;
 ?>
 
 <ul class="navbar-nav flex-column">
-    <li class="nav-divider">
-        Menu
-    </li>
     <?php foreach(Menu::elements as $ix => $el): ?>
         <?php if (Menu::renderiza($el)): ?>
             <?php if (array_key_exists('submenu', $el)): ?>
