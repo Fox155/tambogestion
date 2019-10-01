@@ -9,7 +9,7 @@ use common\widgets\Alert;
 
 AppAsset::register($this);
 
-$defaultCrumb = [ 'label' => 'Inicio', 'link' => '/tambogestion/backend/web' ];
+$defaultCrumb = [ 'label' => 'Inicio', 'link' => '/' ];
 
 if (isset($this->params['breadcrumbs'])) {
     array_unshift($this->params['breadcrumbs'], $defaultCrumb);
@@ -66,6 +66,16 @@ $this->registerJs('Main.init()');
         <!-- Page Content -->
         <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+	    <button class="btn btn-primary" id="menu-toggle">Icono</button>
+
+	    <button class="navbar-toggler" type="button"
+		data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent"
+		aria-expanded="false"
+		aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+	    </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto navbar-right-top">
                     <li class="nav-item dropdown nav-user">
@@ -79,7 +89,7 @@ $this->registerJs('Main.init()');
                                     <?= "$usuario->Usuario" ?>
                                 </h5>
                             </div>
-                            <a class="dropdown-item" href="/tambogestion/backend/web/usuarios/logout">
+                            <a class="dropdown-item" href="/usuarios/logout">
                                 <i class="fas fa-power-off mr-2"></i>Cerrar sesión
                             </a>
                             <?php endif?>
@@ -127,7 +137,12 @@ $this->registerJs('Main.init()');
 
     </div>
     <!-- /#wrapper -->
-
+    <script>
+	$("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+	});
+    </script>
 <?php $this->endBody() ?>
 </body>
 </html>

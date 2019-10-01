@@ -12,22 +12,22 @@ class Menu
         [
             'name' => 'Inicio',
             'icon' => 'fas fa-home',
-            'href' => '/tambogestion/backend/web/',
+            'href' => '/',
         ],
         // [
         //     'name' => 'Usuarios',
         //     'icon' => 'fas fa-users',
-        //     'href' => '/tambogestion/backend/web/usuarios',
+        //     'href' => '/usuarios',
         // ],
         [
             'name' => 'Sucursales',
             'icon' => 'fas fa-kaaba',
-            'href' => '/tambogestion/backend/web/sucursales'
+            'href' => '/sucursales'
         ],
         [
             'name' => 'Lotes',
             'icon' => 'fas fa-sitemap',
-            'href' => '/tambogestion/backend/web/lotes/0'
+            'href' => '/lotes/0'
         ],
         // [
         //     'name' => 'Vacas',
