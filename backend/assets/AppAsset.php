@@ -12,9 +12,10 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/simple-sidebar.css'
+        'css/sb-admin.css'
     ];
     public $js = [
+        'js/sb-admin.min.js',
     ];
     public $depends = [
         'common\assets\CommonAsset',
