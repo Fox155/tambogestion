@@ -9,6 +9,7 @@ class Sucursales extends Model
     public $IdSucursal;
     public $IdTambo;
     public $Nombre;
+    public $Datos;
 
     // DatosJSON
     public $Direccion;
@@ -20,9 +21,9 @@ class Sucursales extends Model
     public function rules()
     {
         return [
-            [['Nombre'],
+            [['Nombre', 'Direccion', 'Telefono'],
                 'required', 'on' => self::_ALTA],
-            [['IdSucursal', 'Nombre'],
+            [['IdSucursal', 'Nombre', 'Direccion', 'Telefono'],
                 'required', 'on' => self::_MODIFICAR],
             [$this->attributes(), 'safe']
         ];
@@ -43,6 +44,26 @@ class Sucursales extends Model
         ]);
         
         $this->attributes = $query->queryOne();
+
+        $datos = json_decode($this->Datos);
+        $this->Telefono = $datos->{'Telefono'};
+        $this->Direccion = $datos->{'Direccion'};
+    }
+
+    /**
+     * tsp_listar_lotes_Sucursal
+     */
+    public function ListarLotes()
+    {
+        $sql = "call tsp_listar_lotes_Sucursal( :idsucursal)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+        ]);
+
+        return $query->queryAll();
     }
 
     // /**

@@ -4,45 +4,52 @@ namespace backend\controllers;
 
 use common\models\Usuarios;
 use common\models\Sucursales;
-use common\models\GestorSucursales;
+use common\models\Lotes;
+use common\models\GestorLotes;
 use common\models\forms\BusquedaForm;
 use Yii;
 use yii\web\Controller;
-use yii\data\Pagination;
 
-class SucursalesController extends Controller
+class LotesController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex($id)
     {
         $busqueda = new BusquedaForm();
 
-        $gestor = new GestorSucursales();
-
         if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
             $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
-            $sucursales = $gestor->Buscar($cadena);
+            $incluye = $busqueda->Check ? $busqueda->Check : 'N';
+            $lotes = GestorLotes::Buscar($id, $incluye, $cadena);
         } else {
-            $sucursales = $gestor->Buscar();
+            $lotes =  GestorLotes::Buscar($id);
+        }
+
+        $sucursal = new Sucursales();
+        if($id != 0){
+            $sucursal->IdSucursal = $id;
+            $sucursal->Dame();
         }
 
         return $this->render('index', [
-            'models' => $sucursales,
-            'busqueda' => $busqueda
+            'models' => $lotes,
+            'busqueda' => $busqueda,
+            'sucursal' => $sucursal
         ]);
     }
 
-    public function actionAlta()
+    public function actionAlta($id)
     {
         // if(Yii::$app->user->identity->IdTambo!='Administrador'){
         //     return;
         // }
 
-        $sucursal = new Sucursales();
+        $lotes = new Lotes();
+        $lotes->IdSucursal = $id;
 
-        $sucursal->setScenario(Sucursales::_ALTA);
+        $lotes->setScenario(Lotes::_ALTA);
 
-        if($sucursal->load(Yii::$app->request->post()) && $sucursal->validate()){
-            $resultado = GestorSucursales::Alta($sucursal);
+        if($lotes->load(Yii::$app->request->post()) && $lotes->validate()){
+            $resultado = GestorLotes::Alta($lotes);
 
             Yii::$app->response->format = 'json';
             if (substr($resultado, 0, 2) == 'OK') {
@@ -52,24 +59,25 @@ class SucursalesController extends Controller
             }
         }else {
             return $this->renderAjax('alta', [
-                'titulo' => 'Alta Sucursal',
-                'model' => $sucursal
+                'titulo' => 'Alta Lote',
+                'model' => $lotes
             ]);
         }
     }
 
-    public function actionEditar($id)
+    public function actionEditar($id, $idL)
     {
         // if(Yii::$app->user->identity->IdTambo!='Administrador'){
         //     return;
         // }
         
-        $sucursal = new Sucursales();
+        $lote = new Lotes();
+        $lote->IdSucursal = $id;
 
-        $sucursal->setScenario(Sucursales::_MODIFICAR);
+        $lote->setScenario(Lotes::_MODIFICAR);
 
-        if ($sucursal->load(Yii::$app->request->post()) && $sucursal->validate()) {
-            $resultado = GestorSucursales::Modificar($sucursal);
+        if ($lote->load(Yii::$app->request->post()) && $lote->validate()) {
+            $resultado = GestorLotes::Modificar($lote);
 
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
@@ -78,13 +86,12 @@ class SucursalesController extends Controller
                 return ['error' => $resultado];
             }
         } else {
-            $sucursal->IdSucursal = $id;
-            
-            $sucursal->Dame();
+            $lote->IdLote = $idL;
+            $lote->Dame();
 
             return $this->renderAjax('alta', [
-                'titulo' => 'Modificar Sucursal',
-                'model' => $sucursal
+                'titulo' => 'Modificar Lote',
+                'model' => $lote
             ]);
         }
     }
@@ -97,10 +104,10 @@ class SucursalesController extends Controller
 
         Yii::$app->response->format = 'json';
         
-        $sucursal = new Sucursales();
-        $sucursal->IdSucursal = $id;
+        $lote = new Lotes();
+        $lote->IdLote = $id;
 
-        $resultado = GestorSucursales::Borrar($sucursal);
+        $resultado = GestorLotes::Borrar($lote);
 
         if ($resultado == 'OK') {
             return ['error' => null];

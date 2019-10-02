@@ -20,7 +20,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
     public $Estado;
 
     // Derivados
-    public $Tipo;
+    public $TipoUsuario;
     // public $IdsSucurla;
     
     const _ALTA = 'alta';
@@ -422,13 +422,12 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
             $esValido = 'N';
         }
 
-        $sql = "CALL tsp_login( :tambo, :usuario, :esValido, :token, :app )";
+        $sql = "CALL tsp_login( :usuario, :esValido, :token, :app )";
 
         $query = Yii::$app->db->createCommand($sql);
 
         $query->bindValues([
             ':app' => $App,
-            ':tambo' => 'Tambo Administracion',
             ':usuario' => $this->Usuario,
             ':esValido' => $esValido,
             ':token' => $Token
@@ -468,5 +467,22 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         ]);
         
         return $query->queryScalar();
+    }
+
+    public function DameTipoUsuario()
+    {
+        $sql = 'CALL tsp_dame_tipo_usuario( :token )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':token' => $this->Token
+        ]);
+        
+        $result = $query->queryScalar();
+
+        $this->TipoUsuario = $result;
+
+        return $result;
     }
 }

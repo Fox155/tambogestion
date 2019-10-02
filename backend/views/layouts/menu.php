@@ -4,14 +4,11 @@ use backend\models\Menu;
 
 ?>
 
-<ul class="navbar-nav flex-column">
-    <li class="nav-divider">
-        Menu
-    </li>
+<ul class="sidebar navbar-nav">
     <?php foreach(Menu::elements as $ix => $el): ?>
         <?php if (Menu::renderiza($el)): ?>
             <?php if (array_key_exists('submenu', $el)): ?>
-            <li class="nav-item ">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-<?= $ix ?>" aria-controls="submenu-<?= $ix ?>">
                     <i class="fas fa-cogs"></i><?= $el['name'] ?>
                 </a>
@@ -28,7 +25,7 @@ use backend\models\Menu;
                 </div>
             </li>
             <?php else: ?>
-            <li class="nav-item ">
+            <li class="nav-item active">
                 <a class="nav-link" href="<?= $el['href'] ?>">
                     <i class="<?= $el['icon'] ?>"></i><?= $el['name'] ?>
                 </a>

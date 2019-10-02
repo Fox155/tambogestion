@@ -21,7 +21,6 @@ $this->title = 'Iniciar sesión - Tambo Gestion';
         . $message . '</div>';
     }
     ?>
-    
 
     <?= $form->field($model, 'Usuario', [
         'inputOptions' => ['placeholder' => 'Usuario'],
@@ -32,7 +31,5 @@ $this->title = 'Iniciar sesión - Tambo Gestion';
     ])->passwordInput()->label(false) ?>
                                                     
     <?= Html::submitButton('Iniciar', ['class' => 'btn btn-lg btn-primary btn-block', 'name' => 'login-button']) ?>  
-
-    <p class="mt-5 mb-3 text-muted"><?= Html::encode(Yii::$app->name) ?> © <?= date('Y') ?></p>
 
 <?php ActiveForm::end(); ?>

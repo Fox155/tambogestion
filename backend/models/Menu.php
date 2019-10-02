@@ -12,23 +12,28 @@ class Menu
         [
             'name' => 'Inicio',
             'icon' => 'fas fa-home',
-            'href' => '/backend/web/',
+            'href' => '/',
+        ],
+        // [
+        //     'name' => 'Usuarios',
+        //     'icon' => 'fas fa-users',
+        //     'href' => '/usuarios',
+        // ],
+        [
+            'name' => 'Sucursales',
+            'icon' => 'fas fa-kaaba',
+            'href' => '/sucursales'
         ],
         [
-            'name' => 'Usuarios',
-            'icon' => 'fas fa-users',
-            'href' => '/backend/web/usuarios',
+            'name' => 'Lotes',
+            'icon' => 'fas fa-sitemap',
+            'href' => '/lotes/0'
         ],
-        [
-            'name' => 'Vacas',
-            'icon' => 'fas fa-store',
-            'href' => '/backend/web/vacas'
-        ],
-        [
-            'name' => 'Producciones',
-            'icon' => 'fas fa-tag',
-            'href' => '/backend/web/producciones'
-        ],
+        // [
+        //     'name' => 'Vacas',
+        //     'icon' => 'fas fa-hat-cowboy-side',
+        //     'href' => '/tambogestion/backend/web/vacas/?idS=0&idL=0'
+        // ],
     ];
 
     /**
@@ -36,9 +41,9 @@ class Menu
      */
     public static function renderiza($el)
     {
-        if (array_key_exists('permiso', $el)) {
-            return Yii::$app->session->get('TipoUsuario')==$el['permiso'];
-        }
+        // if (array_key_exists('permiso', $el)) {
+        //     return Yii::$app->session->get('TipoUsuario')==$el['permiso'];
+        // }
         // if (array_key_exists('submenu', $el)) {
         //     return TiposUsuarioHelper::tieneAlgunPermiso(ArrayHelper::map($el['submenu'], 'permiso', 'permiso'));
         // }
