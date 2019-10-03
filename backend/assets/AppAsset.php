@@ -15,7 +15,7 @@ class AppAsset extends AssetBundle
         'css/sb-admin.css'
     ];
     public $js = [
-        'js/sb-admin.min.js',
+        'js/sb-admin.js',
     ];
     public $depends = [
         'common\assets\CommonAsset',

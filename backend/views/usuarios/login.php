@@ -10,26 +10,26 @@ use common\models\Usuarios;
 
 $this->title = 'Iniciar sesión - Tambo Gestion';
 ?>
-<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header">Inicio de Sesion</div>
+      <div class="card-body">
+        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-    <h1 class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
+            <?= $form->field($model, 'Usuario', ['inputOptions' => ['placeholder' => 'Usuario'],])->textInput(['autofocus' => true])->label(false) ?>
 
-    <?php
-    foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
-        echo '<div class="alert alert-' . $key . ' alert-dismissable">'
-        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'
-        . $message . '</div>';
-    }
-    ?>
+            <?= $form->field($model, 'Password', ['inputOptions' => ['placeholder' => 'Contraseña'],])->passwordInput(['autofocus' => true])->label(false) ?>
 
-    <?= $form->field($model, 'Usuario', [
-        'inputOptions' => ['placeholder' => 'Usuario'],
-    ])->textInput(['autofocus' => true])->label(false) ?>
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Recordar contraseña', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
-    <?= $form->field($model, 'Password', [
-        'inputOptions' => ['placeholder' => 'Contraseña'],
-    ])->passwordInput()->label(false) ?>
-                                                    
-    <?= Html::submitButton('Iniciar', ['class' => 'btn btn-lg btn-primary btn-block', 'name' => 'login-button']) ?>  
+            <?= Html::submitButton('Iniciar', ['class' => 'btn btn-lg btn-primary btn-block', 'name' => 'login-button']) ?>
 
-<?php ActiveForm::end(); ?>
+
+            <div class="text-center">
+                <a class="d-block small" href="/">¿Se te olvidó tu contraseña?</a>
+            </div>
+
+        <?php ActiveForm::end(); ?>
+      </div>
+    </div>
+  </div>

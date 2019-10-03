@@ -4,8 +4,9 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
-use yii\helpers\Html;
 use common\widgets\Alert;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -64,11 +65,11 @@ $this->registerJs('Main.init()');
     <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
           <span class="badge badge-danger">3</span>
+          <i class="fas fa-bell fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Alertas</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
@@ -76,8 +77,8 @@ $this->registerJs('Main.init()');
       </li>
       <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-envelope fa-fw"></i>
           <span class="badge badge-danger">5</span>
+          <i class="fas fa-envelope fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
           <a class="dropdown-item" href="#">Action</a>
@@ -94,7 +95,16 @@ $this->registerJs('Main.init()');
           <a class="dropdown-item" href="#">Settings</a>
           <a class="dropdown-item" href="#">Activity Log</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-power-off"></i>
+            Cerrar Sesión
+          </a>
+          <!-- <button type="button" class="dropdown-item"
+                data-toggle="modal"
+                data-modal="<?= Url::to(['/usuarios/logout']) ?>">
+            <i class="fa fa-edit" style="color: Dodgerblue"></i>
+            Cerrar Sesión
+          </button> -->
         </div>
       </li>
     </ul>
@@ -103,7 +113,7 @@ $this->registerJs('Main.init()');
   <!-- NAV BAR -->
   <?php endif?>
 
-  <div id="wrapper">
+  <div id="wrapper" class="dashboard-main-wrapper">
 
     <?php if (isset(Yii::$app->user->identity->IdTambo)): ?>
     <!-- Sidebar -->
@@ -111,7 +121,8 @@ $this->registerJs('Main.init()');
     <!-- #/Sidebar -->
     <?php endif?>
 
-    <div id="content-wrapper">
+    <div id="page-content-wrapper">
+    <div id="content-wrapper" class="dashboard-wrapper">
 
     <div class="container-fluid dashboard-content ">
         <?php if (isset(Yii::$app->user->identity->IdTambo)): ?>
@@ -147,8 +158,10 @@ $this->registerJs('Main.init()');
         <?php endif?>
         <?= $content ?>
     </div>
+    </div>
       <!-- /.container-fluid -->
 
+      <?php if (isset(Yii::$app->user->identity->IdTambo)): ?>
       <!-- Sticky Footer -->
       <footer class="sticky-footer">
         <div class="container my-auto">
@@ -157,6 +170,7 @@ $this->registerJs('Main.init()');
           </div>
         </div>
       </footer>
+      <?php endif ?>
 
     </div>
     <!-- /.content-wrapper -->
@@ -174,15 +188,15 @@ $this->registerJs('Main.init()');
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/usuarios/logout">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/usuarios/logout">Cerrar sesión</a>
         </div>
       </div>
     </div>
@@ -192,3 +206,7 @@ $this->registerJs('Main.init()');
 </body>
 </html>
 <?php $this->endPage() ?>
+
+
+
+
