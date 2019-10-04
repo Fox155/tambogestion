@@ -6,7 +6,6 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use common\models\Usuarios;
 
 /**
  * Site controller
@@ -72,22 +71,20 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->redirect(["usuarios/login"]);
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
-        // if (!Yii::$app->user->isGuest) {
-        //     return $this->goHome();
-        // }
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            $model->password = '';
 
-        // $model = new Usuarios();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
-        //     return $this->goBack();
-        // } else {
-        //     $model->password = '';
-
-        //     return $this->render('login', [
-        //         'model' => $model,
-        //     ]);
-        // }
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

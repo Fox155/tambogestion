@@ -24,12 +24,12 @@ $this->title = 'Iniciar sesión - Tambo Gestion';
 
             <?= Html::submitButton('Iniciar', ['class' => 'btn btn-lg btn-primary btn-block', 'name' => 'login-button']) ?>
 
-
             <div class="text-center">
                 <a class="d-block small" href="/">¿Se te olvidó tu contraseña?</a>
             </div>
 
-        <?php ActiveForm::end(); ?>
-      </div>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-  </div>
+</div>    
+<p class="mt-5 mb-3 text-muted text-center my-auto"><?= Html::encode("Tambo Gestion") ?> © <?= date('Y') ?></p>

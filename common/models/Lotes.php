@@ -13,6 +13,7 @@ class Lotes extends Model
 
     // Derivados
     public $Sucursal;
+    public $Ganado;
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
@@ -31,6 +32,13 @@ class Lotes extends Model
             [['IdLote','IdSucursal', 'Nombre'],
                 'required', 'on' => self::_MODIFICAR],
             [$this->attributes(), 'safe']
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'IdSucursal' => 'Sucursal',
         ];
     }
 

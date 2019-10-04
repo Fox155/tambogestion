@@ -64,8 +64,8 @@ class VacasController extends Controller
         $vaca->IdSucursal = $idS;
         $vaca->setScenario(Vacas::_ALTA);
 
-        if($vaca->load(Yii::$app->request->post()) && $vaca->validate()){
-            $resultado = GestorVaca::Alta($vaca);
+        if($vaca->load(Yii::$app->request->post()) /*&& $vaca->validate()*/){
+            $resultado = GestorVacas::Alta($vaca);
 
             Yii::$app->response->format = 'json';
             if (substr($resultado, 0, 2) == 'OK') {

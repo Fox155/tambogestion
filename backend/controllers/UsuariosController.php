@@ -6,6 +6,8 @@ use common\models\Usuarios;
 use common\models\GestorUsuarios;
 use common\models\GestorTipoUsuario;
 use common\models\forms\BusquedaForm;
+// use common\models\forms\AuditoriaForm;
+// use common\components\PermisosHelper;
 use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
@@ -27,8 +29,6 @@ class UsuariosController extends Controller
 
         $usuario = new Usuarios();
         $usuario->setScenario(Usuarios::_LOGIN);
-
-        // $this->layout = 'login';
 
         $busqueda = new BusquedaForm();
 
@@ -61,13 +61,19 @@ class UsuariosController extends Controller
         }
 
         return $this->render('login', [
-            'busqueda' => $busqueda,
             'model' => $usuario,
+            'busqueda' => $busqueda,
         ]);
     }
 
     public function actionLogout()
     {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->render('logout', []);
+        }
+
         Yii::$app->user->identity->Logout();
         Yii::$app->user->logout();
         return $this->goHome();
