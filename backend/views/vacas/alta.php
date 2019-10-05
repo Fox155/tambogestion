@@ -10,6 +10,7 @@ use yii\web\View;
 /* @var $form ActiveForm */
 /* @var $model Vacas */
 /* @var $lotes Lotes */
+// 2015-06-12
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -36,6 +37,8 @@ use yii\web\View;
 
             <?php if (!isset($model['IdLote'])): ?>
                 <?= $form->field($model, 'IdLote')->dropDownList(ArrayHelper::map($lotes, 'IdLote', 'Nombre'), ['prompt' => 'Lote']) ?>
+            <?php else: ?>
+                <?= Html::activeHiddenInput($model, 'IdLote') ?>
             <?php endif; ?>
 
             <?= $form->field($model, 'Estado')->dropDownList(Vacas::ESTADOS_ALTA, ['prompt' => 'Estado']) ?>
@@ -47,6 +50,8 @@ use yii\web\View;
             <?= $form->field($model, 'Peso') ?>
 
             <?= $form->field($model, 'FechaNac') ?>
+
+            <?= $form->field($model, 'FechaIngreso') ?>
 
             <?= $form->field($model, 'Observaciones') ?>
             

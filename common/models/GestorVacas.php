@@ -20,11 +20,12 @@ class GestorVacas
             ':idrfid' => $vaca->IdRFID,
             ':nombre' => $vaca->Nombre,
             ':raza' => $vaca->Raza,
-            ':peso' => $vaca->Peso,
+            ':peso' => $vaca->Peso === '' ? 0 : $vaca->Peso,
             ':fechanac' => $vaca->FechaNac,
             ':observaciones' => $vaca->Observaciones,
             ':idlote' => $vaca->IdLote,
             ':fechaingreso' => $vaca->FechaIngreso,
+            ':estado' => $vaca->Estado,
         ]);
 
         return $query->queryScalar();

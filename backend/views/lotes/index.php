@@ -31,13 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="alta--button">
-        
             <div class="alta--button">
-                <button type="button" class="btn btn-primary"
-                        data-modal="<?= Url::to(['/lotes/alta/', 'id' => $sucursal['IdSucursal']]) ?>" 
-                        data-hint="Nuevo Lote">
-                    Nuevo Lote
-                </button>
+                <?php if (!isset($sucursal['Nombre'])): ?>
+                    <button type="button" class="btn btn-primary"
+                            data-modal="<?= Url::to(['/lotes/alta/', 'id' => 0]) ?>" 
+                            data-hint="Nuevo Lote">
+                        Nuevo Lote
+                    </button>
+                <?php else: ?>
+                    <button type="button" class="btn btn-primary"
+                            data-modal="<?= Url::to(['/lotes/alta/', 'id' => $sucursal['IdSucursal']]) ?>" 
+                            data-hint="Nuevo Lote">
+                        Nuevo Lote
+                    </button>
+                <?php endif;?>
             </div>
 
         <div id="errores"> </div>
@@ -59,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php foreach ($models as $model): ?>
                                 <tr>
                                     <td><?= Html::encode($model['Nombre']) ?></td>
-                                    <td><?= 25 ?></td>
+                                    <td><?= Html::encode($model['Ganado']) ?></td>
                                     <td><?= Html::encode(Lotes::ESTADOS[$model['Estado']]) ?></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">

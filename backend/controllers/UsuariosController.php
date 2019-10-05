@@ -5,7 +5,7 @@ namespace backend\controllers;
 use common\models\Usuarios;
 use common\models\GestorUsuarios;
 use common\models\GestorTipoUsuario;
-use common\models\forms\BuscarForm;
+use common\models\forms\BusquedaForm;
 // use common\models\forms\AuditoriaForm;
 // use common\components\PermisosHelper;
 use common\components\TiposUsuarioHelper;
@@ -30,7 +30,7 @@ class UsuariosController extends Controller
         $usuario = new Usuarios();
         $usuario->setScenario(Usuarios::_LOGIN);
 
-        // $this->layout = 'login';
+        $busqueda = new BusquedaForm();
 
         if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
             $login = $usuario->Login('A', $usuario->Password, Yii::$app->security->generateRandomString(300));
@@ -62,11 +62,18 @@ class UsuariosController extends Controller
 
         return $this->render('login', [
             'model' => $usuario,
+            'busqueda' => $busqueda,
         ]);
     }
 
     public function actionLogout()
     {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->render('logout', []);
+        }
+
         Yii::$app->user->identity->Logout();
         Yii::$app->user->logout();
         return $this->goHome();

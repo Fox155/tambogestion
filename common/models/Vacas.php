@@ -15,7 +15,6 @@ class Vacas extends Model
     public $FechaNac;
     public $Observaciones;
 
-
     // Derivados
     public $IdLote;
     public $Lote;
@@ -48,7 +47,9 @@ class Vacas extends Model
         return [
             'IdLote' => 'Lote',
             'IdCaravana' => 'Caravana',
-            'IdRFID' => 'RFID'
+            'IdRFID' => 'RFID',
+            'FechaNac' => 'Fecha de Nacimiento',
+            'FechaIngreso' => 'Fecha de Ingreso al Lote',
         ];
     }
  

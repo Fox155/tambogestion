@@ -9,6 +9,7 @@ use yii\web\View;
 /* @var $this View */
 /* @var $form ActiveForm */
 /* @var $model Lotes */
+/* @var $sucursales Sucursales */
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -27,7 +28,9 @@ use yii\web\View;
 
             <?= Html::activeHiddenInput($model, 'IdLote') ?>
 
-            <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
+            <?php if (!isset($model['IdSucursal'])): ?>
+                <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
+            <?php endif; ?>
             
             <?= $form->field($model, 'Nombre') ?>
             

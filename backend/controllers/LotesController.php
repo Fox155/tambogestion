@@ -6,6 +6,7 @@ use common\models\Usuarios;
 use common\models\Sucursales;
 use common\models\Lotes;
 use common\models\GestorLotes;
+use common\models\GestorSucursales;
 use common\models\forms\BusquedaForm;
 use Yii;
 use yii\web\Controller;
@@ -44,7 +45,7 @@ class LotesController extends Controller
         // }
 
         $lotes = new Lotes();
-        $lotes->IdSucursal = $id;
+        // $lotes->IdSucursal = $id;
 
         $lotes->setScenario(Lotes::_ALTA);
 
@@ -58,9 +59,17 @@ class LotesController extends Controller
                 return ['error' => $resultado];
             }
         }else {
+            $sucursales = 0;
+            if($id == 0){
+                $sucursales = GestorSucursales::Buscar();
+            }else{
+                $lotes->IdSucursal = $id;
+            }
+
             return $this->renderAjax('alta', [
                 'titulo' => 'Alta Lote',
-                'model' => $lotes
+                'model' => $lotes,
+                'sucursales' => $sucursales,
             ]);
         }
     }
