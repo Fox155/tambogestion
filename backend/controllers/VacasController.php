@@ -91,13 +91,13 @@ class VacasController extends Controller
         }
     }
 
-    public function actionEditar($id, $idL)
+    public function actionEditar($id)
     {
         // if(Yii::$app->user->identity->IdTambo!='Administrador'){
         //     return;
         // }
         
-        $lote = new Lotes();
+        $vaca = new Vacas();
         $lote->IdSucursal = $id;
 
         $lote->setScenario(Lotes::_MODIFICAR);
