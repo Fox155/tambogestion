@@ -29,6 +29,11 @@ class Menu
             'icon' => 'fas fa-sitemap',
             'href' => '/lotes/0'
         ],
+        [
+            'name' => 'Clientes',
+            'icon' => 'fas fa-user-friends',
+            'href' => '/clientes'
+        ],
         // [
         //     'name' => 'Vacas',
         //     'icon' => 'fas fa-hat-cowboy-side',

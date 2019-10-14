@@ -57,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <thead class="bg-light">
                             <tr class="border-0">
                                 <th>Lote</th>
+                                <th>Sucursal</th>
                                 <th>Ganado Total</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -66,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php foreach ($models as $model): ?>
                                 <tr>
                                     <td><?= Html::encode($model['Nombre']) ?></td>
+                                    <td><?= Html::encode($model['Sucursal']) ?></td>
                                     <td><?= Html::encode($model['Ganado']) ?></td>
                                     <td><?= Html::encode(Lotes::ESTADOS[$model['Estado']]) ?></td>
                                     <td>
@@ -97,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <?php else: ?>
-            <p><strong>No hay sucursales que coincidan con el criterio de búsqueda utilizado.</strong></p>
+            <p><strong>No hay Lotes que coincidan con el criterio de búsqueda utilizado.</strong></p>
         <?php endif; ?>
     </div>
 </div>
