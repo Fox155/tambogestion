@@ -18,6 +18,7 @@ class BowerAsset extends AssetBundle
 {
     public $sourcePath = '@bower/';
     public $js = [
+        'chartjs/dist/Chart.min.js',
     ];
     public $css = [
         'font-awesome/css/all.min.css',

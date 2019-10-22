@@ -22,7 +22,9 @@
         "bower-asset/font-awesome": "*",
         "bower-asset/material-design-iconic-font": "*",
         "bower-asset/flag-icon-css": "*",
+        "bower-asset/chartjs": "*",
         "bower-asset/vue": "*",
+        "2amigos/yii2-chartjs-widget" : "~2.0",
         "kartik-v/yii2-widget-sidenav": "@dev"
     },
     "require-dev": {

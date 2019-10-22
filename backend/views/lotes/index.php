@@ -35,13 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (!isset($sucursal['Nombre'])): ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/lotes/alta/', 'id' => 0]) ?>" 
-                            data-hint="Nuevo Lote">
+                            data-mensaje="Nuevo Lote">
                         Nuevo Lote
                     </button>
                 <?php else: ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/lotes/alta/', 'id' => $sucursal['IdSucursal']]) ?>" 
-                            data-hint="Nuevo Lote">
+                            data-mensaje="Nuevo Lote">
                         Nuevo Lote
                     </button>
                 <?php endif;?>
@@ -72,19 +72,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="btn-group" role="group" aria-label="...">
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/lotes/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
-                                                        data-hint="Editar">
+                                                        data-mensaje="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
                                                         data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
-                                                        data-hint="Borrar">
+                                                        data-mensaje="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
 
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>"
-                                                        data-hint="Vacas">
+                                                        data-mensaje="Vacas">
                                                     <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                                 </a>
                                         </div>

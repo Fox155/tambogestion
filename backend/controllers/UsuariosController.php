@@ -71,7 +71,7 @@ class UsuariosController extends Controller
         $request = Yii::$app->request;
 
         if ($request->isGet)  {
-            return $this->render('logout', []);
+            return $this->renderAjax('logout', []);
         }
 
         Yii::$app->user->identity->Logout();
