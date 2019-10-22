@@ -17,7 +17,7 @@ use yii\web\View;
 
         <div class="modal-header">
             <h5 class="modal-title"><?= $titulo ?>: <?= $model['Nombre'] ?></h5>
-            <button type="button" class="close" onclick="Main.modalClose()">
+            <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -57,7 +57,7 @@ use yii\web\View;
             
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" onclick="Main.modalClose()">Cerrar</button>
+            <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
         </div>
         <?php ActiveForm::end(); ?>

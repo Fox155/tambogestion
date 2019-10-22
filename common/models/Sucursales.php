@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\charts\RegistroLecheChart;
 use Yii;
 use yii\base\Model;
 
@@ -64,6 +65,32 @@ class Sucursales extends Model
         ]);
 
         return $query->queryAll();
+    }
+
+    /**
+     * tsp_listar_lotes_Sucursal
+     */
+    public function ResumenRegistrosLeche(int $Limite)
+    {
+        $sql = "call tsp_resumen_registroleche( :idsucursal, :limite)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+            ':limite' => $Limite,
+        ]);
+
+        $registros = new RegistroLecheChart();
+
+        $registros->attributes = $query->queryOne();
+
+        $registros->Labels = json_decode($registros->Labels);
+        $registros->Data = json_decode($registros->Data);
+        // $registros->Labels = $labels->{'Labels'};
+        // $registros->Data = $data->{'Data'};
+
+        return $registros;
     }
 
     // /**

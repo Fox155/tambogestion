@@ -49,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (!isset($lote['Nombre'])): ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => 0]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php else: ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => $lote['IdLote']]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php endif ?>
@@ -100,13 +100,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="btn-group" role="group" aria-label="...">
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
-                                                        data-hint="Editar">
+                                                        data-mensaje="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
                                                         data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
-                                                        data-hint="Borrar">
+                                                        data-mensaje="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
                                         </div>

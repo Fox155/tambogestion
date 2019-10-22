@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="alta--button">
                 <button type="button" class="btn btn-primary"
                         data-modal="<?= Url::to(['/sucursales/alta']) ?>" 
-                        data-hint="Nueva Sucursal">
+                        data-mensaje="Nueva Sucursal">
                     Nueva Sucursal
                 </button>
             </div>
@@ -61,30 +61,41 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
-
-                                            
+                  
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/sucursales/editar', 'id' => $model['IdSucursal']]) ?>" 
-                                                        data-hint="Editar">
+                                                        data-mensaje="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
                                                         data-ajax="<?= Url::to(['/sucursales/borrar', 'id' => $model['IdSucursal']]) ?>"
-                                                        data-hint="Borrar">
+                                                        data-mensaje="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
                                             
                                                 <a class="btn btn-default"
-                                                        href="<?= Url::to(['/lotes/', 'id' => $model['IdSucursal']]) ?>"
-                                                        data-hint="Lotes">
+                                                        href="<?= Url::to(['/lotes', 'id' => $model['IdSucursal']]) ?>"
+                                                        data-mensaje="Lotes">
                                                     <i class="fas fa-sitemap" style="color: Green"></i>
                                                 </a>
 
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => 0]) ?>"
-                                                        data-hint="Vacas">
+                                                        data-mensaje="Vacas">
                                                     <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
+                                                </a>
+
+                                                <a class="btn btn-default"
+                                                        href="<?= Url::to(['/sucursales/detalle', 'id' => $model['IdSucursal']]) ?>"
+                                                        data-mensaje="Detalle">
+                                                    <i class="fas fa-info" style="color: Dodgerblue"></i>
+                                                </a>
+
+                                                <a class="btn btn-default"
+                                                        href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => 0]) ?>"
+                                                        data-mensaje="Vacas">
+                                                    <img src="./cow.ico">
                                                 </a>
 
                                         </div>
