@@ -34,6 +34,11 @@ class Menu
             'icon' => 'fas fa-user-friends',
             'href' => '/clientes'
         ],
+        [
+            'name' => 'Lista de Precios',
+            'icon' => 'fas fa-money-check-alt',
+            'href' => '/listas-precio'
+        ],
         // [
         //     'name' => 'Vacas',
         //     'icon' => 'fas fa-hat-cowboy-side',

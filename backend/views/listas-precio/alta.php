@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Lotes;
+use common\models\ListasPrecio;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -8,33 +8,30 @@ use yii\web\View;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-/* @var $model Lotes */
-/* @var $sucursales Sucursales */
+/* @var $model ListaPrecio */
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
 
         <div class="modal-header">
-            <h5 class="modal-title"><?= $titulo ?>: <?= $model['Nombre'] ?></h5>
+            <h5 class="modal-title"><?= $titulo ?>: <?= $model['Lista'] ?></h5>
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'lotes-form',]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'listaprecio-form',]) ?>
 
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
-            <?= Html::activeHiddenInput($model, 'IdLote') ?>
+                <?= Html::activeHiddenInput($model, 'IdListaPrecio') ?>
+    
+                <?= $form->field($model, 'Lista') ?>
+    
+                <?= $form->field($model, 'Precio') ?>
 
-            <?php if (!isset($model['IdSucursal'])): ?>
-                <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
-            <?php endif; ?>
-            
-            <?= $form->field($model, 'Nombre') ?>
-            
-        </div>
+            </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
