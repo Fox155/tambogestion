@@ -24,8 +24,10 @@
         "bower-asset/flag-icon-css": "*",
         "bower-asset/chartjs": "*",
         "bower-asset/vue": "*",
+        "bower-asset/datatables": "*",
         "2amigos/yii2-chartjs-widget" : "~2.0",
-        "kartik-v/yii2-widget-sidenav": "@dev"
+        "kartik-v/yii2-widget-sidenav": "@dev",
+        "miloschuman/yii2-highcharts-widget": "^7.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

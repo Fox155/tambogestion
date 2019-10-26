@@ -140,7 +140,26 @@ class VacasController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }    
+    }
+    
+    public function actionDetalle($id)
+    {
+        $vaca = new Vacas();
+        $vaca->IdVaca = $id;
+            
+        $vaca->Dame();
+
+        $lactancias = $vaca->ListarLactancias();
+
+        $producciones = $vaca->ListarProduccionesUltLac();
+
+        return $this->render('detalle', [
+            'titulo' => 'Detalle Vaca',
+            'model' => $vaca,
+            'lactancias' => $lactancias,
+            'producciones' => $producciones
+        ]);
+    }
 }
 
 ?>

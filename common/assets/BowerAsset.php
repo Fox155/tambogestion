@@ -18,7 +18,8 @@ class BowerAsset extends AssetBundle
 {
     public $sourcePath = '@bower/';
     public $js = [
-        'chartjs/dist/Chart.min.js',
+        'datatables/media/js/dataTables.bootstrap4.min.js',
+        'datatables/media/js/jquery.dataTables.js',
     ];
     public $css = [
         'font-awesome/css/all.min.css',
@@ -28,5 +29,7 @@ class BowerAsset extends AssetBundle
     public function init()
     {
         parent::init();
+
+        $this->js[] = 'vue/dist/vue.js';
     }
 }
