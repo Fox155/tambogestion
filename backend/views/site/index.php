@@ -9,129 +9,78 @@ $this->title = 'Tambo Gestion';
 ?>
 <div class="row">
     <div class="col-sm-12">
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            Ejemplo de gráfico de área - 2amigos
+        <!-- Icon Cards-->
+        <div class="row">
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-kaaba"></i>
+                </div>
+                <div class="mr-5">Sucursales</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/sucursales">
+                <span class="float-left">Detalles</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
           </div>
-          <div class="card-body">
-            <!-- ChartJS 2amigos -->
-            <?= ChartJs::widget([
-                'type' => 'line',
-                'options' => [
-                    'height' => "30",
-                    'width' => "100%",
-                ],
-                'clientOptions' => [
-                  'legend' => [
-                      'display' => false,
-                  ],
-                  'scales' => [
-                    'xAxes' => [
-                      'gridLines' => [
-                        'display' => "false"
-                      ]
-                    ],
-                    'yAxes' => [
-                      'gridLines' => [
-                        'color' => "rgba(0, 0, 0, .125)"
-                      ]
-                    ]
-                  ],
-                ],
-                'data' => [
-                    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-                    'datasets' => [
-                        [
-                            'backgroundColor' => "rgba(2,117,216,0.2)",
-                            'borderColor' => "#0080c0",
-                            'pointBackgroundColor' => "#0080c0",
-                            'pointBorderColor' => "rgba(255,255,255,0.8)",
-                            'pointHoverBackgroundColor' => "#0080c0",
-                            'pointRadius' => 5,
-                            'data' => [65, 59, 90, 81, 56, 55, 40]
-                        ],
-                        [
-                            'backgroundColor' => "rgba(255,99,132,0.2)",
-                            'borderColor' => "rgba(255,99,132,1)",
-                            'pointBackgroundColor' => "rgba(255,99,132,1)",
-                            'pointBorderColor' => "#fff",
-                            'pointHoverBackgroundColor' => "rgba(255,99,132,1)",
-                            'pointHoverBorderColor' => "#fff",
-                            'pointRadius' => 5,
-                            'data' => [28, 48, 40, 19, 96, 27, 100]
-                        ]
-                    ]
-                ]
-            ]);
-            ?>
-            <!-- /ChartJS 2amigos -->
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-shopping-cart"></i>
+                </div>
+                <div class="mr-5">Ventas</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/ventas/0">
+                <span class="float-left">Detalles</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-warning o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-sitemap"></i>
+                </div>
+                <div class="mr-5">Lotes</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/lotes/0">
+                <span class="float-left">Lotes</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-user-friends"></i>
+                </div>
+                <div class="mr-5">Clientes</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="/clientes">
+                <span class="float-left">Detalles</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <div class="col-lg-4">
-            <!-- Grafico de Torta -->
-            <div class="card mb-3">
-              <div class="card-header">
-                <i class="fas fa-chart-pie"></i>
-                Ejemplo de gráfico circular - 2amigos</div>
-              <div class="card-body">
-                <?=ChartJs::widget([
-                    'type' => 'pie',
-                    'id' => 'structurePie',
-                    'options' => [
-                        'height' => 200,
-                        'width' => 400,
-                    ],
-                    'data' => [
-                        'radius' =>  "90%",
-                        'labels' => ['Label 1', 'Label 2', 'Label 3'], // Your labels
-                        'datasets' => [
-                            [
-                                'data' => ['35.6', '17.5', '46.9'], // Your dataset
-                                'label' => '',
-                                'backgroundColor' => [
-                                        '#ADC3FF',
-                                        '#FF9A9A',
-                                    'rgba(190, 124, 145, 0.8)'
-                                ],
-                                'borderColor' =>  [
-                                        '#fff',
-                                        '#fff',
-                                        '#fff'
-                                ],
-                                'borderWidth' => 1,
-                                'hoverBorderColor'=>["#999","#999","#999"],                
-                            ]
-                        ]
-                    ],
-                    'clientOptions' => [
-                        'legend' => [
-                            'display' => false,
-                            'position' => 'bottom',
-                            'labels' => [
-                                'fontSize' => 14,
-                                'fontColor' => "#425062",
-                            ]
-                        ],
-                        'tooltips' => [
-                            'enabled' => true,
-                            'intersect' => true
-                        ],
-                        'hover' => [
-                            'mode' => false
-                        ],
-                        'maintainAspectRatio' => false,
-
-                    ]
-                    ]);
-                ?>
-              </div>
-              <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-            </div>
-            <!-- /Grafico de Torta -->
-          </div>
-          
     </div>
 </div>

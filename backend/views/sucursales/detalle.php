@@ -16,131 +16,85 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
     <div class="col-sm-12">
+        <!-- Icon Cards-->
+        <div class="row">
 
-        <div class="card">
-            <div class="card-header">
-                <i class="fas fa-chart-area"></i>
-                Ejemplo de gráfico de área - Registros de leche
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-comments"></i>
+                </div>
+                <div class="mr-5">26 New Messages!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
             </div>
-            <!-- ChartJS 2amigos -->
-            <div class="card-body">
-                <?= ChartJs::widget([
-                    'type' => 'line',
-                    'options' => [
-                        'height' => "30",
-                        'width' => "100%",
-                    ],
-                    'clientOptions' => [
-                    'legend' => [
-                        'display' => false,
-                    ],
-                    'scales' => [
-                        'xAxes' => [
-                        'gridLines' => [
-                            'display' => "false"
-                        ]
-                        ],
-                        'yAxes' => [
-                        'gridLines' => [
-                            'color' => "rgba(0, 0, 0, .125)"
-                        ]
-                        ]
-                    ],
-                    ],
-                    'data' => [
-                        'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-                        'datasets' => [
-                            [
-                                'backgroundColor' => "rgba(2,117,216,0.2)",
-                                'borderColor' => "#0080c0",
-                                'pointBackgroundColor' => "#0080c0",
-                                'pointBorderColor' => "rgba(255,255,255,0.8)",
-                                'pointHoverBackgroundColor' => "#0080c0",
-                                'pointRadius' => 5,
-                                'data' => [65, 59, 90, 81, 56, 55, 40]
-                            ],
-                            [
-                                'backgroundColor' => "rgba(255,99,132,0.2)",
-                                'borderColor' => "rgba(255,99,132,1)",
-                                'pointBackgroundColor' => "rgba(255,99,132,1)",
-                                'pointBorderColor' => "#fff",
-                                'pointHoverBackgroundColor' => "rgba(255,99,132,1)",
-                                'pointHoverBorderColor' => "#fff",
-                                'pointRadius' => 5,
-                                'data' => [28, 48, 40, 19, 96, 27, 100]
-                            ]
-                        ]
-                    ]
-                ]);
-                ?>
+          </div>
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-warning o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-list"></i>
+                </div>
+                <div class="mr-5">11 New Tasks!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
             </div>
-            <!-- /ChartJS 2amigos -->
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-shopping-cart"></i>
+                </div>
+                <div class="mr-5">123 New Orders!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-life-ring"></i>
+                </div>
+                <div class="mr-5">13 New Tickets!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+
         </div>
+        <!-- Icon Cards-->
 
-        <div class="card">
-            <?php if (isset($registros['Labels'])): ?>
+        <?php if (isset($registros['Labels'])): ?>
+        <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-chart-area"></i>
-                Ejemplo de gráfico de Barras - Registros de leche
-            </div>
-            <!-- ChartJS 2amigos -->
-            
-            <div class="card-body">
-                <?= ChartJs::widget([
-                    'type' => 'bar',
-                    'options' => [
-                        'height' => "30",
-                        'width' => "100%",
-                    ],
-                    'clientOptions' => [
-                        'legend' => [
-                            'display' => false,
-                        ],
-                        'scales' => [
-                            'xAxes' => [
-                                'time' => [
-                                    'unit' => 'day'
-                                ],
-                                'gridLines' => [
-                                    'display' => "false"
-                                ]
-                            ],
-                            'yAxes' => [
-                                'ticks' => [
-                                    'min' => 0,
-                                    'max' => 800,
-                                    'maxTicksLimit' => 5
-                                ],
-                                'gridLines' => [
-                                    'color' => "rgba(0, 0, 0, .125)"
-                                ]
-                            ]
-                        ],
-                    ],
-                    'data' => [
-                        'labels' => $registros['Labels'],
-                        'datasets' => [
-                            [
-                                'backgroundColor'=> "rgba(2,117,216,1)",
-                                'borderColor'=> "rgba(2,117,216,1)",
-                                'data'=> $registros['Data'],
-                            ]
-                        ]
-                    ]
-                ]);
-                ?>
-            </div>
-            <!-- /ChartJS 2amigos -->
-            <?php endif ?>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-
-        <div class="card">
-            <?php if (isset($registros['Labels'])): ?>
-            <div class="card-header">
-                <i class="fas fa-chart-area"></i>
-                Ejemplo de gráfico de Barras - Registros de leche - Highcharts
+                Ejemplo de gráfico de Barras - Registros de Leche de la Sucursal: <?= Html::encode($model['Nombre']) ?>
             </div>
             <!-- Highcharts -->
             <div class="card-body">
@@ -148,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Highcharts::widget([
                     'options' => [
                         'chart' => ['type' => 'column'],
-                        'title' => ['text' => 'Registro de Leche de la Sucural: '.$model['Nombre']],
+                        'title' => ['text' => 'Registros de Leche de la Sucural: '.$model['Nombre']],
                         'yAxis' => [
                             'title' => ['text' => 'Litros de Leche']
                         ],
@@ -157,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'type' => 'datetime'
                         ],
                         'series' => [
-                            ['data' => $registros['Data']]
+                            ['name' => 'Valor','data' => $registros['Data']]
                         ],
                         'credits' => [
                             'enabled' => false
@@ -170,10 +124,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
 
             </div>
-            <!-- /ChartJS 2amigos -->
-            <?php endif ?>
+            <!-- /Highcharts -->
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
+        <?php endif ?>
 
     </div>
 </div>

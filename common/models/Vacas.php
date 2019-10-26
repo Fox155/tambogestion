@@ -80,4 +80,36 @@ class Vacas extends Model
         
         $this->attributes = $query->queryOne();
     }
+
+    /**
+     * tsp_listar_lactancias
+     */
+    public function ListarLactancias()
+    {
+        $sql = "call tsp_listar_lactancias_vaca( :id )";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+        ]);
+
+        return $query->queryAll();
+    }
+
+    /**
+     * tsp_listar_producciones_ultima_lactancia
+     */
+    public function ListarProduccionesUltLac()
+    {
+        $sql = "call tsp_listar_producciones_ultima_lactancia( :id )";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+        ]);
+
+        return $query->queryAll();
+    }
 }
