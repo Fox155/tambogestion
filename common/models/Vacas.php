@@ -28,10 +28,12 @@ class Vacas extends Model
     const _MODIFICAR = 'modificar';
 
     const ESTADOS = [
+        'VAQUILLONA' => 'Vaquillona',
         'SECA' => 'Seca',
         'LACTANTE' => 'Lactante',
-        'VAQUILLONA' => 'Vaquillona',
-        'VAQUILLON' => 'Vaquillon',
+        'MUERTA' => 'Muerta',
+        'VENDIDA' => 'Vendida',
+        'BAJA' => 'Baja',
         'T' => 'Todos'
     ];
 

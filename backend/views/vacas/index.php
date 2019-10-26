@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <?php else: ?>
-            <p><strong>No hay sucursales que coincidan con el criterio de búsqueda utilizado.</strong></p>
+            <p><strong>No hay Vacas que coincidan con el criterio de búsqueda utilizado.</strong></p>
         <?php endif; ?>
     </div>
 </div>
