@@ -49,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (!isset($lote['Nombre'])): ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => 0]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php else: ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => $lote['IdLote']]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php endif ?>
