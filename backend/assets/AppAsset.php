@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/sb-admin.min.js',
+        'js/demo/datatables-demo.js',
     ];
     public $depends = [
         'common\assets\CommonAsset',

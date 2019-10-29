@@ -140,7 +140,38 @@ class VacasController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }    
+    }
+    
+    public function actionDetalle($id)
+    {
+        $busqueda = new BusquedaForm();
+        
+        $vaca = new Vacas();
+        $vaca->IdVaca = $id;
+        
+        $vaca->Dame();
+        
+        $lactancias = $vaca->ListarLactancias();
+
+        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+            $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
+            $incluye = $busqueda->Check ? $busqueda->Check : 'N';
+            $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
+        } else {
+            $vacas =  GestorVacas::Buscar($idS, $idL);
+        }
+        
+        $producciones = $vaca->ListarProduccionesUltLac();
+
+        return $this->render('detalle', [
+            'titulo' => 'Detalle Vaca',
+            'model' => $vaca,
+            'busqueda' => $busqueda,
+            'lactancias' => $lactancias,
+            'producciones' => $producciones
+        ]);
+    }
+
 }
 
 ?>

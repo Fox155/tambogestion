@@ -18,6 +18,11 @@ $config = [
         'assetManager' => [
             'linkAssets' => true,
             'appendTimestamp' => true,
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',

@@ -23,7 +23,7 @@ if (isset($this->params['breadcrumbs'])) {
 
 $usuario = Yii::$app->user->identity;
 
-//$this->registerJs('Main.init()');
+//$this->registerJs('Main.iniciar()');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
