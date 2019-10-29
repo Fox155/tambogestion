@@ -27,7 +27,9 @@
         "bower-asset/datatables": "*",
         "2amigos/yii2-chartjs-widget" : "~2.0",
         "kartik-v/yii2-widget-sidenav": "@dev",
-        "miloschuman/yii2-highcharts-widget": "^7.1"
+        "miloschuman/yii2-highcharts-widget": "^7.1",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-field-range": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

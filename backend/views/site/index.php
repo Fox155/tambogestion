@@ -1,7 +1,11 @@
 <?php
 
 use backend\models\Menu;
-use dosamigos\chartjs\ChartJs;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use miloschuman\highcharts\Highcharts;
+use yii\bootstrap\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 
@@ -83,4 +87,160 @@ $this->title = 'Tambo Gestion';
         </div>
 
     </div>
+
+    <div class="col-sm-12">
+      <?php if (isset($model['Nombre'])): ?>
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-light">
+                            <tr class="border-0">
+                                <th>Nombre</th>
+                                <th>CUIT</th>
+                                <th>Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?= Html::encode($model['Nombre']) ?></td>
+                                <td><?= Html::encode($model['CUIT']) ?></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="...">
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/listas-precio']) ?>"
+                                          data-mensaje="Lista de Precios">
+                                        <i class="fas fa-money-check-alt" style="color: Dodgerblue"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/clientes']) ?>"
+                                          data-mensaje="Clientes">
+                                        <i class="fas fa-user-friends" style="color: Tomato"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/ventas']) ?>"
+                                          data-mensaje="Ventas">
+                                        <i class="fas fa-shopping-cart" style="color: Green"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/sucursales']) ?>"
+                                          data-mensaje="Sucursales">
+                                        <i class="fas fa-kaaba" style="color: Dodgerblue"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/lotes/0']) ?>"
+                                          data-mensaje="Lotes">
+                                        <i class="fas fa-sitemap" style="color: Green"></i>
+                                      </a>
+
+                                    </div>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    
+
+    <div class="col-sm-12">
+        <?php if (isset($producciones['Labels'])): ?>
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-area"></i>
+                Ejemplo de Resumen ultimas Producciones: <?= Html::encode($model['Nombre']) ?>
+            </div>
+
+            <!-- Highcharts -->
+            <div class="card-body">
+
+                <?= Highcharts::widget([
+                    'options' => [
+                        'chart' => ['type' => 'column'],
+                        'title' => ['text' => 'Producciones del Tambo: '.$model['Nombre']],
+                        'yAxis' => [
+                            'title' => ['text' => 'Litros de Leche Registrados']
+                        ],
+                        'xAxis' => [
+                            'title' => ['text' => 'Dias'],
+                            'categories' => $producciones['Labels'],
+                            'type' => 'date'
+                        ],
+                        'series' => [
+                            ['name' => 'Litros','data' => $producciones['Data']]
+                        ],
+                        'credits' => [
+                            'enabled' => false
+                        ],
+                        'legend' => [
+                            'enabled' => false
+                        ],
+                    ]
+                    ]);
+                ?>
+
+            </div>
+            <!-- /Highcharts -->
+
+            <div class="card-footer small text-muted">
+              Actualizado el <?= Html::encode($producciones['Footer']) ?>
+            </div>
+        </div>
+        <?php endif ?>
+    </div>
+
+    <div class="col-sm-12">
+        <?php if (isset($ventas['Labels'])): ?>
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-area"></i>
+                Ejemplo de Resumen ultimas Ventas: <?= Html::encode($model['Nombre']) ?>
+            </div>
+
+            <!-- Highcharts -->
+            <div class="card-body">
+
+                <?= Highcharts::widget([
+                    'options' => [
+                        'chart' => ['type' => 'column'],
+                        'title' => ['text' => 'Ventas del Tambo: '.$model['Nombre']],
+                        'yAxis' => [
+                            'title' => ['text' => 'Monto de Pagos']
+                        ],
+                        'xAxis' => [
+                            'title' => ['text' => 'Dias'],
+                            'categories' => $ventas['Labels'],
+                            'type' => 'date'
+                        ],
+                        'series' => [
+                            ['name' => 'Pagos','data' => $ventas['Data']]
+                        ],
+                        'credits' => [
+                            'enabled' => false
+                        ],
+                        'legend' => [
+                            'enabled' => false
+                        ],
+                    ]
+                    ]);
+                ?>
+
+            </div>
+            <!-- /Highcharts -->
+
+            <div class="card-footer small text-muted">
+              Actualizado el <?= Html::encode($ventas['Footer']) ?>
+            </div>
+        </div>
+        <?php endif ?>
+    </div>
+
 </div>

@@ -4,17 +4,20 @@ namespace common\models\charts;
 
 use yii\base\Model;
 
-class RegistroLecheChart extends Model
+class RegistroAvanzado extends Model
 {
     public $Labels;
     public $Data;
+    public $Participantes;
+    public $Footer;
 
     public function rules()
     {
         return [
             ['Labels', 'each', 'rule' => ['trim']],
             ['Data', 'each', 'rule' => ['integer']],
-            [['Labels', 'Data'], 'safe'],
+            [['Footer'], 'trim'],
+            [['Labels', 'Data', 'Participantes'], 'safe'],
         ];
     }
 }

@@ -3,6 +3,7 @@ namespace common\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\charts\RegistroLecheChart;
 
 class Vacas extends Model
 {
@@ -104,7 +105,7 @@ class Vacas extends Model
      */
     public function ListarProduccionesUltLac()
     {
-        $sql = "call tsp_listar_producciones_ultima_lactancia( :id )";
+        $sql = "call tsp_resumen_producciones_vaca( :id )";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -112,6 +113,15 @@ class Vacas extends Model
             ':id' => $this->IdVaca,
         ]);
 
-        return $query->queryAll();
+        $registros = new RegistroLecheChart();
+
+        $registros->attributes = $query->queryOne();
+
+        $registros->Labels = json_decode($registros->Labels);
+        $registros->Data = json_decode($registros->Data);
+        // $registros->Labels = $labels->{'Labels'};
+        // $registros->Data = $data->{'Data'};
+
+        return $registros;
     }
 }

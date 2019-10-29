@@ -49,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (!isset($lote['Nombre'])): ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => 0]) ?>" 
-                            data-mensaje="Nueva Vaca">
+                            data-hint="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php else: ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => $lote['IdLote']]) ?>" 
-                            data-mensaje="Nueva Vaca">
+                            data-hint="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php endif ?>
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
-
+                                            
                                             <a class="btn btn-default"
                                                     href="<?= Url::to(['/vacas/detalle', 'id' => $model['IdVaca']]) ?>"
                                                     data-mensaje="Detalle">
@@ -106,13 +106,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </a>
 
                                             <button type="button" class="btn btn-default"
-                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
+                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca']]) ?>" 
                                                     data-mensaje="Editar">
                                                 <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                             </button>
-                                        
+                                            
                                             <button type="button" class="btn btn-default"
-                                                    data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
+                                                    data-ajax="<?= Url::to(['/vacas/borrar', 'id' => $model['IdLote']]) ?>"
                                                     data-mensaje="Borrar">
                                                 <i class="far fa-trash-alt" style="color: Tomato"></i>
                                             </button>
