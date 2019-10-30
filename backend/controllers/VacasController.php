@@ -91,19 +91,15 @@ class VacasController extends Controller
         }
     }
 
-    public function actionEditar($id)
+    public function actionEditar($id,$idS)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-        
-        $vaca = new Vacas();
-        $lote->IdSucursal = $id;
+       
+        $vacas = new Vacas();
+        $vacas->IdSucursal = $idS;
+        $vacas->setScenario(Vacas::_MODIFICAR);
 
-        $lote->setScenario(Lotes::_MODIFICAR);
-
-        if ($lote->load(Yii::$app->request->post()) && $lote->validate()) {
-            $resultado = GestorLotes::Modificar($lote);
+        if ($vacas->load(Yii::$app->request->post()) && $vacas->validate()) {
+            $resultado = GestorVacas::Modificar($vacas);
 
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
@@ -112,15 +108,23 @@ class VacasController extends Controller
                 return ['error' => $resultado];
             }
         } else {
-            $lote->IdLote = $idL;
-            $lote->Dame();
+            $vacas->IdVaca = $id;
+            $vacas->Dame();
+            
+               
+            $sucursal = new Sucursales();
+            $sucursal->IdSucursal = $idS;
+            $lotes = $sucursal->ListarLotes();
+            
 
             return $this->renderAjax('alta', [
-                'titulo' => 'Modificar Lote',
-                'model' => $lote
+                'titulo' => 'Modificar Vaca',
+                'model' => $vacas,
+                'lotes' => $lotes
             ]);
         }
     }
+
 
     public function actionBorrar($id)
     {
@@ -130,10 +134,10 @@ class VacasController extends Controller
 
         Yii::$app->response->format = 'json';
         
-        $lote = new Lotes();
-        $lote->IdLote = $id;
+        $vaca= new Vacas();
+        $vaca->IdVaca = $id;
 
-        $resultado = GestorLotes::Borrar($lote);
+        $resultado = GestorVacas::Borrar($vaca);
 
         if ($resultado == 'OK') {
             return ['error' => null];

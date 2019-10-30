@@ -99,13 +99,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
                                                 <button type="button" class="btn btn-default"
-                                                        data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
+                                                        data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca'], 'idS' => $sucursal['IdSucursal']]) ?>" 
                                                         data-hint="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
+                                                        data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdVaca']]) ?>"
                                                         data-hint="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
