@@ -10,7 +10,7 @@ use yii\web\View;
 /* @var $form ActiveForm */
 /* @var $model Vacas */
 /* @var $lotes Lotes */
-// 2015-06-12
+
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -36,9 +36,9 @@ use yii\web\View;
             <?= $form->field($model, 'IdRFID') ?>
 
             <?php if (!isset($model['IdLote'])): ?>
-                <?= $form->field($model, 'IdLote')->dropDownList(ArrayHelper::map($lotes, 'IdLote', 'Nombre'), ['prompt' => 'Lote']) ?>
+                <?= $form->field($model, 'IdLote')->dropDownList(ArrayHelper::map($lotes, 'IdLote', 'Nombre'), ['prompt' => 'Lote X sucursal']) ?>
             <?php else: ?>
-                <?= Html::activeHiddenInput($model, 'IdLote') ?>
+                <?= $form->field($model, 'IdLote')?>
             <?php endif; ?>
 
             <?= $form->field($model, 'Estado')->dropDownList(Vacas::ESTADOS_ALTA, ['prompt' => 'Estado']) ?>

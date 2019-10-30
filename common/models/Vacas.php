@@ -42,7 +42,6 @@ class Vacas extends Model
         'SECA' => 'Seca',
         'LACTANTE' => 'Lactante',
         'VAQUILLONA' => 'Vaquillona',
-        'VAQUILLON' => 'Vaquillon'
     ];
 
     public function attributeLabels()
@@ -61,7 +60,7 @@ class Vacas extends Model
         return [
             [['IdLote', 'IdCaravana', 'IdRFID', 'Estado'],
                 'required', 'on' => self::_ALTA],
-            [['IdVaca', 'IdLote', 'IdCaravana', 'IdRFID', 'Estado'],
+            [['IdVaca', 'IdLote', 'IdCaravana', 'IdRFID', 'Raza'],
                 'required', 'on' => self::_MODIFICAR],
             [$this->attributes(), 'safe']
         ];
