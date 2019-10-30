@@ -12,11 +12,10 @@ use kartik\date\DatePicker;
 $this->title = 'Tambo Gestion';
 ?>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="padding-bottom: 15px;">
         <!-- Icon Cards-->
-        <div class="row">
+        <div class="card-group">
 
-          <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
@@ -31,9 +30,7 @@ $this->title = 'Tambo Gestion';
                 </span>
               </a>
             </div>
-          </div>
 
-          <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-success o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
@@ -48,9 +45,7 @@ $this->title = 'Tambo Gestion';
                 </span>
               </a>
             </div>
-          </div>
 
-          <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-warning o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
@@ -65,9 +60,7 @@ $this->title = 'Tambo Gestion';
                 </span>
               </a>
             </div>
-          </div>
 
-          <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-danger o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
@@ -82,18 +75,17 @@ $this->title = 'Tambo Gestion';
                 </span>
               </a>
             </div>
-          </div>
 
         </div>
 
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="padding-bottom: 15px;">
       <?php if (isset($model['Nombre'])): ?>
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table m-0">
                         <thead class="bg-light">
                             <tr class="border-0">
                                 <th>Nombre</th>
@@ -105,7 +97,7 @@ $this->title = 'Tambo Gestion';
                             <tr>
                                 <td><?= Html::encode($model['Nombre']) ?></td>
                                 <td><?= Html::encode($model['CUIT']) ?></td>
-                                <td>
+                                <td style="width: 24rem;">
                                     <div class="btn-group" role="group" aria-label="...">
 
                                       <a class="btn btn-default"
@@ -138,6 +130,12 @@ $this->title = 'Tambo Gestion';
                                         <i class="fas fa-sitemap" style="color: Green"></i>
                                       </a>
 
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/usuarios']) ?>"
+                                          data-mensaje="Usuarios">
+                                        <i class="fas fa-id-card" style="color: Blue"></i>
+                                      </a>
+
                                     </div>
                                 </td> 
                             </tr>
@@ -151,10 +149,10 @@ $this->title = 'Tambo Gestion';
 
     
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="padding-bottom: 15px;">
         <?php if (isset($producciones['Labels'])): ?>
-        <div class="card">
-            <div class="card-header">
+        <div class="card m-10">
+            <div class="card-header m-10">
                 <i class="fas fa-chart-area"></i>
                 Ejemplo de Resumen ultimas Producciones: <?= Html::encode($model['Nombre']) ?>
             </div>
@@ -197,7 +195,7 @@ $this->title = 'Tambo Gestion';
         <?php endif ?>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="padding-bottom: 15px;">
         <?php if (isset($ventas['Labels'])): ?>
         <div class="card">
             <div class="card-header">

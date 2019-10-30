@@ -31,8 +31,14 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         'A' => 'Activo',
         'B' => 'Baja',
         'S' => 'Suspendido',
-        'C' => 'CambiaPass',
+        'C' => 'Debe Cambiar Contraseña',
         'T' => 'Todos'
+    ];
+
+    const TIPOS_USUARIOS = [
+        1 => 'Administrador',
+        2 => 'Operador',
+        0 => 'Todos'
     ];
 
     const APLICACIONES = [

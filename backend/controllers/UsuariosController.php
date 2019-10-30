@@ -82,21 +82,19 @@ class UsuariosController extends Controller
 
     public function actionIndex()
     {
-        // $busqueda = new BuscarForm();
+        $busqueda = new BusquedaForm();
 
-        // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
-        //     $tipo = $busqueda->Combo ? $busqueda->Combo : 'T';
-        //     $estado = $busqueda->Combo2 ? $busqueda->Combo2 : 'A';
-        //     $clientes = $gestor->Buscar($busqueda->Cadena, $tipo, $estado);
-        // } else {
-        //     $clientes = $gestor->Buscar();
-        // }
-
-        $usuarios = GestorUsuarios::Buscar();
+        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+            $tipo = $busqueda->Combo ? $busqueda->Combo : 0;
+            $estado = $busqueda->Combo2 ? $busqueda->Combo2 : 'A';
+            $usuarios = GestorUsuarios::Buscar($tipo, $estado, $busqueda->Cadena);
+        } else {
+            $usuarios = GestorUsuarios::Buscar();
+        }
 
         return $this->render('index', [
-            'models' => $usuarios
-            // 'busqueda' => $busqueda
+            'models' => $usuarios,
+            'busqueda' => $busqueda
         ]);
     }
 
