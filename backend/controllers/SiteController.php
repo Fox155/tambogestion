@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Tambos;
 
 /**
  * Site controller
@@ -60,8 +61,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // $this->layout = 'menu';
-        return $this->render('index');
+        if (Yii::$app->session->get('TipoUsuario') != 'Administrador'){
+            return $this->redirect('/sucursales/detalle');
+        }
+
+        $tambo = new Tambos();
+        $tambo->IdTambo = Yii::$app->session->get('IdTambo');
+        $tambo->Dame();
+
+        $producciones = $tambo->ResumenProducciones();
+
+        $ventas = $tambo->ResumenVentas();
+
+        return $this->render('index', [
+            'model' => $tambo,
+            'producciones' => $producciones,
+            'ventas' => $ventas,
+        ]);
     }
 
     /**

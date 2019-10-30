@@ -21,7 +21,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
 
     // Derivados
     public $TipoUsuario;
-    // public $IdsSucurla;
+    public $IdsSucursales;
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
@@ -60,7 +60,8 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
             [['Usuario', 'Password'], 'required', 'on' => self::_LOGIN],
             [['IdTipoUsuario', 'Usuario', 'Email'], 'required', 'on' => self::_ALTA],
             [['IdUsuario', 'IdTipoUsuario', 'Email'], 'required', 'on' => self::_MODIFICAR],
-            [$this->attributes(), 'safe']
+            [$this->attributes(), 'safe'],
+            [['IdsSucursales','TipoUsuario'], 'safe']
         ];
     }
 

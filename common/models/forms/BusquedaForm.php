@@ -33,6 +33,7 @@ class BusquedaForm extends Model
             ['Check2', 'in', 'range' => ['S', 'N']],
             [['Numero', 'Id', 'Numero2'], 'integer', 'min' => 0],
             [['Numero', 'Id', 'Numero2', 'Combo', 'Combo2', 'Combo3', 'Combo4'], 'default', 'value' => 0],
+            [['Check', 'Check2'], 'default', 'value' => 'N'],
             [['Check', 'FechaInicio', 'FechaFin', 'Id', 'Numero', 'Combo', 'Check2',
                 'Combo2', 'Combo3', 'Cadena', 'Numero2', 'Combo4', 'Periodo'], 'safe'],
         ];

@@ -107,7 +107,27 @@ class SucursalesController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }    
+    }
+    
+    public function actionDetalle($id)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+        
+        $sucursal = new Sucursales();
+        $sucursal->IdSucursal = $id;
+            
+        $sucursal->Dame();
+
+        $registros = $sucursal->ResumenRegistrosLeche(5);
+
+        return $this->render('detalle', [
+            'titulo' => 'Detalle Sucursal',
+            'model' => $sucursal,
+            'registros' => $registros
+        ]);
+    }
 }
 
 ?>

@@ -49,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (!isset($lote['Nombre'])): ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => 0]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php else: ?>
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => $lote['IdLote']]) ?>" 
-                            data-hint="Nueva Vaca">
+                            data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php endif ?>
@@ -98,17 +98,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-default"
-                                                        data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca'], 'idS' => $sucursal['IdSucursal']]) ?>" 
-                                                        data-hint="Editar">
-                                                    <i class="fa fa-edit" style="color: Dodgerblue"></i>
-                                                </button>
                                             
-                                                <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdVaca']]) ?>"
-                                                        data-hint="Borrar">
-                                                    <i class="far fa-trash-alt" style="color: Tomato"></i>
-                                                </button>
+                                            <a class="btn btn-default"
+                                                    href="<?= Url::to(['/vacas/detalle', 'id' => $model['IdVaca']]) ?>"
+                                                    data-mensaje="Detalle">
+                                                <i class="fas fa-info" style="color: Dodgerblue"></i>
+                                            </a>
+
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-mensaje="Editar">
+                                                <i class="fa fa-edit" style="color: Dodgerblue"></i>
+                                            </button>
+                                            
+                                            <button type="button" class="btn btn-default"
+                                                    data-ajax="<?= Url::to(['/vacas/borrar', 'id' => $model['IdVaca']]) ?>"
+                                                    data-mensaje="Borrar">
+                                                <i class="far fa-trash-alt" style="color: Tomato"></i>
+                                            </button>
+                                          
                                         </div>
                                     </td> 
                                 </tr>

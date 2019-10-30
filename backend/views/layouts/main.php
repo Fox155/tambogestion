@@ -22,7 +22,7 @@ if (isset($this->params['breadcrumbs'])) {
 
 $usuario = Yii::$app->user->identity;
 
-$this->registerJs('Main.init()');
+$this->registerJs('Main.iniciar()');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -42,24 +42,14 @@ $this->registerJs('Main.init()');
       <?php if (isset(Yii::$app->user->identity->IdTambo)): ?>
       <!-- NAV BAR -->
       <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
+      <div class="navbar-collapse collapse justify-content-between">
+        <div class="navbar-collapse collapse justify-content-left">
         <a class="navbar-brand mr-1" href="/">Tambo Gestion</a>
 
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
           <i class="fas fa-bars"></i>
         </button>
-
-        <!-- Navbar Search -->
-        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar por..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form>
+        </div>
 
         <!-- Navbar -->
         <ul class="navbar-nav ml-auto ml-md-0">
@@ -69,18 +59,6 @@ $this->registerJs('Main.init()');
               <i class="fas fa-bell fa-fw"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="badge badge-danger">5</span>
-              <i class="fas fa-envelope fa-fw"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <div class="dropdown-divider"></div>
@@ -104,6 +82,7 @@ $this->registerJs('Main.init()');
           </li>
         </ul>
 
+      </div>
       </nav>
       <!-- NAV BAR -->
       <?php endif?>
