@@ -7,36 +7,31 @@ use Yii;
 class GestorUsuarios
 {
     /**
-     * tsp_alta_vaca
+     * tsp_alta_usuario
      */
-    public function Alta(Vacas $vaca)
+    public function Alta(Usuarios $usuario)
     {
-        $sql = "call tsp_alta_vaca( :idcaravana, :idrfid, :nombre, :raza, :peso, :fechanac, :observaciones, :idlote, :fechaingreso, :estado)";
+        $sql = "call tsp_alta_usuario( :token, :idtipo, :usuario, :pass, :email)";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
-            ':idcaravana' => $vaca->IdCaravana,
-            ':idrfid' => $vaca->IdRFID,
-            ':nombre' => $vaca->Nombre,
-            ':raza' => $vaca->Raza,
-            ':peso' => $vaca->Peso === '' ? 0 : $vaca->Peso,
-            ':fechanac' => $vaca->FechaNac,
-            ':observaciones' => $vaca->Observaciones,
-            ':idlote' => $vaca->IdLote,
-            ':fechaingreso' => $vaca->FechaIngreso,
-            ':estado' => $vaca->Estado,
+            ':token' => Yii::$app->user->identity->Token,
+            ':idtipo' => $usuario->IdTipoUsuario,
+            ':usuario' => $usuario->Usuario,
+            ':email' => $usuario->Email,
+            ':pass' => md5($usuario->Password),
         ]);
 
         return $query->queryScalar();
     }
 
     /**
-     * xsp_buscar_usuarios
+     * tsp_buscar_usuarios
      */
     public function Buscar($Tipo = 0 ,$Estado = 'A', $Cadena = '')
     {
-        $sql = "call xsp_buscar_usuarios( :idtambo, :cadena, :estado, :tipo)";
+        $sql = "call tsp_buscar_usuarios( :idtambo, :cadena, :estado, :tipo)";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -51,17 +46,19 @@ class GestorUsuarios
     }
 
     /**
-     * tsp_modificar_vaca
+     * tsp_modificar_usuario
      */
-    public function Modificar(Vacas $vaca)
+    public function Modificar(Usuarios $usuario)
     {
-        $sql = "call tsp_modificar_vaca( :idlote, :nombre)";
+        $sql = "call tsp_modificar_usuario( :token, :idusuario, :tipo, :email )";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
-            ':idlote' => $lote->IdLote,
-            ':nombre' => $lote->Nombre,
+            ':token' => Yii::$app->user->identity->Token,
+            ':tipo' => $usuario->IdTipoUsuario,
+            ':idusuario' => $usuario->IdUsuario,
+            ':email' => $usuario->Email,
         ]);
 
         return $query->queryScalar();

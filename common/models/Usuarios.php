@@ -55,6 +55,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return [
             'IdTipoUsuario' => 'Tipo de Usuario',
             'IdTambo' => 'Tambo',
+            'Password' => 'Contraseña',
             'IdUsuario' => 'Usuario'
         ];
     }
@@ -64,7 +65,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return [
             ['Email','email'],
             [['Usuario', 'Password'], 'required', 'on' => self::_LOGIN],
-            [['IdTipoUsuario', 'Usuario', 'Email'], 'required', 'on' => self::_ALTA],
+            [['IdTipoUsuario', 'Usuario', 'Email', 'Password'], 'required', 'on' => self::_ALTA],
             [['IdUsuario', 'IdTipoUsuario', 'Email'], 'required', 'on' => self::_MODIFICAR],
             [$this->attributes(), 'safe'],
             [['IdsSucursales','TipoUsuario'], 'safe']
