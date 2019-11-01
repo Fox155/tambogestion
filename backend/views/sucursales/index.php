@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr class="border-0">
                                 <th>Sucursal</th>
                                 <th>Datos</th>
+                                <th>Litros Registrados</th>
                                 <th>Operaciones</th>
                                 <?php if ($busqueda['Check'] == 'S'): ?>
                                     <th>Acciones</th>
@@ -65,9 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <?php endforeach; ?>
                                         </ul>
                                     </td>
+                                    <td><?= Html::encode($model['Litros']) ?></td>
                                     <td>
                                         <!-- Operaciones -->
                                         <div class="btn-group" role="group" aria-label="...">
+
+                                                <button type="button" class="btn btn-default"
+                                                        data-modal="<?= Url::to(['/sucursales/alta-registro', 'id' => $model['IdSucursal']]) ?>" 
+                                                        data-mensaje="Añadir Registro de Leche">
+                                                    <i class="fas fa-plus-circle" style="color: Tomato"></i>
+                                                </button>
                                             
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/sucursales/detalle', 'id' => $model['IdSucursal']]) ?>"

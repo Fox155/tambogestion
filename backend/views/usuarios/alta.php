@@ -45,8 +45,12 @@ use yii\web\View;
                 <?= Html::activeHiddenInput($model, 'Password') ?>
             <?php endif; ?>
 
-            <?= $form->field($model, 'IdTipoUsuario')->dropDownList(ArrayHelper::map($tipos, 'IdTipoUsuario', 'Tipo'), ['prompt' => 'Tipo de Usuario']) ?>
-            
+            <?php if ($model['IdUsuario'] != Yii::$app->user->identity->IdUsuario): ?>
+                <?= $form->field($model, 'IdTipoUsuario')->dropDownList(ArrayHelper::map($tipos, 'IdTipoUsuario', 'Tipo'), ['prompt' => 'Tipo de Usuario']) ?>
+            <?php else: ?>
+                <?= Html::activeHiddenInput($model, 'IdTipoUsuario') ?>
+            <?php endif; ?>
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>

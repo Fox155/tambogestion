@@ -33,7 +33,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'common\models\Usuarios',
-            'loginUrl' => 'usuarios/login',
+            'loginUrl' => '/usuarios/login',
             'authTimeout' => 60 * 60,
             // 'enableAutoLogin' => true,
             // 'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
@@ -64,6 +64,37 @@ $config = [
             ],
         ],
         
+    ],
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            /**
+             *  Usuarios no logueados
+             */
+            [
+                'allow' => true,
+                'actions' => ['login', 'error'],
+            ],
+            /**
+             *  Debug
+             */
+            [
+                'allow' => true,
+                'controllers' => ['debug', 'default', 'debug/default'],
+            ],
+            /**
+             *  Usuarios logueados, están activos y tienen Token bueno
+             */
+            [
+                'allow' => true,
+                'roles' => ['@'],
+                'matchCallback' => function () {
+                    $usuario = Yii::$app->user->identity;
+                    $token = Yii::$app->session->get('Token');
+                    return $usuario->Estado == 'A' && $usuario->Token == $token;
+                },
+            ],
+        ],
     ],
     'params' => $params,
 ];

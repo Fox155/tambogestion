@@ -72,12 +72,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         data-mensaje="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
-                                            
+
+                                            <?php if ($model['IdUsuario'] != Yii::$app->user->identity->IdUsuario): ?>
                                                 <button type="button" class="btn btn-default"
                                                         data-ajax="<?= Url::to(['/usuarios/borrar', 'id' => $model['IdUsuario']]) ?>"
                                                         data-mensaje="Borrar">
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
+                                            <?php endif; ?>
 
                                         </div>
                                     </td> 

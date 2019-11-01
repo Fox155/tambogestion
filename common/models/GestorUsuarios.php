@@ -65,16 +65,17 @@ class GestorUsuarios
     }
 
     /**
-     * tsp_borrar_lote
+     * tsp_borra_usuario
      */
     public function Borrar(Lotes $lote)
     {
-        $sql = "call tsp_borrar_lote(:idlote)";
+        $sql = "call tsp_borra_usuario(:token, :idusuario)";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
-            ':idlote' => $lote->IdLote,
+            ':token' => Yii::$app->user->identity->Token,
+            ':idusuario' => $usuario->IdUsuario,
         ]);
 
         return $query->queryScalar();
