@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\models\Usuarios;
 use common\models\GestorUsuarios;
-use common\models\GestorTipoUsuario;
+use common\models\GestorTiposUsuario;
 use common\models\forms\BusquedaForm;
 // use common\models\forms\AuditoriaForm;
 // use common\components\PermisosHelper;
@@ -82,43 +82,29 @@ class UsuariosController extends Controller
 
     public function actionIndex()
     {
-        // $busqueda = new BuscarForm();
+        $busqueda = new BusquedaForm();
 
-        // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
-        //     $tipo = $busqueda->Combo ? $busqueda->Combo : 'T';
-        //     $estado = $busqueda->Combo2 ? $busqueda->Combo2 : 'A';
-        //     $clientes = $gestor->Buscar($busqueda->Cadena, $tipo, $estado);
-        // } else {
-        //     $clientes = $gestor->Buscar();
-        // }
-
-        $usuarios = GestorUsuarios::Buscar();
+        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+            $tipo = $busqueda->Combo ? $busqueda->Combo : 0;
+            $estado = $busqueda->Combo2 ? $busqueda->Combo2 : 'A';
+            $usuarios = GestorUsuarios::Buscar($tipo, $estado, $busqueda->Cadena);
+        } else {
+            $usuarios = GestorUsuarios::Buscar();
+        }
 
         return $this->render('index', [
-            'models' => $usuarios
-            // 'busqueda' => $busqueda
+            'models' => $usuarios,
+            'busqueda' => $busqueda
         ]);
     }
 
     public function actionAlta()
     {
-        PermisosHelper::verificarPermiso('AltaCliente');
+        $usuario = new Usuarios();
+        $usuario->setScenario(Usuarios::_ALTA);
 
-        $cliente = new Clientes();
-
-        $cliente->Tipo = Yii::$app->request->get('Tipo');
-
-        if ($cliente->Tipo == 'F') {
-            $cliente->setScenario(Clientes::_ALTA_FISICA);
-        } else {
-            $cliente->setScenario(Clientes::_ALTA_JURIDICA);
-        }
-
-        $listas = GestorListasPrecio::Buscar();
-
-        if ($cliente->load(Yii::$app->request->post()) && $cliente->validate()) {
-            $gestor = new GestorClientes();
-            $resultado = $gestor->Alta($cliente);
+        if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
+            $resultado = GestorUsuarios::Alta($usuario);
 
             Yii::$app->response->format = 'json';
             if (substr($resultado, 0, 2) == 'OK') {
@@ -127,35 +113,25 @@ class UsuariosController extends Controller
                 return ['error' => $resultado];
             }
         } else {
+            $tipos = GestorTiposUsuario::Listar();
+
             return $this->renderAjax('alta', [
-                'titulo' => 'Alta Cliente',
-                'model' => $cliente,
-                'listas' => $listas
+                'titulo' => 'Alta Usuario',
+                'model' => $usuario,
+                'tipos' => $tipos
             ]);
         }
     }
 
     public function actionEditar($id)
     {
-        PermisosHelper::verificarPermiso('ModificarCliente');
+        $usuario = new Usuarios();
         
-        $cliente = new Clientes();
-
-        $clienteAux = new Clientes();
-        $clienteAux->IdCliente = $id;
-        $clienteAux->Dame();
-        if ($clienteAux->Tipo == 'F') {
-            $cliente->setScenario(Clientes::_MODIFICAR_FISICA);
-        } else {
-            $cliente->setScenario(Clientes::_MODIFICAR_JURIDICA);
-        }
+        $usuario->setScenario(Usuarios::_MODIFICAR);
         
-        $listas = GestorListasPrecio::Buscar();
-
-        if ($cliente->load(Yii::$app->request->post()) && $cliente->validate()) {
-            $gestor = new GestorClientes();
-            $resultado = $gestor->Modificar($cliente);
-
+        if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
+            $resultado = GestorUsuarios::Modificar($usuario);
+            
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
                 return ['error' => null];
@@ -163,26 +139,26 @@ class UsuariosController extends Controller
                 return ['error' => $resultado];
             }
         } else {
+            $usuario->IdUsuario = $id;
+            $usuario->Dame();
+            $tipos = GestorTiposUsuario::Listar();
+
             return $this->renderAjax('alta', [
-                        'titulo' => 'Editar Cliente',
-                        'model' => $clienteAux,
-                        'listas' => $listas
+                'titulo' => 'Modificar Usuario',
+                'model' => $usuario,
+                'tipos' => $tipos
             ]);
         }
     }
 
     public function actionBorrar($id)
     {
-        PermisosHelper::verificarPermiso('BorrarCliente');
-
         Yii::$app->response->format = 'json';
         
-        $cliente = new Clientes();
-        $cliente->IdCliente = $id;
+        $usuario = new Usuarios();
+        $usuario->IdUsuario = $id;
 
-        $gestor = new GestorClientes();
-
-        $resultado = $gestor->Borrar($cliente);
+        $resultado = GestorUsuarios::Borrar($usuario);
 
         if ($resultado == 'OK') {
             return ['error' => null];
@@ -193,14 +169,12 @@ class UsuariosController extends Controller
 
     public function actionActivar($id)
     {
-        PermisosHelper::verificarPermiso('ActivarCliente');
-
         Yii::$app->response->format = 'json';
         
-        $cliente = new Clientes();
-        $cliente->IdCliente = $id;
+        $usuario = new Usuarios();
+        $usuario->IdUsuario = $id;
 
-        $resultado = $cliente->Activar();
+        $resultado = $usuario->Activar();
 
         if ($resultado == 'OK') {
             return ['error' => null];
@@ -211,14 +185,12 @@ class UsuariosController extends Controller
 
     public function actionDarBaja($id)
     {
-        PermisosHelper::verificarPermiso('DarBajaCliente');
-
         Yii::$app->response->format = 'json';
         
-        $cliente = new Clientes();
-        $cliente->IdCliente = $id;
+        $usuario = new Usuarios();
+        $usuario->IdUsuario = $id;
 
-        $resultado = $cliente->DarBaja();
+        $resultado = $usuario->DarBaja();
 
         if ($resultado == 'OK') {
             return ['error' => null];

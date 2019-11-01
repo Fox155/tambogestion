@@ -11,6 +11,7 @@ class Sucursales extends Model
     public $IdTambo;
     public $Nombre;
     public $Datos;
+    public $Litros;
 
     // DatosJSON
     public $Direccion;
@@ -91,6 +92,27 @@ class Sucursales extends Model
         // $registros->Data = $data->{'Data'};
 
         return $registros;
+    }
+
+    /**
+     * Permite dar de alta un registro de leche de una sucursal.
+     * Controlando que solo se pueda anotar una registracion por dia en una sucursal
+     * Devuelve OK+Id o el mensaje de error en Mensaje.
+     * tsp_alta_registroleche
+     */
+    public function AltaRegistro(RegistrosLeche $registro)
+    {
+        $sql = "call tsp_alta_registroleche( :idsucursal, :litros, :fecha)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+            ':litros' => $registro->Litros,
+            ':fecha' => $registro->Fecha,
+        ]);
+
+        return $query->queryScalar();
     }
 
     // /**

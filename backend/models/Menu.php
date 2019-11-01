@@ -14,11 +14,11 @@ class Menu
             'icon' => 'fas fa-home',
             'href' => '/',
         ],
-        // [
-        //     'name' => 'Usuarios',
-        //     'icon' => 'fas fa-users',
-        //     'href' => '/usuarios',
-        // ],
+        [
+            'name' => 'Usuarios',
+            'icon' => 'fas fa-id-card',
+            'href' => '/usuarios',
+        ],
         [
             'name' => 'Sucursales',
             'icon' => 'fas fa-kaaba',

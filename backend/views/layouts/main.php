@@ -8,6 +8,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use common\widgets\Alert;
 
+// if (Yii::$app->user->isGuest) {
+//   $this->redirect(['/usuarios/login']);
+// }
+
 AppAsset::register($this);
 
 $defaultCrumb = [ 'label' => 'Inicio', 'link' => '/' ];

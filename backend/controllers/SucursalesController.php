@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Usuarios;
 use common\models\Sucursales;
 use common\models\GestorSucursales;
+use common\models\RegistrosLeche;
 use common\models\forms\BusquedaForm;
 use Yii;
 use yii\web\Controller;
@@ -127,6 +128,34 @@ class SucursalesController extends Controller
             'model' => $sucursal,
             'registros' => $registros
         ]);
+    }
+
+    public function actionAltaRegistro($id)
+    {
+        $registro = new RegistrosLeche();
+        $registro->setScenario(RegistrosLeche::_ALTA);
+        $registro->IdSucursal = $id;
+
+        $sucursal = new Sucursales();
+        $sucursal->IdSucursal = $id;
+
+        if($registro->load(Yii::$app->request->post()) && $registro->validate()){
+            $resultado = $sucursal->AltaRegistro($registro);
+
+            Yii::$app->response->format = 'json';
+            if (substr($resultado, 0, 2) == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        }else {
+            $sucursal->Dame();
+            $registro->Fecha = date('Y-m-d');
+            return $this->renderAjax('alta-registro', [
+                'titulo' => 'Alta Registro de Leche Sucursal: '.$sucursal->Nombre,
+                'model' => $registro
+            ]);
+        }
     }
 }
 
