@@ -7,6 +7,7 @@ use common\models\Sucursales;
 use common\models\GestorSucursales;
 use common\models\RegistrosLeche;
 use common\models\forms\BusquedaForm;
+use common\components\FechaHelper;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -118,15 +119,26 @@ class SucursalesController extends Controller
         
         $sucursal = new Sucursales();
         $sucursal->IdSucursal = $id;
-            
         $sucursal->Dame();
 
-        $registros = $sucursal->ResumenRegistrosLeche(5);
+        $busqueda = new BusquedaForm();
+
+        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+            $inicio = $busqueda->FechaInicio ? FechaHelper::toDateMysql($busqueda->FechaInicio) : NULL;
+            $fin = $busqueda->FechaFin ? FechaHelper::toDateMysql($busqueda->FechaFin) : NULL;
+            $registros = $sucursal->BuscarRegistros($inicio,$fin);
+        } else {
+            $registros = $sucursal->BuscarRegistros();
+        }
+
+        $resumen = $sucursal->ResumenRegistrosLeche(5);
 
         return $this->render('detalle', [
             'titulo' => 'Detalle Sucursal',
             'model' => $sucursal,
-            'registros' => $registros
+            'busqueda' => $busqueda,
+            'registros' => $registros,
+            'resumen' => $resumen
         ]);
     }
 
@@ -153,6 +165,56 @@ class SucursalesController extends Controller
             $registro->Fecha = date('Y-m-d');
             return $this->renderAjax('alta-registro', [
                 'titulo' => 'Alta Registro de Leche Sucursal: '.$sucursal->Nombre,
+                'model' => $registro
+            ]);
+        }
+    }
+
+    public function actionBorrarRegistro($id)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+
+        Yii::$app->response->format = 'json';
+        
+        $registro = new RegistrosLeche();
+        $registro->IdRegistroLeche = $id;
+
+        $resultado = Sucursales::BorrarRegistro($registro);
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
+        }
+    }
+
+    public function actionEditarRegistro($id)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+        
+        $registro = new RegistrosLeche();
+
+        $registro->setScenario(RegistrosLeche::_MODIFICAR);
+
+        if ($registro->load(Yii::$app->request->post()) && $registro->validate()) {
+            $resultado = Sucursales::ModificarRegistro($registro);
+
+            Yii::$app->response->format = 'json';
+            if ($resultado == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        } else {
+            $registro->IdRegistroLeche = $id;
+            $registro->Dame();
+
+            return $this->renderAjax('alta-registro', [
+                'titulo' => 'Modificar Registro de Leche dia: '.$registro->Fecha,
                 'model' => $registro
             ]);
         }

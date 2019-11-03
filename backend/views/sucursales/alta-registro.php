@@ -26,6 +26,8 @@ use yii\web\View;
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
+            <?= Html::activeHiddenInput($model, 'IdRegistroLeche') ?>
+
             <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
             
             <?= $form->field($model, 'Litros') ?>

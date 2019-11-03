@@ -101,39 +101,39 @@ $this->title = 'Tambo Gestion';
                                     <div class="btn-group" role="group" aria-label="...">
 
                                       <a class="btn btn-default"
-                                          href="<?= Url::to(['/listas-precio']) ?>"
-                                          data-mensaje="Lista de Precios">
-                                        <i class="fas fa-money-check-alt" style="color: Dodgerblue"></i>
-                                      </a>
-
-                                      <a class="btn btn-default"
-                                          href="<?= Url::to(['/clientes']) ?>"
-                                          data-mensaje="Clientes">
-                                        <i class="fas fa-user-friends" style="color: Tomato"></i>
-                                      </a>
-
-                                      <a class="btn btn-default"
-                                          href="<?= Url::to(['/ventas']) ?>"
+                                          href="<?= Url::to(['/ventas/0']) ?>"
                                           data-mensaje="Ventas">
                                         <i class="fas fa-shopping-cart" style="color: Green"></i>
                                       </a>
 
                                       <a class="btn btn-default"
-                                          href="<?= Url::to(['/sucursales']) ?>"
+                                          href="/sucursales"
                                           data-mensaje="Sucursales">
-                                        <i class="fas fa-kaaba" style="color: Dodgerblue"></i>
+                                        <i class="fas fa-kaaba" style="color: DodgerBlue"></i>
                                       </a>
 
                                       <a class="btn btn-default"
                                           href="<?= Url::to(['/lotes/0']) ?>"
                                           data-mensaje="Lotes">
-                                        <i class="fas fa-sitemap" style="color: Green"></i>
+                                        <i class="fas fa-sitemap" style="color: Indigo"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/clientes']) ?>"
+                                          data-mensaje="Clientes">
+                                        <i class="fas fa-user-friends" style="color: OrangeRed"></i>
+                                      </a>
+
+                                      <a class="btn btn-default"
+                                          href="<?= Url::to(['/listas-precio']) ?>"
+                                          data-mensaje="Lista de Precios">
+                                        <i class="fas fa-money-check-alt" style="color: SeaGreen"></i>
                                       </a>
 
                                       <a class="btn btn-default"
                                           href="<?= Url::to(['/usuarios']) ?>"
                                           data-mensaje="Usuarios">
-                                        <i class="fas fa-id-card" style="color: Blue"></i>
+                                        <i class="fas fa-id-card" style="color: Brown"></i>
                                       </a>
 
                                     </div>

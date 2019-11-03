@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use common\models\charts\RegistroLecheChart;
+use common\models\charts\RegistroAvanzado;
 use Yii;
 use yii\base\Model;
 
@@ -69,6 +69,24 @@ class Sucursales extends Model
     }
 
     /**
+     * tsp_buscar_registroleche
+     */
+    public function BuscarRegistros($inicio = NULL, $fin = NULL)
+    {
+        $sql = "call tsp_buscar_registroleche( :idsucursal, :inicio, :fin)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+            ':inicio' => $inicio,
+            ':fin' => $fin,
+        ]);
+
+        return $query->queryAll();
+    }
+
+    /**
      * tsp_listar_lotes_Sucursal
      */
     public function ResumenRegistrosLeche(int $Limite)
@@ -82,7 +100,7 @@ class Sucursales extends Model
             ':limite' => $Limite,
         ]);
 
-        $registros = new RegistroLecheChart();
+        $registros = new RegistroAvanzado();
 
         $registros->attributes = $query->queryOne();
 
@@ -110,6 +128,45 @@ class Sucursales extends Model
             ':idsucursal' => $this->IdSucursal,
             ':litros' => $registro->Litros,
             ':fecha' => $registro->Fecha,
+        ]);
+
+        return $query->queryScalar();
+    }
+
+    /**
+     * Permite dar de alta un registro de leche de una sucursal.
+     * Controlando que solo se pueda anotar una registracion por dia en una sucursal
+     * Devuelve OK+Id o el mensaje de error en Mensaje.
+     * tsp_modificar_registroleche
+     */
+    public function ModificarRegistro(RegistrosLeche $registro)
+    {
+        $sql = "call tsp_modificar_registroleche( :id, :litros, :fecha)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $registro->IdRegistroLeche,
+            ':litros' => $registro->Litros,
+            ':fecha' => $registro->Fecha,
+        ]);
+
+        return $query->queryScalar();
+    }
+
+    /**
+     * Permite borrar un registro de leche.
+     * Devuelve OK+Id o el mensaje de error en Mensaje.
+     * tsp_borrar_registroleche
+     */
+    public function BorrarRegistro(RegistrosLeche $registro)
+    {
+        $sql = "call tsp_borrar_registroleche( :id)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $registro->IdRegistroLeche,
         ]);
 
         return $query->queryScalar();
