@@ -30,17 +30,19 @@ use yii\web\View;
     
                 <?= $form->field($model, 'Apellido') ?>
                 <?= $form->field($model, 'Nombre') ?>
-                <?= $form->field($model, 'TipoDoc')->dropDownList(Clientes::_TIPO,['prompt' => 'Tipo Doc']) ?>
+                <?= $form->field($model, 'TipoDoc')->dropDownList(Clientes::_TIPO,['prompt' => 'Tipo de Documento']) ?>
                 <?= $form->field($model, 'NroDoc') ?>
                 <?php if (!isset($model['IdListaPrecio'])): ?>
                     <?= $form->field($model, 'IdListaPrecio')->dropDownList(ArrayHelper::map($listaprecio, 'IdListaPrecio', 'Lista'), ['prompt' => 'Lista']) ?>
                 <?php else: ?>
-                <?= $form->field($model, 'IdListaPrecio')->dropDownList(ArrayHelper::map($listaprecio, 'IdListaPrecio', 'Lista'), ['prompt' => 'Lista aqui']) ?>
+                    <?= $form->field($model, 'IdListaPrecio')->dropDownList(ArrayHelper::map($listaprecio, 'IdListaPrecio', 'Lista'), ['prompt' => 'Lista aqui']) ?>
                 <?php endif; ?>
 
                 <?= $form->field($model, 'Direccion') ?>
+
                 <?= $form->field($model, 'Telefono') ?>
-                <?= $form->field($model, 'Observaciones') ?>
+
+                <?= $form->field($model, 'Observaciones')->textarea() ?>
 
             </div>
         <div class="modal-footer">

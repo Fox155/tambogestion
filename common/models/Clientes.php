@@ -8,6 +8,7 @@ class Clientes extends Model
 {
     public $IdCliente;    
     public $IdTambo;
+    public $IdListaPrecio;
     public $Apellido;
     public $Nombre;
     public $TipoDoc;
@@ -16,11 +17,12 @@ class Clientes extends Model
     public $Observaciones;
     public $Datos;
 
+    // Derivados
+    public $NombreCompleto;
+
     //Datos de la Lista Precio
-    public $IdListaPrecio;
     public $Lista;
     public $Precio;
-
 
      // DatosJSON
      public $Direccion;
@@ -44,9 +46,9 @@ class Clientes extends Model
     public function rules()
     {
         return [
-            [['Apellido', 'Nombre','NroDoc','Direccion','Telefono','Observaciones'],
+            [['IdListaPrecio', 'Apellido', 'Nombre', 'TipoDoc','NroDoc','Direccion','Telefono'],
                 'required', 'on' => self::_ALTA],
-            [['IdCliente','Apellido', 'Nombre','TipoDoc','NroDoc','Direccion','Telefono','Observaciones'],
+            [['IdCliente', 'IdListaPrecio', 'Apellido', 'Nombre','TipoDoc','NroDoc','Direccion','Telefono'],
                 'required', 'on' => self::_MODIFICAR],
             [$this->attributes(), 'safe']
         ];
@@ -56,6 +58,8 @@ class Clientes extends Model
     {
         return [
             'IdListaPrecio' => 'Lista Precio',
+            'NroDoc' => 'Numero de Documento',
+            'TipoDoc' => 'Tipo de Documento',
         ];
     }
 

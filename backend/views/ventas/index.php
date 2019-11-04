@@ -97,11 +97,9 @@ HTML;
                                     <th>Sucursal</th>
                                 <?php endif ?>
                                 <th>Cliente</th>
-                                <th>Numero de Pagos</th>
+                                <th>Pagos</th>
                                 <th>Litros</th>
-                                <th>Monto Presupuestado</th>
-                                <th>Monto Pagado</th>
-                                <th>Pagos Realizados</th>
+                                <th>Monto</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>
                                 <th>Observaciones</th>                
@@ -114,17 +112,37 @@ HTML;
                                     <?php if (!isset($sucursal['Nombre'])): ?>
                                         <td><?= Html::encode($model['Sucursal']) ?></td>
                                     <?php endif ?>
-                                    <td><?= Html::encode($model['Cliente']) ?>
-                                    <td><?= Html::encode($model['NroPagos']) ?>
-                                    <td><?= Html::encode($model['Litros']) ?>
-                                    <td><?= Html::encode($model['MontoPres']) ?>
-                                    <td><?= Html::encode($model['MontoPagar']) ?>
-                                    <td><?= Html::encode($model['Pagos']) ?></td>
+                                    <td><?= Html::encode($model['Cliente']) ?> </td>
+                                    <td>
+                                        <ul>
+                                            <li>Numero de Pagos: <?= Html::encode($model['NroPagos']) ?></li>
+                                            <li>Pagos Realizados: <?= Html::encode($model['Pagos']) ?></li>
+                                        </ul>
+                                    </td>
+                                    <td><?= Html::encode($model['Litros']) ?> </td>
+                                    <td>
+                                        <ul>
+                                            <li>Monto Presupuestado: <?= Html::encode($model['MontoPres']) ?></li>
+                                            <li>Monto Pagado: <?= Html::encode($model['MontoPagar']) ?></li>
+                                        </ul>
+                                    </td>
                                     <td><?= Html::encode(FechaHelper::toDatetimeLocal($model['Fecha'])) ?></td>
-                                    <td><?= Html::encode($model['Estado']) ?></td>
+                                    <td><?= Html::encode(Ventas::ESTADOS[$model['Estado']]) ?></td>
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="...">
+
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/ventas/alta-pago', 'id' => $model['IdVenta']]) ?>" 
+                                                    data-mensaje="Nuevo Pago">
+                                                <i class="fas fa-plus-circle" style="color: Tomato"></i>
+                                            </button>
+                                        
+                                            <a class="btn btn-default"
+                                                    href="<?= Url::to(['/ventas/detalle', 'id' => $model['IdVenta']]) ?>"
+                                                    data-mensaje="Detalle">
+                                                <i class="fas fa-info" style="color: Dodgerblue"></i>
+                                            </a>
 
                                             <button type="button" class="btn btn-default"
                                                     data-modal="<?= Url::to(['/ventas/editar', 'id' => $model['IdVenta']]) ?>" 
@@ -137,13 +155,7 @@ HTML;
                                                     data-mensaje="Borrar">
                                                 <i class="far fa-trash-alt" style="color: Tomato"></i>
                                             </button>
-                                            <?php if ($model['Estado'] == 'B'): ?>
-                                                <button type="button" class="btn btn-default"
-                                                    data-ajax="<?= Url::to(['/ventas/activar', 'id' => $model['IdVenta']]) ?>"
-                                                    data-mensaje="Activar">
-                                                <i class="fas fa-toggle-on" style="color: indigo" > </i>
-                                                </button>
-                                            <?php else: ?>
+                                            <?php if ($model['Estado'] == 'A'): ?>
                                                 <button type="button" class="btn btn-default"
                                                     data-ajax="<?= Url::to(['/ventas/darbaja', 'id' => $model['IdVenta']]) ?>"
                                                     data-mensaje="Dar de Baja">
@@ -161,7 +173,7 @@ HTML;
             </div>
         </div>
         <?php else: ?>
-            <p><strong>No hay Clientes que coincidan con el criterio de búsqueda utilizado.</strong></p>
+            <p><strong>No hay Ventas que coincidan con el criterio de búsqueda utilizado.</strong></p>
         <?php endif; ?>
     </div>
 </div>

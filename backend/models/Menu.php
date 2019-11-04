@@ -32,7 +32,7 @@ class Menu
         [
             'name' => 'Ventas',
             'icon' => 'fas fa-shopping-cart',
-            'href' => '/cventas/0'
+            'href' => '/ventas/0'
         ],
         [
             'name' => 'Clientes',

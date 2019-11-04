@@ -24,7 +24,7 @@ class GestorVentas
             ':pagos' => $venta->NroPagos,
             ':litros' => $venta->Litros,
             ':datos' => $venta->Datos,
-            ':observaciones' => $vaca->Observaciones,
+            ':observaciones' => $venta->Observaciones,
         ]);
 
         return $query->queryScalar();
@@ -70,7 +70,7 @@ class GestorVentas
             ':pagos' => $venta->NroPagos,
             ':litros' => $venta->Litros,
             ':datos' => $venta->Datos,
-            ':observaciones' => $vaca->Observaciones,
+            ':observaciones' => $venta->Observaciones,
         ]);
 
         return $query->queryScalar();

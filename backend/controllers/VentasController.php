@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Ventas;
 use common\models\GestorVentas;
 use common\models\Sucursales;
+use common\models\GestorSucursales;
 use common\models\Clientes;
 use common\models\GestorClientes;
 use common\models\ListasPrecio;
@@ -46,15 +47,11 @@ class VentasController extends Controller
 
     public function actionAlta($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        $venta = new Ventas();
+        $venta->setScenario(Ventas::_ALTA);
 
-        $clientes = new Clientes();
-        $clientes->setScenario(Clientes::_ALTA);
-
-        if($clientes->load(Yii::$app->request->post()) && $clientes->validate()){
-            $resultado = GestorClientes::Alta($clientes);
+        if($venta->load(Yii::$app->request->post()) && $venta->validate()){
+            $resultado = GestorVentas::Alta($venta);
 
             Yii::$app->response->format = 'json';
             if (substr($resultado, 0, 2) == 'OK') {
@@ -63,29 +60,31 @@ class VentasController extends Controller
                 return ['error' => $resultado];
             }
         }else {
-            $listasprecio  = 0;
+            $sucursales  = 0;
             if($id == 0){
-                $listasprecio  = GestorListasPrecio::Buscar();
+                $sucursales  = GestorSucursales::Buscar();
             }else{
-                $clientes->IdListaPrecio = $id;
+                $venta->IdSucursal = $id;
             }
 
+            $clientes = GestorClientes::Buscar();
+
             return $this->renderAjax('alta', [
-                'titulo' => 'Nuevo Cliente',
-                'model' => $clientes,
-                'listaprecio' => $listasprecio
+                'titulo' => 'Nueva Venta',
+                'model' => $venta,
+                'sucursales' => $sucursales,
+                'clientes' => $clientes
             ]);
         }
     }
 
     public function actionEditar($id)
     {
-       
-        $clientes = new Clientes();
-        $clientes ->setScenario(Clientes::_MODIFICAR);
+        $venta = new Ventas();
+        $venta ->setScenario(Ventas::_MODIFICAR);
 
-        if ($clientes->load(Yii::$app->request->post()) && $clientes->validate()) {
-            $resultado = GestorClientes::Modificar($clientes);
+        if ($venta->load(Yii::$app->request->post()) && $venta->validate()) {
+            $resultado = GestorVentas::Modificar($venta);
 
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
@@ -94,15 +93,15 @@ class VentasController extends Controller
                 return ['error' => $resultado];
             }
         } else {
-            $clientes->IdCliente = $id;
+            $venta->IdVenta = $id;
+            $venta->Dame();
             
-            $clientes->Dame();
-            $listasprecio  = GestorListasPrecio::Buscar();
+            $clientes = GestorClientes::Buscar();
 
             return $this->renderAjax('alta', [
-                'titulo' => 'Modificar Cliente',
-                'model' => $clientes,
-                'listaprecio' => $listasprecio
+                'titulo' => 'Modificar Venta',
+                'model' => $venta,
+                'clientes' => $clientes
             ]);
         }
     }
@@ -111,10 +110,10 @@ class VentasController extends Controller
     {
         Yii::$app->response->format = 'json';
         
-        $clientes = new Clientes();
-        $clientes->IdCliente= $id;
+        $venta = new Ventas();
+        $venta->IdVenta = $id;
 
-        $resultado = GestorClientes::Borrar($clientes);
+        $resultado = GestorVentas::Borrar($venta);
 
         if ($resultado == 'OK') {
             return ['error' => null];
@@ -127,10 +126,10 @@ class VentasController extends Controller
     {
         Yii::$app->response->format = 'json';
         
-        $clientes = new Clientes();
-        $clientes->IdCliente= $id;
+        $venta = new Ventas();
+        $venta->IdVenta= $id;
 
-        $resultado = Clientes::Darbaja($clientes);
+        $resultado = $venta->DarBaja();
 
         if ($resultado == 'OK') {
             return ['error' => null];
@@ -139,21 +138,107 @@ class VentasController extends Controller
         }
     }
 
-    public function actionActivar($id)
-        {
+    public function actionDetalle($id)
+    {       
+        $venta = new Ventas();
+        $venta->IdVenta = $id;
+        $venta->Dame();
+
+        $busqueda = new BusquedaForm();
+
+        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+            $inicio = $busqueda->FechaInicio ? FechaHelper::toDateMysql($busqueda->FechaInicio) : NULL;
+            $fin = $busqueda->FechaFin ? FechaHelper::toDateMysql($busqueda->FechaFin) : NULL;
+            $incluye = $busqueda->Check ? $busqueda->Check : 'N';
+            $pagos = $venta->BuscarPagos($inicio, $fin, $incluye);
+        } else {
+            $pagos = $venta->BuscarPagos();
+        }
+
+        return $this->render('detalle', [
+            'titulo' => 'Detalle Venta',
+            'model' => $venta,
+            'busqueda' => $busqueda,
+            'pagos' => $pagos,
+        ]);
+    }
+
+    public function actionAltaPago($id)
+    {
+        $registro = new RegistrosLeche();
+        $registro->setScenario(RegistrosLeche::_ALTA);
+        $registro->IdSucursal = $id;
+
+        $sucursal = new Sucursales();
+        $sucursal->IdSucursal = $id;
+
+        if($registro->load(Yii::$app->request->post()) && $registro->validate()){
+            $resultado = $sucursal->AltaRegistro($registro);
+
             Yii::$app->response->format = 'json';
-            
-            $clientes = new Clientes();
-            $clientes->IdCliente= $id;
-    
-            $resultado = Clientes::Activar($clientes);
-    
+            if (substr($resultado, 0, 2) == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        }else {
+            $sucursal->Dame();
+            $registro->Fecha = date('Y-m-d');
+            return $this->renderAjax('alta-registro', [
+                'titulo' => 'Alta Registro de Leche Sucursal: '.$sucursal->Nombre,
+                'model' => $registro
+            ]);
+        }
+    }
+
+    public function actionBorrarPago($id)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+
+        Yii::$app->response->format = 'json';
+        
+        $registro = new RegistrosLeche();
+        $registro->IdRegistroLeche = $id;
+
+        $resultado = Sucursales::BorrarRegistro($registro);
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
+        }
+    }
+
+    public function actionEditarPago($id)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+        
+        $registro = new RegistrosLeche();
+
+        $registro->setScenario(RegistrosLeche::_MODIFICAR);
+
+        if ($registro->load(Yii::$app->request->post()) && $registro->validate()) {
+            $resultado = Sucursales::ModificarRegistro($registro);
+
+            Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
                 return ['error' => null];
             } else {
                 return ['error' => $resultado];
-        }    
+            }
+        } else {
+            $registro->IdRegistroLeche = $id;
+            $registro->Dame();
 
+            return $this->renderAjax('alta-registro', [
+                'titulo' => 'Modificar Registro de Leche dia: '.$registro->Fecha,
+                'model' => $registro
+            ]);
+        }
     }
 
 }

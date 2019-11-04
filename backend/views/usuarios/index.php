@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <tr>
                                     <td><?= Html::encode($model['Usuario']) ?></td>
                                     <td><?= Html::encode($model['Email']) ?></td>
-                                    <td><?= Html::encode($model['Estado']) ?></td>
+                                    <td><?= Html::encode(Usuarios::ESTADOS[$model['Estado']]) ?></td>
                                     <td><?= Html::encode($model['FechaAlta']) ?></td>
                                     <td><?= Html::encode($model['TipoUsuario']) ?></td>
                                     <td>
