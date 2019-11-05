@@ -1,6 +1,7 @@
 <?php
 
-use common\models\Sucursales;
+use common\models\Ventas;
+use common\models\Pagos;
 use yii\web\View;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -12,20 +13,14 @@ use miloschuman\highcharts\Highcharts;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-$this->title = 'Detalle de la Sucursal: ' . $model['Nombre'];
+$this->title = 'Detalle de la Venta';
 $this->params['breadcrumbs'][] = $this->title;
 
-$layout3 = <<< HTML
+$layout = <<< HTML
 <div class="input-group-prepend"><span class="input-group-text">Desde</span></div>
 {input1}
 <div class="input-group-append"><span class="input-group-text">hasta</span></div>
-<!-- {separator} -->
 {input2}
-<!-- <div class="input-group-append">
-    <span class="input-group-text kv-date-remove">
-        <i class="fas fa-times kv-dp-icon"></i>
-    </span>
-</div> -->
 HTML;
 
 ?>
@@ -57,21 +52,17 @@ HTML;
                                           border-left-width: 0px;
                                           border-right-width: 0px;' ],
                 'separator' => '<div class="input-group-append"><span class="input-group-text">hasta</span></div>',
-                // 'removeButton' => '',
-                'layout' => $layout3,
+                'layout' => $layout,
                 'pluginOptions' => [
                     'format' => 'dd/mm/yyyy',
                     'autoclose' => true,
                     'clearBtn' => true,
                 ]
             ]); ?>
-            <!-- <div class="input-group-append">
-                <span class="input-group-text kv-date-remove">
-                    <i class="fas fa-times kv-dp-icon"></i>
-                </span>
-            </div> -->
 
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+            
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -79,48 +70,54 @@ HTML;
         <div class="alta--button">
             <div class="alta--button">
                 <button type="button" class="btn btn-primary"
-                        data-modal="<?= Url::to(['/sucursales/alta-registro', 'id' => $model['IdSucursal']]) ?>" 
-                        data-mensaje="Añadir Registro de Leche">
-                    Añadir Registro de Leche
+                        data-modal="<?= Url::to(['/ventas/alta-pago', 'id' => $model['IdVenta']]) ?>" 
+                        data-mensaje="Nuevo Pago">
+                    Nuevo Pago
                 </button>
             </div>
         </div>
 
         <div id="errores"> </div>
 
-      <?php if (isset($model['Nombre'])): ?>
+        <?php if (count($pagos) > 0): ?>
         <div class="card">
           <div class="card-header">
             <i class="fas fa-info"></i>
-            Registros de Leche de la Sucursal: <?= Html::encode($model['Nombre']) ?>
+            Pagos de la Venta
           </div>
           <div class="card-body p-0">
               <div class="table-responsive">
                   <table class="table m-0">
                       <thead class="bg-light">
                           <tr class="border-0">
+                              <th>Numero de Comprobante</th>
+                              <th>Tipo de Comprobante</th>
+                              <th>Monto</th>
                               <th>Fecha</th>
-                              <th>Litros</th>
+                              <th>Estado</th>
                               <th>Acciones</th>
                           </tr>
                       </thead>
                       <tbody>
-                        <?php foreach ($registros as $registro): ?>
+                        <?php foreach ($pagos as $pago): ?>
                           <tr>
-                              <td><?= Html::encode(FechaHelper::toDateLocal($registro['Fecha'])) ?></td>
-                              <td><?= Html::encode($registro['Litros']) ?></td>
-                              <td>
+                                <td><?= Html::encode($pago['NroComp']) ?></td>
+                                <td><?= Html::encode($pago['TipoComp']) ?></td>
+                                <td><?= Html::encode($pago['Monto']) ?></td>
+                                <td><?= Html::encode(FechaHelper::toDateLocal($pago['Fecha'])) ?></td>
+                                <td><?= Html::encode(Pagos::ESTADOS[$model['Estado']]) ?></td>
+                                <td>
                                 <!-- Acciones -->
                                 <div class="btn-group" role="group" aria-label="...">
           
                                   <button type="button" class="btn btn-default"
-                                          data-modal="<?= Url::to(['/sucursales/editar-registro', 'id' => $registro['IdRegistroLeche']]) ?>" 
+                                          data-modal="<?= Url::to(['/ventas/editar-pago', 'idV' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>" 
                                           data-mensaje="Editar">
                                       <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                   </button>
                               
                                   <button type="button" class="btn btn-default"
-                                          data-ajax="<?= Url::to(['/sucursales/borrar-registro', 'id' => $registro['IdRegistroLeche']]) ?>"
+                                          data-ajax="<?= Url::to(['/ventas/borrar-pago', 'idV' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>"
                                           data-mensaje="Borrar">
                                       <i class="far fa-trash-alt" style="color: Tomato"></i>
                                   </button>
@@ -134,49 +131,9 @@ HTML;
               </div>
           </div>
         </div>
-      <?php endif; ?>
-    </div>
-
-    <div class="col-sm-12" style="padding-bottom: 15px;">
-      <?php if (isset($resumen['Labels'])): ?>
-      <div class="card">
-          <div class="card-header">
-              <i class="fas fa-chart-area"></i>
-              Ejemplo de gráfico de Barras - Registros de Leche de la Sucursal: <?= Html::encode($model['Nombre']) ?>
-          </div>
-          <!-- Highcharts -->
-          <div class="card-body">
-
-              <?= Highcharts::widget([
-                  'options' => [
-                      'chart' => ['type' => 'column'],
-                      'title' => ['text' => 'Registros de Leche de la Sucural: '.$model['Nombre']],
-                      'yAxis' => [
-                          'title' => ['text' => 'Litros de Leche']
-                      ],
-                      'xAxis' => [
-                          'categories' => $resumen['Labels'],
-                          'type' => 'datetime'
-                      ],
-                      'series' => [
-                          ['name' => 'Valor','data' => $resumen['Data']]
-                      ],
-                      'credits' => [
-                          'enabled' => false
-                      ],
-                      'legend' => [
-                          'enabled' => false
-                      ],
-                  ]
-                  ]);
-              ?>
-
-          </div>
-          <!-- /Highcharts -->
-          <div class="card-footer small text-muted">
-            Actualizado el <?= Html::encode($resumen['Footer']) ?>
-          </div>
-      </div>
-      <?php endif ?>
+        <?php else: ?>
+            <p><strong>No hay Pagos que coincidan con el criterio de búsqueda utilizado.</strong></p>
+        <?php endif; ?>
+      
     </div>
 </div>

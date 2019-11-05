@@ -20,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -36,6 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     Nueva Sucursal
                 </button>
             </div>
+
+        </div>
 
         <div id="errores"> </div>
         
@@ -84,9 +86,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 </a>
 
                                                 <a class="btn btn-default"
+                                                    href="<?= Url::to(['/ventas', 'id' => $model['IdSucursal']]) ?>"
+                                                    data-mensaje="Ventas">
+                                                    <i class="fas fa-shopping-cart" style="color: Green"></i>
+                                                </a>
+
+                                                <a class="btn btn-default"
                                                         href="<?= Url::to(['/lotes', 'id' => $model['IdSucursal']]) ?>"
                                                         data-mensaje="Lotes">
-                                                    <i class="fas fa-sitemap" style="color: Green"></i>
+                                                    <i class="fas fa-sitemap" style="color: Indigo"></i>
                                                 </a>
 
                                                 <a class="btn btn-default"

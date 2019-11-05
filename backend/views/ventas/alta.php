@@ -1,16 +1,15 @@
 <?php
 
-use common\models\Sucursales;
+use common\models\Ventas;
 use yii\bootstrap4\ActiveForm;
-use common\components\FechaHelper;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-/* @var $model Sucursales */
+/* @var $model Ventas */
+/* @var $sucursales Sucursales */
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -22,31 +21,29 @@ use yii\web\View;
             </button>
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'registro-leche-form',]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'ventas-form',]) ?>
 
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
-            <?= Html::activeHiddenInput($model, 'IdRegistroLeche') ?>
+            <?= Html::activeHiddenInput($model, 'IdVenta') ?>
 
-            <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
+            <?php if (!isset($model['IdSucursal'])): ?>
+                <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
+            <?php else: ?>
+                <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
+            <?php endif; ?>
+
+            <?= $form->field($model, 'IdCliente')->dropDownList(ArrayHelper::map($clientes, 'IdCliente', 'NombreCompleto'), ['prompt' => 'Cliente']) ?>
             
+            <?= $form->field($model, 'MontoPres', ['inputOptions' => ['autocomplete' => 'off']]) ?>
+
+            <?= $form->field($model, 'NroPagos') ?>
+
             <?= $form->field($model, 'Litros', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
-            <p> Fecha </p>
-            <?= DatePicker::widget([
-                'model' => $model,
-                'attribute' => 'Fecha',
-                'language' => 'es',
-                'options' => ['placeholder' => 'Ingrese la Fecha...', 'autocomplete' => "off",],
-                'pluginOptions' => [
-                    'todayHighlight' => true,
-                    'format' => 'dd/mm/yyyy',
-                    'autoclose' => true,
-                    'clearBtn' => true,
-                ]
-            ]);
-            ?>
+            <?= $form->field($model, 'Observaciones')->textarea() ?>
+            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>

@@ -30,6 +30,11 @@ class Menu
             'href' => '/lotes/0'
         ],
         [
+            'name' => 'Ventas',
+            'icon' => 'fas fa-shopping-cart',
+            'href' => '/ventas/0'
+        ],
+        [
             'name' => 'Clientes',
             'icon' => 'fas fa-user-friends',
             'href' => '/clientes'

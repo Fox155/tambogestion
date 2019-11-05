@@ -11,7 +11,7 @@ class GestorVacas
      */
     public function Alta(Vacas $vaca)
     {
-        $sql = "call tsp_alta_vaca( :idcaravana, :idrfid, :nombre, :raza, :peso, :fechanac, :observaciones, :idlote, :fechaingreso, :estado)";
+        $sql = "call tsp_alta_vaca( :idcaravana, :idrfid, :idlote, :nombre, :raza, :peso, :fechanac, :observaciones, :fechaingreso, :estado)";
 
         $query = Yii::$app->db->createCommand($sql);
         
