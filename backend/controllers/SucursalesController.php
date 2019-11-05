@@ -162,7 +162,7 @@ class SucursalesController extends Controller
             }
         }else {
             $sucursal->Dame();
-            $registro->Fecha = date('Y-m-d');
+            $registro->Fecha = date('d/m/Y');
             return $this->renderAjax('alta-registro', [
                 'titulo' => 'Alta Registro de Leche Sucursal: '.$sucursal->Nombre,
                 'model' => $registro

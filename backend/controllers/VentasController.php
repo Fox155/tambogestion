@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Pagos;
 use common\models\Ventas;
 use common\models\GestorVentas;
 use common\models\Sucursales;
@@ -165,15 +166,15 @@ class VentasController extends Controller
 
     public function actionAltaPago($id)
     {
-        $registro = new RegistrosLeche();
-        $registro->setScenario(RegistrosLeche::_ALTA);
-        $registro->IdSucursal = $id;
+        $pago = new Pagos();
+        $pago->setScenario(Pagos::_ALTA);
+        $pago->IdVenta = $id;
 
-        $sucursal = new Sucursales();
-        $sucursal->IdSucursal = $id;
+        $venta = new Ventas();
+        $venta->IdVenta = $id;
 
-        if($registro->load(Yii::$app->request->post()) && $registro->validate()){
-            $resultado = $sucursal->AltaRegistro($registro);
+        if($pago->load(Yii::$app->request->post()) && $pago->validate()){
+            $resultado = $venta->AltaPago($pago);
 
             Yii::$app->response->format = 'json';
             if (substr($resultado, 0, 2) == 'OK') {
@@ -182,27 +183,26 @@ class VentasController extends Controller
                 return ['error' => $resultado];
             }
         }else {
-            $sucursal->Dame();
-            $registro->Fecha = date('Y-m-d');
-            return $this->renderAjax('alta-registro', [
-                'titulo' => 'Alta Registro de Leche Sucursal: '.$sucursal->Nombre,
-                'model' => $registro
+            $venta->Dame();
+
+            return $this->renderAjax('alta-pago', [
+                'titulo' => 'Alta Pago',
+                'model' => $pago
             ]);
         }
     }
 
-    public function actionBorrarPago($id)
+    public function actionBorrarPago($idV, $nro)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-
         Yii::$app->response->format = 'json';
         
-        $registro = new RegistrosLeche();
-        $registro->IdRegistroLeche = $id;
+        $pago = new Pagos();
+        $pago->NroPago = $nro;
 
-        $resultado = Sucursales::BorrarRegistro($registro);
+        $venta = new Ventas();
+        $venta->IdVenta = $idV;
+
+        $resultado = $venta->BorrarPago($pago);
 
         if ($resultado == 'OK') {
             return ['error' => null];
@@ -211,18 +211,17 @@ class VentasController extends Controller
         }
     }
 
-    public function actionEditarPago($id)
+    public function actionEditarPago($idV, $nro)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-        
-        $registro = new RegistrosLeche();
+        $pago = new Pagos();
 
-        $registro->setScenario(RegistrosLeche::_MODIFICAR);
+        $pago->setScenario(Pagos::_MODIFICAR);
 
-        if ($registro->load(Yii::$app->request->post()) && $registro->validate()) {
-            $resultado = Sucursales::ModificarRegistro($registro);
+        if ($pago->load(Yii::$app->request->post()) && $pago->validate()) {
+            $venta = new Ventas();
+            $venta->IdVenta = $idV;
+
+            $resultado = $venta->ModificarPago($pago);
 
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {
@@ -231,12 +230,13 @@ class VentasController extends Controller
                 return ['error' => $resultado];
             }
         } else {
-            $registro->IdRegistroLeche = $id;
-            $registro->Dame();
+            $pago->IdVenta = $idV;
+            $pago->NroPago = $nro;
+            $pago->Dame();
 
-            return $this->renderAjax('alta-registro', [
-                'titulo' => 'Modificar Registro de Leche dia: '.$registro->Fecha,
-                'model' => $registro
+            return $this->renderAjax('alta-pago', [
+                'titulo' => 'Modificar Pago',
+                'model' => $pago
             ]);
         }
     }

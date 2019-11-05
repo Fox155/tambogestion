@@ -8,8 +8,7 @@ use yii\web\View;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-/* @var $model Ventas */
-/* @var $sucursales Sucursales */
+/* @var $model Pagos */
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -21,29 +20,21 @@ use yii\web\View;
             </button>
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'ventas-form',]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'pago-form',]) ?>
 
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
             <?= Html::activeHiddenInput($model, 'IdVenta') ?>
 
-            <?php if (!isset($model['IdSucursal'])): ?>
-                <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
-            <?php else: ?>
-                <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
-            <?php endif; ?>
-
-            <?= $form->field($model, 'IdCliente')->dropDownList(ArrayHelper::map($clientes, 'IdCliente', 'NombreCompleto'), ['prompt' => 'Cliente']) ?>
+            <?= Html::activeHiddenInput($model, 'NroPago') ?>
             
-            <?= $form->field($model, 'MontoPres', ['inputOptions' => ['autocomplete' => 'off']]) ?>
+            <?= $form->field($model, 'TipoComp') ?>
 
-            <?= $form->field($model, 'NroPagos') ?>
+            <?= $form->field($model, 'NroComp', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
-            <?= $form->field($model, 'Litros', ['inputOptions' => ['autocomplete' => 'off']]) ?>
+            <?= $form->field($model, 'Monto', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
-            <?= $form->field($model, 'Observaciones')->textarea() ?>
-            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>

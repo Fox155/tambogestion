@@ -111,13 +111,13 @@ HTML;
                                 <div class="btn-group" role="group" aria-label="...">
           
                                   <button type="button" class="btn btn-default"
-                                          data-modal="<?= Url::to(['/ventas/editar-pago', 'idN' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>" 
+                                          data-modal="<?= Url::to(['/ventas/editar-pago', 'idV' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>" 
                                           data-mensaje="Editar">
                                       <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                   </button>
                               
                                   <button type="button" class="btn btn-default"
-                                          data-ajax="<?= Url::to(['/ventas/borrar-pago', 'idN' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>"
+                                          data-ajax="<?= Url::to(['/ventas/borrar-pago', 'idV' => $pago['IdVenta'], 'nro' => $pago['NroPago']]) ?>"
                                           data-mensaje="Borrar">
                                       <i class="far fa-trash-alt" style="color: Tomato"></i>
                                   </button>

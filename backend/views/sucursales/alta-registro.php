@@ -2,6 +2,7 @@
 
 use common\models\Sucursales;
 use yii\bootstrap4\ActiveForm;
+use common\components\FechaHelper;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -30,19 +31,19 @@ use yii\web\View;
 
             <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
             
-            <?= $form->field($model, 'Litros') ?>
+            <?= $form->field($model, 'Litros', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
             <p> Fecha </p>
             <?= DatePicker::widget([
                 'model' => $model,
                 'attribute' => 'Fecha',
-                'value' => date('Y-m-d'),
-                'options' => ['placeholder' => 'Ingrese la Fecha...'],
+                'language' => 'es',
+                'options' => ['placeholder' => 'Ingrese la Fecha...', 'autocomplete' => "off",],
                 'pluginOptions' => [
                     'todayHighlight' => true,
-                    'todayBtn' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                     'autoclose' => true,
+                    'clearBtn' => true,
                 ]
             ]);
             ?>
