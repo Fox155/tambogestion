@@ -93,9 +93,9 @@ class Ventas extends Model
     /**
      * tsp_buscar_pagos
      */
-    public function BuscarPagos($inicio = NULL, $fin = NULL, $incluye = 'N')
+    public function BuscarPagos($inicio = NULL, $fin = NULL)
     {
-        $sql = "call tsp_buscar_pagos( :id, :inicio, :fin, :incluye)";
+        $sql = "call tsp_buscar_pagos( :id, :inicio, :fin)";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -103,7 +103,6 @@ class Ventas extends Model
             ':id' => $this->IdVenta,
             ':inicio' => $inicio,
             ':fin' => $fin,
-            ':incluye' => $incluye,
         ]);
 
         return $query->queryAll();

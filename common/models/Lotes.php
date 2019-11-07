@@ -14,6 +14,7 @@ class Lotes extends Model
 
     // Derivados
     public $Sucursal;
+    public $LoteSucursal;
     public $Ganado;
     
     const _ALTA = 'alta';

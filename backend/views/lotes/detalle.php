@@ -100,7 +100,7 @@ HTML;
                     </div>
                 </div>
             <?php else: ?>
-                <p><strong>No hay lactancias registradas en este Lote.</strong></p>
+                <p><strong>No hay producciones registradas en este Lote.</strong></p>
             <?php endif; ?>
         </div>
 

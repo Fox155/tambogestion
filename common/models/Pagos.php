@@ -12,16 +12,9 @@ class Pagos extends Model
     public $NroComp;
     public $Monto;
     public $Fecha;
-    public $Estado;
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
-
-    const ESTADOS = [
-        'A' => 'Activo',
-        'B' => 'Baja',
-        'T' => 'Todos'
-    ];
  
     public function rules()
     {

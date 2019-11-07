@@ -104,7 +104,21 @@ class ListasPrecioController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }    
+    }
+    
+    public function actionHistorico($id)
+    {       
+        $listaprecio = new ListasPrecio();
+        $listaprecio->IdListaPrecio = $id;
+
+        $historicos = $listaprecio->Historico();
+
+        return $this->renderAjax('historico', [
+            'titulo' => 'Detalle Venta',
+            'models' => $historicos,
+            'lista' => $listaprecio,
+        ]);
+    }
 }
 
 ?>

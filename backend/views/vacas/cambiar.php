@@ -1,17 +1,15 @@
 <?php
 
-use common\models\Vacas;
-use yii\bootstrap4\ActiveForm;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use yii\web\View;
+/* @var $this \yii\web\View */
+/* @var $content string */
 
-/* @var $this View */
-/* @var $form ActiveForm */
-/* @var $model Vacas */
-/* @var $lotes Lotes */
-// 2015-06-12
+use common\models\Vacas;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+
 ?>
+
 <div class="modal-dialog">
     <div class="modal-content">
 
@@ -21,41 +19,20 @@ use yii\web\View;
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-
-        <?php $form = ActiveForm::begin(['id' => 'vacas-form',]) ?>
-
+            
+        <?php $form = ActiveForm::begin(['id' => 'vaca-estado-form']); ?>
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
             <?= Html::activeHiddenInput($model, 'IdVaca') ?>
 
-            <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
-            
-            <?= $form->field($model, 'IdCaravana') ?>
-
-            <?= $form->field($model, 'IdRFID') ?>
-
-            <?php if (!isset($model['IdLote'])): ?>
+            <?php if (isset($lotes)): ?>
                 <?= $form->field($model, 'IdLote')->dropDownList(ArrayHelper::map($lotes, 'IdLote', 'LoteSucursal'), ['prompt' => 'Lote']) ?>
             <?php else: ?>
-                <?= Html::activeHiddenInput($model, 'IdLote') ?>
+                <?= $form->field($model, 'Estado')->dropDownList(Vacas::ESTADOS, ['prompt' => 'Estado'])->label('Nuevo Estado') ?>
             <?php endif; ?>
-
-            <?= $form->field($model, 'Estado')->dropDownList(Vacas::ESTADOS_ALTA, ['prompt' => 'Estado']) ?>
-
-            <?= $form->field($model, 'Nombre') ?>
-
-            <?= $form->field($model, 'Raza') ?>
-
-            <?= $form->field($model, 'Peso') ?>
-
-            <?= $form->field($model, 'FechaNac') ?>
-
-            <?= $form->field($model, 'FechaIngreso') ?>
-
-            <?= $form->field($model, 'Observaciones') ?>
-            
         </div>
+
         <div class="modal-footer">
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
