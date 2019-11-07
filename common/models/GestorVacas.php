@@ -56,13 +56,18 @@ class GestorVacas
      */
     public function Modificar(Vacas $vaca)
     {
-        $sql = "call tsp_modificar_vaca( :idlote, :nombre)";
-
+        $sql = "call tsp_modificar_vaca(:idvaca,:idcaravana, :idrfid ,:nombre,:raza,:peso,:fechanac,:observaciones)";
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
-            ':idlote' => $lote->IdLote,
-            ':nombre' => $lote->Nombre,
+            ':idvaca' => $vaca->IdVaca,
+            ':idcaravana' => $vaca->IdCaravana,
+            ':idrfid' => $vaca->IdRFID, 
+            ':nombre' => $vaca->Nombre,
+            ':raza' => $vaca->Raza,
+            ':peso'  => $vaca->Peso,
+            ':fechanac' => $vaca->FechaNac,
+            ':observaciones' => $vaca->Observaciones
         ]);
 
         return $query->queryScalar();

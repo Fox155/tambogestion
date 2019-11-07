@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+
             <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?= $form->field($busqueda, 'Check2')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -78,11 +78,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td>
                                         <!-- Operaciones -->
                                         <div class="btn-group" role="group" aria-label="...">
-                                                <a class="btn btn-default"
-                                                        href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>"
-                                                        data-mensaje="Vacas">
-                                                    <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
-                                                </a>
+
+                                            <a class="btn btn-default"
+                                                    href="<?= Url::to(['/lotes/detalle', 'id' => $model['IdLote']]) ?>"
+                                                    data-mensaje="Detalle">
+                                                <i class="fas fa-info" style="color: Dodgerblue"></i>
+                                            </a>
+
+                                            <a class="btn btn-default"
+                                                    href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>"
+                                                    data-mensaje="Vacas">
+                                                <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
+                                            </a>
+
                                         </div>
                                     </td>
                                     <?php if ($busqueda['Check2'] == 'S'): ?>

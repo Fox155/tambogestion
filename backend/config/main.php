@@ -65,37 +65,37 @@ $config = [
         ],
         
     ],
-    'as access' => [
-        'class' => 'yii\filters\AccessControl',
-        'rules' => [
-            /**
-             *  Usuarios no logueados
-             */
-            [
-                'allow' => true,
-                'actions' => ['login', 'error'],
-            ],
-            /**
-             *  Debug
-             */
-            [
-                'allow' => true,
-                'controllers' => ['debug', 'default', 'debug/default'],
-            ],
-            /**
-             *  Usuarios logueados, están activos y tienen Token bueno
-             */
-            [
-                'allow' => true,
-                'roles' => ['@'],
-                'matchCallback' => function () {
-                    $usuario = Yii::$app->user->identity;
-                    $token = Yii::$app->session->get('Token');
-                    return $usuario->Estado == 'A' && $usuario->Token == $token;
-                },
-            ],
-        ],
-    ],
+    // 'as access' => [
+    //     'class' => 'yii\filters\AccessControl',
+    //     'rules' => [
+    //         /**
+    //          *  Usuarios no logueados
+    //          */
+    //         [
+    //             'allow' => true,
+    //             'actions' => ['login', 'error'],
+    //         ],
+    //         /**
+    //          *  Debug
+    //          */
+    //         [
+    //             'allow' => true,
+    //             'controllers' => ['debug', 'default', 'debug/default'],
+    //         ],
+    //         /**
+    //          *  Usuarios logueados, están activos y tienen Token bueno
+    //          */
+    //         [
+    //             'allow' => true,
+    //             'roles' => ['@'],
+    //             'matchCallback' => function () {
+    //                 $usuario = Yii::$app->user->identity;
+    //                 $token = Yii::$app->session->get('Token');
+    //                 return $usuario->Estado == 'A' && $usuario->Token == $token;
+    //             },
+    //         ],
+    //     ],
+    // ],
     'params' => $params,
 ];
 

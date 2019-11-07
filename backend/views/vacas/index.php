@@ -8,6 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\components\FechaHelper;
 
 /* @var $this View */
 /* @var $form ActiveForm */
@@ -93,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= Html::encode($model['IdCaravana']) ?></td>
                                     <td><?= Html::encode($model['IdRFID']) ?></td>
                                     <td><?= Html::encode($model['Peso']) ?></td>
-                                    <td><?= Html::encode($model['FechaNac']) ?></td>
+                                    <td><?= Html::encode(FechaHelper::toDateLocal($model['FechaNac'])) ?></td>
                                     <td><?= Html::encode(Vacas::ESTADOS[$model['Estado']]) ?></td>
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
