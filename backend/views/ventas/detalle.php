@@ -62,8 +62,6 @@ HTML;
 
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
             
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
             <?php ActiveForm::end(); ?>
         </div>
 
@@ -94,7 +92,6 @@ HTML;
                               <th>Tipo de Comprobante</th>
                               <th>Monto</th>
                               <th>Fecha</th>
-                              <th>Estado</th>
                               <th>Acciones</th>
                           </tr>
                       </thead>
@@ -105,7 +102,6 @@ HTML;
                                 <td><?= Html::encode($pago['TipoComp']) ?></td>
                                 <td><?= Html::encode($pago['Monto']) ?></td>
                                 <td><?= Html::encode(FechaHelper::toDateLocal($pago['Fecha'])) ?></td>
-                                <td><?= Html::encode(Pagos::ESTADOS[$model['Estado']]) ?></td>
                                 <td>
                                 <!-- Acciones -->
                                 <div class="btn-group" role="group" aria-label="...">

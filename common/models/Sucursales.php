@@ -172,6 +172,62 @@ class Sucursales extends Model
         return $query->queryScalar();
     }
 
+    /**
+     * tsp_listar_usuarios_sucursales
+     */
+    public function BuscarUsuarios()
+    {
+        $sql = "call tsp_listar_usuarios_sucursales( :idsucursal )";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+        ]);
+
+        return $query->queryAll();
+    }
+
+    /**
+     * Permite dar de alta un registro de leche de una sucursal.
+     * Controlando que solo se pueda anotar una registracion por dia en una sucursal
+     * Devuelve OK+Id o el mensaje de error en Mensaje.
+     * tsp_asignar_usuario_sucursal
+     */
+    public function AsignarUsuario(UsuariosSucursales $usuario)
+    {
+        $sql = "call tsp_asignar_usuario_sucursal( :idsucursal, :idusuario)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $this->IdSucursal,
+            ':idusuario' => $usuario->IdUsuario,
+        ]);
+
+        return $query->queryScalar();
+    }
+
+    /**
+     * Permite dar de alta un registro de leche de una sucursal.
+     * Controlando que solo se pueda anotar una registracion por dia en una sucursal
+     * Devuelve OK+Id o el mensaje de error en Mensaje.
+     * tsp_desasignar_usuario_sucursal
+     */
+    public function DesasignarUsuario(UsuariosSucursales $usuario)
+    {
+        $sql = "call tsp_desasignar_usuario_sucursal( :idsucursal, :idusuario)";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':idsucursal' => $usuario->IdSucursal,
+            ':idusuario' => $usuario->IdUsuario,
+        ]);
+
+        return $query->queryScalar();
+    }
+
     // /**
     //  * Permite asignar el punto de venta al que pertenece un usuario, controlando que ambos pertenezcan a la misma empresa.
 	//  * Un usuario sólo puede pertenecer a un punto de venta. Por lo tanto se dan de baja las pertenencias anteriores y se 

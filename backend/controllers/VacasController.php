@@ -6,6 +6,7 @@ use common\models\Usuarios;
 use common\models\Sucursales;
 use common\models\Lotes;
 use common\models\Vacas;
+use common\models\GestorLotes;
 use common\models\GestorVacas;
 use common\models\forms\BusquedaForm;
 use Yii;
@@ -21,7 +22,8 @@ class VacasController extends Controller
         if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
             $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
             $incluye = $busqueda->Check ? $busqueda->Check : 'N';
-            $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
+            $vendidas = $busqueda->Check2 ? $busqueda->Check2 : 'N';
+            $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $vendidas, $cadena);
         } else {
             $vacas =  GestorVacas::Buscar($idS, $idL);
         }
@@ -76,9 +78,7 @@ class VacasController extends Controller
         }else {
             $lotes = 0;
             if($idL == 0){
-                $sucursal = new Sucursales();
-                $sucursal->IdSucursal = $idS;
-                $lotes = $sucursal->ListarLotes();
+                $lotes =  GestorLotes::Buscar($idS);
             }else{
                 $vaca->IdLote = $idL;
             }
@@ -110,7 +110,6 @@ class VacasController extends Controller
         } else {
             $vacas->IdVaca = $id;
             $vacas->Dame();
-            
                
             $sucursal = new Sucursales();
             $sucursal->IdSucursal = $idS;
@@ -121,6 +120,60 @@ class VacasController extends Controller
                 'titulo' => 'Modificar Vaca',
                 'model' => $vacas,
                 'lotes' => $lotes
+            ]);
+        }
+    }
+
+    public function actionEstado($id)
+    {
+       
+        $vacas = new Vacas();
+        $vacas->IdVaca = $id;
+        $vacas->setScenario(Vacas::_ESTADO);
+
+        if ($vacas->load(Yii::$app->request->post()) && $vacas->validate()) {
+            $resultado = $vacas->CambiarEstado();
+
+            Yii::$app->response->format = 'json';
+            if ($resultado == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        } else {
+            $vacas->Dame();
+
+            return $this->renderAjax('cambiar', [
+                'titulo' => 'Cambiar Estado a la Vaca',
+                'model' => $vacas,
+            ]);
+        }
+    }
+
+    public function actionLote($id)
+    {
+       
+        $vacas = new Vacas();
+        $vacas->IdVaca = $id;
+        $vacas->setScenario(Vacas::_LOTE);
+
+        if ($vacas->load(Yii::$app->request->post()) && $vacas->validate()) {
+            $resultado = $vacas->CambiarLote();
+
+            Yii::$app->response->format = 'json';
+            if ($resultado == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        } else {
+            $vacas->Dame();
+            $lotes =  GestorLotes::Buscar(0);
+
+            return $this->renderAjax('cambiar', [
+                'titulo' => 'Cambiar Lote a la Vaca',
+                'model' => $vacas,
+                'lotes' => $lotes,
             ]);
         }
     }
@@ -144,7 +197,7 @@ class VacasController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }
+    } 
     
     public function actionDetalle($id)
     {
@@ -157,13 +210,13 @@ class VacasController extends Controller
         
         $lactancias = $vaca->ListarLactancias();
 
-        if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
-            $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
-            $incluye = $busqueda->Check ? $busqueda->Check : 'N';
-            $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
-        } else {
-            $vacas =  GestorVacas::Buscar($idS, $idL);
-        }
+        // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+        //     $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
+        //     $incluye = $busqueda->Check ? $busqueda->Check : 'N';
+        //     $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
+        // } else {
+        //     $vacas =  GestorVacas::Buscar($idS, $idL);
+        // }
         
         $producciones = $vaca->ListarProduccionesUltLac();
 

@@ -150,8 +150,7 @@ class VentasController extends Controller
         if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
             $inicio = $busqueda->FechaInicio ? FechaHelper::toDateMysql($busqueda->FechaInicio) : NULL;
             $fin = $busqueda->FechaFin ? FechaHelper::toDateMysql($busqueda->FechaFin) : NULL;
-            $incluye = $busqueda->Check ? $busqueda->Check : 'N';
-            $pagos = $venta->BuscarPagos($inicio, $fin, $incluye);
+            $pagos = $venta->BuscarPagos($inicio, $fin);
         } else {
             $pagos = $venta->BuscarPagos();
         }

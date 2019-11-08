@@ -8,6 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\components\FechaHelper;
 
 /* @var $this View */
 /* @var $form ActiveForm */
@@ -36,9 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Vendidas/Muertas', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -93,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= Html::encode($model['IdCaravana']) ?></td>
                                     <td><?= Html::encode($model['IdRFID']) ?></td>
                                     <td><?= Html::encode($model['Peso']) ?></td>
-                                    <td><?= Html::encode($model['FechaNac']) ?></td>
+                                    <td><?= Html::encode(FechaHelper::toDateLocal($model['FechaNac'])) ?></td>
                                     <td><?= Html::encode(Vacas::ESTADOS[$model['Estado']]) ?></td>
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
@@ -106,7 +109,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </a>
 
                                             <button type="button" class="btn btn-default"
-                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-modal="<?= Url::to(['/vacas/estado', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-mensaje="Cambiar Estado">
+                                                <i class="fas fa-file-alt" style="color: Green"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/vacas/lote', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-mensaje="Cambiar de Lote">
+                                                <i class="fas fa-sign-out-alt" style="color: Indigo"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca'], 'idS' => $sucursal['IdSucursal']]) ?>" 
                                                     data-mensaje="Editar">
                                                 <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                             </button>

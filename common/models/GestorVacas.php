@@ -34,9 +34,9 @@ class GestorVacas
     /**
      * tsp_buscar_vacas
      */
-    public function Buscar($IdSucursal, $IdLote, $Incluye = 'N', $Cadena = '')
+    public function Buscar($IdSucursal, $IdLote, $Incluye = 'N', $Vendidas = 'N', $Cadena = '')
     {
-        $sql = "call tsp_buscar_vacas( :idsucursal, :idlote, :cadena, :incluye)";
+        $sql = "call tsp_buscar_vacas( :idsucursal, :idlote, :cadena, :incluye, :vendidas)";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -45,6 +45,7 @@ class GestorVacas
             ':idsucursal' => $IdSucursal,
             ':idlote' => $IdLote,
             ':incluye' => $Incluye,
+            ':vendidas' => $Vendidas,
             ':cadena' => $Cadena,
         ]);
 

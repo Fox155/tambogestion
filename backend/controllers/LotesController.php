@@ -123,7 +123,34 @@ class LotesController extends Controller
         } else {
             return ['error' => $resultado];
         }
-    }    
+    }
+    
+    public function actionDetalle($id)
+    {
+        $busqueda = new BusquedaForm();
+        
+        $lote = new Lotes();
+        $lote->IdLote = $id;
+        
+        $lote->Dame();
+        
+        // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
+        //     $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
+        //     $incluye = $busqueda->Check ? $busqueda->Check : 'N';
+        //     $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
+        // } else {
+        //     $vacas =  GestorVacas::Buscar($idS, $idL);
+        // }
+        
+        $producciones = $lote->ResumenProducciones();
+
+        return $this->render('detalle', [
+            'titulo' => 'Detalle Vaca',
+            'model' => $lote,
+            'busqueda' => $busqueda,
+            'producciones' => $producciones
+        ]);
+    }
 }
 
 ?>

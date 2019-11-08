@@ -66,6 +66,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         data-mensaje="Editar">
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
+
+                                                <button type="button" class="btn btn-default"
+                                                        data-modal="<?= Url::to(['/listas-precio/historico', 'id' => $model['IdListaPrecio']]) ?>" 
+                                                        data-mensaje="Historico">
+                                                    <i class="fa fa-history" style="color: Green"></i>
+                                                </button>
                                             
                                                 <button type="button" class="btn btn-default"
                                                         data-ajax="<?= Url::to(['/listas-precio/borrar', 'id' => $model['IdListaPrecio']]) ?>"

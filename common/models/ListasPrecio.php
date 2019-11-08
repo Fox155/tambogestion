@@ -47,8 +47,22 @@ class ListasPrecio extends Model
         ]);
         
         $this->attributes = $query->queryOne();
+    }
 
-    
+    /**
+     * tsp_listar_historico_listaprecio
+     */
+    public function Historico()
+    {
+        $sql = "call tsp_listar_historico_listaprecio( :id )";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $this->IdListaPrecio
+        ]);
+
+        return $query->queryAll();
     }
 
 }

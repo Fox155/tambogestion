@@ -31,6 +31,7 @@ HTML;
 ?>
 <div class="row">
 
+    <!-- Usuarios -->
     <div class="col-sm-12" style="padding-bottom: 15px;">
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
@@ -79,49 +80,48 @@ HTML;
         <div class="alta--button">
             <div class="alta--button">
                 <button type="button" class="btn btn-primary"
-                        data-modal="<?= Url::to(['/sucursales/alta-registro', 'id' => $model['IdSucursal']]) ?>" 
-                        data-mensaje="Añadir Registro de Leche">
-                    Añadir Registro de Leche
+                        data-modal="<?= Url::to(['/sucursales/asignar-usuario', 'id' => $model['IdSucursal']]) ?>" 
+                        data-mensaje="Asignar Usuario">
+                    <i class="fas fa-id-card"></i>
+                    Asignar Usuario
                 </button>
             </div>
         </div>
 
         <div id="errores"> </div>
 
-      <?php if (isset($model['Nombre'])): ?>
+      <?php if (count($usuarios) > 0): ?>
         <div class="card">
           <div class="card-header">
-            <i class="fas fa-info"></i>
-            Registros de Leche de la Sucursal: <?= Html::encode($model['Nombre']) ?>
+            <i class="fas fa-id-card"></i>
+            Usuarios de la Sucursal: <?= Html::encode($model['Nombre']) ?>
           </div>
           <div class="card-body p-0">
               <div class="table-responsive">
                   <table class="table m-0">
                       <thead class="bg-light">
                           <tr class="border-0">
-                              <th>Fecha</th>
-                              <th>Litros</th>
+                              <th>Usuario</th>
+                              <th>Email</th>
+                              <th>Fecha de Alta</th>
+                              <th>Tipo de Usuario</th>
                               <th>Acciones</th>
                           </tr>
                       </thead>
                       <tbody>
-                        <?php foreach ($registros as $registro): ?>
+                        <?php foreach ($usuarios as $usuario): ?>
                           <tr>
-                              <td><?= Html::encode(FechaHelper::toDateLocal($registro['Fecha'])) ?></td>
-                              <td><?= Html::encode($registro['Litros']) ?></td>
+                              <td><?= Html::encode($usuario['Usuario']) ?></td>
+                              <td><?= Html::encode($usuario['Email']) ?></td>
+                              <td><?= Html::encode(FechaHelper::toDateLocal($usuario['FechaAlta'])) ?></td>
+                              <td><?= Html::encode($usuario['Tipo']) ?></td>
                               <td>
                                 <!-- Acciones -->
                                 <div class="btn-group" role="group" aria-label="...">
-          
-                                  <button type="button" class="btn btn-default"
-                                          data-modal="<?= Url::to(['/sucursales/editar-registro', 'id' => $registro['IdRegistroLeche']]) ?>" 
-                                          data-mensaje="Editar">
-                                      <i class="fa fa-edit" style="color: Dodgerblue"></i>
-                                  </button>
                               
                                   <button type="button" class="btn btn-default"
-                                          data-ajax="<?= Url::to(['/sucursales/borrar-registro', 'id' => $registro['IdRegistroLeche']]) ?>"
-                                          data-mensaje="Borrar">
+                                          data-ajax="<?= Url::to(['/sucursales/desasignar-usuario', 'idU' => $usuario['IdUsuario'], 'idS' => $model['IdSucursal']]) ?>"
+                                          data-mensaje="Desasignar Usuario">
                                       <i class="far fa-trash-alt" style="color: Tomato"></i>
                                   </button>
 
@@ -134,9 +134,12 @@ HTML;
               </div>
           </div>
         </div>
+      <?php else: ?>
+          <p><strong>No hay usuarios que coincidan con el criterio de búsqueda utilizado.</strong></p>
       <?php endif; ?>
     </div>
 
+    <!-- Grafica -->
     <div class="col-sm-12" style="padding-bottom: 15px;">
       <?php if (isset($resumen['Labels'])): ?>
       <div class="card">
@@ -179,4 +182,72 @@ HTML;
       </div>
       <?php endif ?>
     </div>
+    
+    <!-- Registros -->
+    <div class="col-sm-12" style="padding-bottom: 15px;">
+
+        <div class="alta--button">
+            <div class="alta--button">
+                <button type="button" class="btn btn-primary"
+                        data-modal="<?= Url::to(['/sucursales/alta-registro', 'id' => $model['IdSucursal']]) ?>" 
+                        data-mensaje="Añadir Registro de Leche">
+                    <i class="fas fa-receipt"></i>
+                    Añadir Registro de Leche
+                </button>
+            </div>
+        </div>
+
+        <div id="errores"> </div>
+
+      <?php if (count($registros) > 0): ?>
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-receipt"></i>
+            Registros de Leche de la Sucursal: <?= Html::encode($model['Nombre']) ?>
+          </div>
+          <div class="card-body p-0">
+              <div class="table-responsive">
+                  <table class="table m-0">
+                      <thead class="bg-light">
+                          <tr class="border-0">
+                              <th>Fecha</th>
+                              <th>Litros</th>
+                              <th>Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($registros as $registro): ?>
+                          <tr>
+                              <td><?= Html::encode(FechaHelper::toDateLocal($registro['Fecha'])) ?></td>
+                              <td><?= Html::encode($registro['Litros']) ?></td>
+                              <td>
+                                <!-- Acciones -->
+                                <div class="btn-group" role="group" aria-label="...">
+          
+                                  <button type="button" class="btn btn-default"
+                                          data-modal="<?= Url::to(['/sucursales/editar-registro', 'id' => $registro['IdRegistroLeche']]) ?>" 
+                                          data-mensaje="Editar">
+                                      <i class="fa fa-edit" style="color: Dodgerblue"></i>
+                                  </button>
+                              
+                                  <button type="button" class="btn btn-default"
+                                          data-ajax="<?= Url::to(['/sucursales/borrar-registro', 'id' => $registro['IdRegistroLeche']]) ?>"
+                                          data-mensaje="Borrar">
+                                      <i class="far fa-trash-alt" style="color: Tomato"></i>
+                                  </button>
+
+                                </div>
+                              </td> 
+                          </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+      <?php else: ?>
+        <p><strong>No hay registros que coincidan con el criterio de búsqueda utilizado.</strong></p>
+      <?php endif; ?>
+    </div>
+
 </div>

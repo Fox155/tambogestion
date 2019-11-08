@@ -3,8 +3,10 @@
 namespace backend\controllers;
 
 use common\models\Usuarios;
+use common\models\UsuariosSucursales;
 use common\models\Sucursales;
 use common\models\GestorSucursales;
+use common\models\GestorUsuarios;
 use common\models\RegistrosLeche;
 use common\models\forms\BusquedaForm;
 use common\components\FechaHelper;
@@ -131,13 +133,16 @@ class SucursalesController extends Controller
             $registros = $sucursal->BuscarRegistros();
         }
 
-        $resumen = $sucursal->ResumenRegistrosLeche(5);
+        $resumen = $sucursal->ResumenRegistrosLeche(10);
+
+        $usuarios = $sucursal->BuscarUsuarios();
 
         return $this->render('detalle', [
             'titulo' => 'Detalle Sucursal',
             'model' => $sucursal,
             'busqueda' => $busqueda,
             'registros' => $registros,
+            'usuarios' => $usuarios,
             'resumen' => $resumen
         ]);
     }
@@ -217,6 +222,58 @@ class SucursalesController extends Controller
                 'titulo' => 'Modificar Registro de Leche dia: '.$registro->Fecha,
                 'model' => $registro
             ]);
+        }
+    }
+
+    public function actionAsignarUsuario($id)
+    {
+        $usuario = new UsuariosSucursales();
+        $usuario->setScenario(UsuariosSucursales::_ALTA);
+        $usuario->IdSucursal = $id;
+
+        $sucursal = new Sucursales();
+        $sucursal->IdSucursal = $id;
+
+        if($usuario->load(Yii::$app->request->post()) && $usuario->validate()){
+            $resultado = $sucursal->AsignarUsuario($usuario);
+
+            Yii::$app->response->format = 'json';
+            if (substr($resultado, 0, 2) == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        }else {
+            $sucursal->Dame();
+
+            $usuarios = GestorUsuarios::Buscar();
+
+            return $this->renderAjax('asignar-usuario', [
+                'titulo' => 'Asignar Usuario a la Sucursal: '.$sucursal->Nombre,
+                'model' => $usuario,
+                'usuarios' => $usuarios,
+            ]);
+        }
+    }
+
+    public function actionDesasignarUsuario($idU, $idS)
+    {
+        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+        //     return;
+        // }
+
+        Yii::$app->response->format = 'json';
+        
+        $usuario = new UsuariosSucursales();
+        $usuario->IdUsuario = $idU;
+        $usuario->IdSucursal = $idS;
+
+        $resultado = Sucursales::DesasignarUsuario($usuario);
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
         }
     }
 }

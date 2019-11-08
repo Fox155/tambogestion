@@ -27,6 +27,18 @@ class Vacas extends Model
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
+    const _ESTADO = 'estado';
+    const _LOTE = 'lote';
+
+    const ESTADOS_LISTAR = [
+        'VAQUILLONA' => 'Vaquillona',
+        'SECA' => 'Seca',
+        'LACTANTE' => 'Lactante',
+        'MUERTA' => 'Muerta',
+        'VENDIDA' => 'Vendida',
+        'BAJA' => 'Baja',
+        'T' => 'Todos'
+    ];
 
     const ESTADOS = [
         'VAQUILLONA' => 'Vaquillona',
@@ -35,7 +47,6 @@ class Vacas extends Model
         'MUERTA' => 'Muerta',
         'VENDIDA' => 'Vendida',
         'BAJA' => 'Baja',
-        'T' => 'Todos'
     ];
 
     const ESTADOS_ALTA = [
@@ -62,6 +73,8 @@ class Vacas extends Model
                 'required', 'on' => self::_ALTA],
             [['IdVaca', 'IdLote', 'IdCaravana', 'IdRFID', 'Raza'],
                 'required', 'on' => self::_MODIFICAR],
+            [['IdVaca', 'Estado'], 'required', 'on' => self::_ESTADO],
+            [['IdVaca', 'IdLote'], 'required', 'on' => self::_LOTE],
             [$this->attributes(), 'safe']
         ];
     }
@@ -81,6 +94,40 @@ class Vacas extends Model
         ]);
         
         $this->attributes = $query->queryOne();
+    }
+
+    /**
+     * tsp_cambiar_estado_vaca
+     */
+    public function CambiarEstado()
+    {
+        $sql = 'CALL tsp_cambiar_estado_vaca( :id, :estado )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+            ':estado' => $this->Estado
+        ]);
+        
+        return $query->queryScalar();
+    }
+
+    /**
+     * tsp_cambiar_lote_vaca
+     */
+    public function CambiarLote()
+    {
+        $sql = 'CALL tsp_cambiar_lote_vaca( :id, :lote )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+            ':lote' => $this->IdLote
+        ]);
+        
+        return $query->queryScalar();
     }
 
     /**
