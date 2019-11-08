@@ -37,6 +37,8 @@ use yii\web\View;
 
             <?php if (!isset($model['IdLote'])): ?>
                 <?= $form->field($model, 'IdLote')->dropDownList(ArrayHelper::map($lotes, 'IdLote', 'LoteSucursal'), ['prompt' => 'Lote']) ?>
+
+                <?= $form->field($model, 'FechaIngreso') ?>
             <?php else: ?>
                 <?= Html::activeHiddenInput($model, 'IdLote') ?>
             <?php endif; ?>
@@ -50,8 +52,6 @@ use yii\web\View;
             <?= $form->field($model, 'Peso') ?>
 
             <?= $form->field($model, 'FechaNac') ?>
-
-            <?= $form->field($model, 'FechaIngreso') ?>
 
             <?= $form->field($model, 'Observaciones') ?>
             

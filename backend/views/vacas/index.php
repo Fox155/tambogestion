@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
 
                                             <button type="button" class="btn btn-default"
-                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca'], 'idS' => $sucursal['IdSucursal']]) ?>" 
                                                     data-mensaje="Editar">
                                                 <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                             </button>

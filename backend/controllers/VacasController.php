@@ -110,7 +110,6 @@ class VacasController extends Controller
         } else {
             $vacas->IdVaca = $id;
             $vacas->Dame();
-            
                
             $sucursal = new Sucursales();
             $sucursal->IdSucursal = $idS;
