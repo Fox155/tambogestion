@@ -127,10 +127,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
                                             
                                             <button type="button" class="btn btn-default"
-                                                    data-ajax="<?= Url::to(['/vacas/borrar', 'id' => $model['IdLote']]) ?>"
+                                                    data-ajax="<?= Url::to(['/vacas/borrar', 'id' => $model['IdVaca']]) ?>"
                                                     data-mensaje="Borrar">
                                                 <i class="far fa-trash-alt" style="color: Tomato"></i>
                                             </button>
+                                          
                                         </div>
                                     </td> 
                                 </tr>

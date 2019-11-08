@@ -178,6 +178,7 @@ class VacasController extends Controller
         }
     }
 
+
     public function actionBorrar($id)
     {
         // if(Yii::$app->user->identity->IdTambo!='Administrador'){
