@@ -34,7 +34,7 @@ class ClientesController extends Controller
         ]);
     }
 
-    public function actionAlta($id)
+    public function actionAlta()
     {
         // if(Yii::$app->user->identity->IdTambo!='Administrador'){
         //     return;
@@ -53,12 +53,7 @@ class ClientesController extends Controller
                 return ['error' => $resultado];
             }
         }else {
-            $listasprecio  = 0;
-            if($id == 0){
-                $listasprecio  = GestorListasPrecio::Buscar();
-            }else{
-                $clientes->IdListaPrecio = $id;
-            }
+            $listasprecio  = GestorListasPrecio::Buscar();
 
             return $this->renderAjax('alta', [
                 'titulo' => 'Nuevo Cliente',
@@ -115,6 +110,14 @@ class ClientesController extends Controller
     
     public function actionDarbaja($id)
     {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'objeto' => 'al cliente',
+            ]);
+        }
+
         Yii::$app->response->format = 'json';
         
         $clientes = new Clientes();

@@ -15,9 +15,9 @@ class Menu
             'href' => '/',
         ],
         [
-            'name' => 'Usuarios',
-            'icon' => 'fas fa-id-card',
-            'href' => '/usuarios',
+            'name' => 'Ventas',
+            'icon' => 'fas fa-shopping-cart',
+            'href' => '/ventas/0'
         ],
         [
             'name' => 'Sucursales',
@@ -30,14 +30,14 @@ class Menu
             'href' => '/lotes/0'
         ],
         [
-            'name' => 'Ventas',
-            'icon' => 'fas fa-shopping-cart',
-            'href' => '/ventas/0'
-        ],
-        [
             'name' => 'Clientes',
             'icon' => 'fas fa-user-friends',
             'href' => '/clientes'
+        ],
+        [
+            'name' => 'Usuarios',
+            'icon' => 'fas fa-id-card',
+            'href' => '/usuarios',
         ],
         [
             'name' => 'Lista de Precios',

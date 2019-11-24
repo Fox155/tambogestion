@@ -16,10 +16,12 @@ use yii\helpers\Html;
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <!-- <span class="badge badge-danger">1</span> -->
         </div>
             
         <div class="modal-body">
             <?php if (count($models) > 0): ?>
+            <!-- <span class="badge badge-danger">2</span> -->
             <div class="card">
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -50,8 +52,8 @@ use yii\helpers\Html;
         </div>
 
         <div class="modal-footer">
+            <!-- <span class="badge badge-danger">3</span> -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
-            <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
         </div>
     </div>
 </div>

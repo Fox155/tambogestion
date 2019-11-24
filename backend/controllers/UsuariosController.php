@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Usuarios;
 use common\models\GestorUsuarios;
 use common\models\GestorTiposUsuario;
+use common\models\GestorSucursales;
 use common\models\forms\BusquedaForm;
 // use common\models\forms\AuditoriaForm;
 // use common\components\PermisosHelper;
@@ -30,7 +31,7 @@ class UsuariosController extends Controller
         $usuario = new Usuarios();
         $usuario->setScenario(Usuarios::_LOGIN);
 
-        $busqueda = new BusquedaForm();
+        $this->layout = 'login';
 
         if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
             $login = $usuario->Login('A', $usuario->Password, Yii::$app->security->generateRandomString(300));
@@ -63,7 +64,6 @@ class UsuariosController extends Controller
 
         return $this->render('login', [
             'model' => $usuario,
-            'busqueda' => $busqueda,
         ]);
     }
 
@@ -115,9 +115,12 @@ class UsuariosController extends Controller
         } else {
             $tipos = GestorTiposUsuario::Listar();
 
+            $sucursales = GestorSucursales::Buscar();
+
             return $this->renderAjax('alta', [
                 'titulo' => 'Alta Usuario',
                 'model' => $usuario,
+                'sucursales' => $sucursales,
                 'tipos' => $tipos
             ]);
         }
@@ -185,6 +188,15 @@ class UsuariosController extends Controller
 
     public function actionDarBaja($id)
     {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'direccion' => '/usuarios/dar-baja',
+                'objeto' => 'el usuario',
+            ]);
+        }
+
         Yii::$app->response->format = 'json';
         
         $usuario = new Usuarios();
@@ -196,6 +208,88 @@ class UsuariosController extends Controller
             return ['error' => null];
         } else {
             return ['error' => $resultado];
+        }
+    }
+
+    public function actionCambiarPass()
+    {
+        $form = new Usuarios();
+        $form->setScenario(Usuarios::_CAMBIAR);
+
+        $this->layout = 'login';
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $usuario = Yii::$app->user->identity;
+
+            $mensaje = $usuario->CambiarPassword($usuario->Token, $form->Anterior, $form->Password_repeat);
+
+            if ($mensaje == 'OK') {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash('success', 'La contraseña fue modificada.');
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('danger', $mensaje);
+                return $this->render('password', [
+                            'model' => $form,
+                ]);
+            }
+        } else {
+            return $this->render('cambiar', [
+                'model' => $form,
+            ]);
+        }
+    }
+
+    public function actionResetPass($id)
+    {
+        $usuario = new Usuarios();
+        $usuario->setScenario(Usuarios::_ALTA);
+
+        if ($usuario->load(Yii::$app->request->post()) && $usuario->validate()) {
+            $resultado = GestorUsuarios::Alta($usuario);
+
+            Yii::$app->response->format = 'json';
+            if (substr($resultado, 0, 2) == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        } else {
+            $usuario->IdUsuario = $id;
+            $usuario->Dame();
+
+            return $this->renderAjax('reset', [
+                'titulo' => 'Resetear la Contraseña del Usuario',
+                'model' => $usuario,
+            ]);
+        }
+    }
+
+    public function actionCambiarPassword()
+    {
+        $form = new Usuarios();
+        $form->setScenario(Usuarios::_CAMBIAR);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $usuario = Yii::$app->user->identity;
+
+            $mensaje = $usuario->CambiarPassword($usuario->Token, $form->Anterior, $form->Password_repeat);
+
+            if ($mensaje == 'OK') {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash('success', 'La contraseña fue modificada.');
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('danger', $mensaje);
+                return $this->render('password', [
+                            'model' => $form,
+                ]);
+            }
+        } else {
+            return $this->renderAjax('cambiar-modal', [
+                'titulo' => 'Cambiar mi Contraseña',
+                'model' => $form,
+            ]);
         }
     }
 }

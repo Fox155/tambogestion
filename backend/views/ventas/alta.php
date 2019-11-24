@@ -19,6 +19,7 @@ use yii\web\View;
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
         <?php $form = ActiveForm::begin(['id' => 'ventas-form',]) ?>
@@ -29,25 +30,33 @@ use yii\web\View;
             <?= Html::activeHiddenInput($model, 'IdVenta') ?>
 
             <?php if (!isset($model['IdSucursal'])): ?>
+                <!-- <span class="badge badge-danger">2</span> -->
                 <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
             <?php else: ?>
                 <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
             <?php endif; ?>
 
+            <!-- <span class="badge badge-danger">3</span> -->
             <?= $form->field($model, 'IdCliente')->dropDownList(ArrayHelper::map($clientes, 'IdCliente', 'NombreCompleto'), ['prompt' => 'Cliente']) ?>
             
+            <!-- <span class="badge badge-danger">4</span> -->
             <?= $form->field($model, 'MontoPres', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
+            <!-- <span class="badge badge-danger">5</span> -->
             <?= $form->field($model, 'NroPagos') ?>
 
+            <!-- <span class="badge badge-danger">6</span> -->
             <?= $form->field($model, 'Litros', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
+            <!-- <span class="badge badge-danger">7</span> -->
             <?= $form->field($model, 'Observaciones')->textarea() ?>
             
         </div>
         <div class="modal-footer">
+            <!-- <span class="badge badge-danger">8</span> -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
+            <!-- <span class="badge badge-danger">9</span> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

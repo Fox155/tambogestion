@@ -8,13 +8,20 @@ class RegistroLecheChart extends Model
 {
     public $Labels;
     public $Data;
+    public $Footer;
+    public $Pico;
+    public $DiasPico;
+    public $FechaPico;
+    public $FechaLactancia;
 
     public function rules()
     {
         return [
             ['Labels', 'each', 'rule' => ['trim']],
             ['Data', 'each', 'rule' => ['integer']],
-            [['Labels', 'Data'], 'safe'],
+            [['Footer'], 'trim'],
+            [['Pico'], 'integer'],
+            [$this->attributes(), 'safe'],
         ];
     }
 }

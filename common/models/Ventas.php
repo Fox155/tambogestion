@@ -87,7 +87,7 @@ class Ventas extends Model
             ':id' => $this->IdVenta
         ]);
         
-        $this->attributes = $query->queryOne();
+        $this->attributes = $query->queryScalar();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Ventas;
+use common\models\Usuarios;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -8,7 +8,8 @@ use yii\web\View;
 
 /* @var $this View */
 /* @var $form ActiveForm */
-/* @var $model Pagos */
+/* @var $model Usuarios */
+/* @var $tipos TiposUsuario */
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
@@ -21,23 +22,21 @@ use yii\web\View;
             <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'pago-form',]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'usuario-form',]) ?>
 
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
-            <?= Html::activeHiddenInput($model, 'IdVenta') ?>
+            <?= Html::activeHiddenInput($model, 'IdUsuario') ?>
 
-            <?= Html::activeHiddenInput($model, 'NroPago') ?>
-            
             <!-- <span class="badge badge-danger">2</span> -->
-            <?= $form->field($model, 'TipoComp') ?>
+            <?= $form->field($model, 'PasswordOld', ['inputOptions' => ['placeholder' => 'Antigua Contraseña'],])->passwordInput(['autofocus' => true]) ?>
 
             <!-- <span class="badge badge-danger">3</span> -->
-            <?= $form->field($model, 'NroComp', ['inputOptions' => ['autocomplete' => 'off']]) ?>
+            <?= $form->field($model, 'PasswordNew', ['inputOptions' => ['placeholder' => 'Nueva Contraseña'],])->passwordInput(['autofocus' => true]) ?>
 
             <!-- <span class="badge badge-danger">4</span> -->
-            <?= $form->field($model, 'Monto', ['inputOptions' => ['autocomplete' => 'off']]) ?>
+            <?= $form->field($model, 'PasswordRep', ['inputOptions' => ['placeholder' => 'Repita la Contraseña'],])->passwordInput(['autofocus' => true]) ?>
 
         </div>
         <div class="modal-footer">

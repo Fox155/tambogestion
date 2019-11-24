@@ -16,16 +16,21 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
     public $Token;
     public $IntentosPass;
     public $FechaAlta;
-    // public $DebeCambiarPass;
     public $Estado;
 
     // Derivados
     public $TipoUsuario;
     public $IdsSucursales;
+
+    // Cambiar Pass
+    public $PasswordOld;
+    public $PasswordNew;
+    public $PasswordRep;
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
     const _LOGIN =  'login';
+    const _CAMBIAR =  'cambiar';
     
     const ESTADOS = [
         'A' => 'Activo',
@@ -56,6 +61,10 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
             'IdTipoUsuario' => 'Tipo de Usuario',
             'IdTambo' => 'Tambo',
             'Password' => 'Contraseña',
+            'PasswordOld' => 'Antigua Contraseña',
+            'PasswordNew' => 'Nueva Contraseña',
+            'PasswordRep' => 'Repita la Contraseña',
+            'IdsSucursales' => 'Sucursales asignadas',
             'IdUsuario' => 'Usuario'
         ];
     }
@@ -65,8 +74,9 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return [
             ['Email','email'],
             [['Usuario', 'Password'], 'required', 'on' => self::_LOGIN],
-            [['IdTipoUsuario', 'Usuario', 'Email', 'Password'], 'required', 'on' => self::_ALTA],
-            [['IdUsuario', 'IdTipoUsuario', 'Email'], 'required', 'on' => self::_MODIFICAR],
+            [['IdTipoUsuario', 'Usuario', 'Email', 'Password', 'IdsSucursales'], 'required', 'on' => self::_ALTA],
+            [['IdUsuario', 'IdTipoUsuario', 'Email', 'IdsSucursales'], 'required', 'on' => self::_MODIFICAR],
+            [['PasswordOld', 'PasswordNew', 'PasswordRep'], 'required', 'on' => self::_CAMBIAR],
             [$this->attributes(), 'safe'],
             [['IdsSucursales','TipoUsuario'], 'safe']
         ];

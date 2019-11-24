@@ -25,7 +25,7 @@ HTML;
 <div class="row">
         <!-- Detalle Vaca -->
         <div class="col-sm-12" style="padding-bottom: 15px;">
-
+        <!-- <span class="badge badge-danger">1</span> -->
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-receipt"></i>
@@ -61,6 +61,7 @@ HTML;
         <div class="col-sm-12" style="padding-bottom: 15px;">
             
             <?php if (isset($producciones['Labels'])): ?>
+                <!-- <span class="badge badge-danger">2</span> -->
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-chart-area"></i>
@@ -71,7 +72,7 @@ HTML;
 
                         <?= Highcharts::widget([
                             'options' => [
-                                'chart' => ['type' => 'column'],
+                                'chart' => ['type' => 'areaspline'],
                                 'title' => ['text' => 'Producciones del Lote: '.$model['Nombre']],
                                 'yAxis' => [
                                     'title' => ['text' => 'Litros de Leche']

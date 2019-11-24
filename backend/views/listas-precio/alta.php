@@ -18,6 +18,7 @@ use yii\web\View;
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
         <?php $form = ActiveForm::begin(['id' => 'listaprecio-form',]) ?>
@@ -27,14 +28,18 @@ use yii\web\View;
 
                 <?= Html::activeHiddenInput($model, 'IdListaPrecio') ?>
     
+                <!-- <span class="badge badge-danger">2</span> -->
                 <?= $form->field($model, 'Lista') ?>
     
+                <!-- <span class="badge badge-danger">3</span> -->
                 <?= $form->field($model, 'Precio') ?>
 
             </div>
         <div class="modal-footer">
+            <!-- <span class="badge badge-danger">4</span> -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
+            <!-- <span class="badge badge-danger">5</span> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

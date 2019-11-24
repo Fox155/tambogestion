@@ -48,16 +48,19 @@ $this->registerJs('Main.iniciar()');
       <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
       <div class="navbar-collapse collapse justify-content-between">
         <div class="navbar-collapse collapse justify-content-left">
-        <a class="navbar-brand mr-1" href="/">Tambo Gestion</a>
+        <a class="navbar-brand mr-1" href="/">
+        <!-- <span class="badge badge-danger">1</span> -->
+        Tambo Gestion</a>
 
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+          <!-- <span class="badge badge-danger">2</span> -->
           <i class="fas fa-bars"></i>
         </button>
         </div>
 
         <!-- Navbar -->
         <ul class="navbar-nav ml-auto ml-md-0">
-          <li class="nav-item dropdown no-arrow mx-1">
+          <!-- <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="badge badge-danger">3</span>
               <i class="fas fa-bell fa-fw"></i>
@@ -68,17 +71,23 @@ $this->registerJs('Main.iniciar()');
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown no-arrow">
+            <!-- <span class="badge badge-danger justify-content-left">3</span> -->
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-user-circle fa-fw"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="#">Settings</a>
-              <a class="dropdown-item" href="#">Activity Log</a>
+              <button type="button" class="dropdown-item"
+                  data-modal="<?= Url::to(['/usuarios/cambiar-password']) ?>" >
+                  <!-- <span class="badge badge-danger">14</span> -->
+                  <i class="fas fa-key"></i>
+                  Cambiar mi Contraseña
+              </button>
               <div class="dropdown-divider"></div>
               <button type="button" class="dropdown-item"
                       data-modal="<?= Url::to(['/usuarios/logout']) ?>" >
+                  <!-- <span class="badge badge-danger">15</span> -->
                   <i class="fas fa-power-off"></i>
                   Cerrar sesión
               </button>
@@ -108,11 +117,13 @@ $this->registerJs('Main.iniciar()');
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
+                            <!-- <span class="badge badge-danger">11</span> -->
                             <h2 class="pageheader-title"><?= $this->title ?></h2>
                             <div class="container">
                                 <?= Alert::widget() ?>
                             </div>
                             <div class="page-breadcrumb">
+                                <!-- <span class="badge badge-danger">12</span> -->
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                     <?php foreach ($this->params['breadcrumbs'] as $i => $crumb): ?>
@@ -135,7 +146,8 @@ $this->registerJs('Main.iniciar()');
                     </div>
                 </div>
                 <?php endif ?>
-                <?= $content ?>
+                <!-- <span class="badge badge-danger">13</span> -->
+                <?=$content ?>
             </div>
           </div>
         </div>

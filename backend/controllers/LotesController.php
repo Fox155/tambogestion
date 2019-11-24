@@ -124,6 +124,30 @@ class LotesController extends Controller
             return ['error' => $resultado];
         }
     }
+
+    public function actionDarBaja($id)
+    {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'objeto' => 'al lote',
+            ]);
+        }
+
+        Yii::$app->response->format = 'json';
+        
+        $lote = new Lotes();
+        $lote->IdLote = $id;
+
+        $resultado = $lote->DarBaja();
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
+        }
+    }
     
     public function actionDetalle($id)
     {

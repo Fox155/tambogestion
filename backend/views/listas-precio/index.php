@@ -19,18 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
+            <!-- <span class="badge badge-danger">1</span> -->
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
+            <!-- <span class="badge badge-danger">2</span> -->
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+
+            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <!-- <span class="badge badge-danger">3</span> -->
 
             <?php ActiveForm::end(); ?>
         </div>
-
-        <div class="alta--button">
         
         <div class="alta--button">
+            <!-- <span class="badge badge-danger">4</span> -->
             <button type="button" class="btn btn-primary"
                     data-modal="<?= Url::to(['/listas-precio/alta']) ?>" 
                     data-hint="Nueva Lista Precio">
@@ -41,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="errores"> </div>
         
         <?php if (count($models) > 0): ?>
+        <!-- <span class="badge badge-danger">5</span> -->
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -64,18 +67,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/listas-precio/editar', 'id' => $model['IdListaPrecio']]) ?>" 
                                                         data-mensaje="Editar">
+                                                        <!-- <span class="badge badge-danger">6</span> -->
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
 
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/listas-precio/historico', 'id' => $model['IdListaPrecio']]) ?>" 
                                                         data-mensaje="Historico">
+                                                        <!-- <span class="badge badge-danger">7</span> -->
                                                     <i class="fa fa-history" style="color: Green"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/listas-precio/borrar', 'id' => $model['IdListaPrecio']]) ?>"
+                                                        data-modal="<?= Url::to(['/listas-precio/borrar', 'id' => $model['IdListaPrecio']]) ?>"
                                                         data-mensaje="Borrar">
+                                                        <!-- <span class="badge badge-danger">8</span> -->
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
                                         </div>

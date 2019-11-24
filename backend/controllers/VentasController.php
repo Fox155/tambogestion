@@ -123,8 +123,14 @@ class VentasController extends Controller
         }
     }
     
-    public function actionDarbaja($id)
+    public function actionDarBaja($id)
     {
+        if (Yii::$app->request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'objeto' => 'la venta',
+            ]);
+        }
+
         Yii::$app->response->format = 'json';
         
         $venta = new Ventas();

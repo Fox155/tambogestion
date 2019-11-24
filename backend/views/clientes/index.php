@@ -19,37 +19,32 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
+            <!-- <span class="badge badge-danger">1</span> -->
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
+            <!-- <span class="badge badge-danger">2</span> -->
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
 
             <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
-
-            <?= $form->field($busqueda, 'Check2')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <!-- <span class="badge badge-danger">3</span> -->
 
             <?php ActiveForm::end(); ?>
         </div>
         
         <div class="alta--button">
             <div class="alta--button">
-                <?php if (!isset($listasprecio['IdListaPrecio'])): ?>
-                    <button type="button" class="btn btn-primary"
-                            data-modal="<?= Url::to(['/clientes/alta/', 'id' => 0]) ?>" 
-                            data-mensaje="Nuevo Cliente">
-                        Nuevo Cliente
-                    </button>
-                <?php else: ?>
-                    <button type="button" class="btn btn-primary"
-                            data-modal="<?= Url::to(['/cliente/alta/', 'id' => $listasprecio['IdListaPrecio']]) ?>" 
-                            data-mensaje="Nuevo Cliente">
-                        Nuevo Cliente
-                    </button>
-                <?php endif;?>
+                <!-- <span class="badge badge-danger">4</span> -->
+                <button type="button" class="btn btn-primary"
+                        data-modal="<?= Url::to(['/clientes/alta/']) ?>" 
+                        data-mensaje="Nuevo Cliente">
+                    Nuevo Cliente
+                </button>
             </div>
 
         <div id="errores"> </div>
         
         <?php if (count($models) > 0): ?>
+        <!-- <span class="badge badge-danger">5</span> -->
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -64,10 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Datos</th>
                                 <th>Listas Precio</th>
                                 <th>Observaciones</th>                
-                                <th>Operaciones</th>
-                                <?php if ($busqueda['Check2'] == 'S'): ?>
-                                    <th>Acciones</th>
-                                <?php endif ?>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,48 +80,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= Html::encode($model['Lista']) ?> - $<?= Html::encode($model['Precio'])?></td>
                                     <td><?= Html::encode($model['Observaciones']) ?></td>
                                     <td>
-                                     <!-- Operaciones -->
-                                        <div class="btn-group" role="group" aria-label="...">
-                                            
-                                            <a class="btn btn-default"
-                                                    href="<?= Url::to(['/clientes/ventas', 'id' => $model['IdCliente']]) ?>"
-                                                    data-mensaje="Ventas">
-                                                <i class="fas fa-comment-dollar" style="color: green"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <?php if ($busqueda['Check2'] == 'S'): ?>
-                                    <td>
                                         <!-- Acciones -->
                                         <div class="btn-group" role="group" aria-label="...">
 
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/clientes/editar', 'id' => $model['IdCliente']]) ?>" 
+                                                    data-mensaje="Editar">
+                                                    <!-- <span class="badge badge-danger">6</span> -->
+                                                <i class="fa fa-edit" style="color: Dodgerblue"></i>
+                                            </button>
+                                        
+                                            <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/clientes/darbaja', 'id' => $model['IdCliente']]) ?>"
+                                                    data-mensaje="Borrar">
+                                                    <!-- <span class="badge badge-danger">7</span> -->
+                                                <i class="far fa-trash-alt" style="color: Tomato"></i>
+                                            </button>
+                                            <?php if ($model['Estado'] == 'B'): ?>
                                                 <button type="button" class="btn btn-default"
-                                                        data-modal="<?= Url::to(['/clientes/editar', 'id' => $model['IdCliente']]) ?>" 
-                                                        data-mensaje="Editar">
-                                                    <i class="fa fa-edit" style="color: Dodgerblue"></i>
+                                                    data-ajax="<?= Url::to(['/clientes/activar', 'id' => $model['IdCliente']]) ?>"
+                                                    data-mensaje="Activar">
+                                                    <!-- <span class="badge badge-danger">8</span> -->
+                                                <i class="fas fa-toggle-on" style="color: indigo" > </i>
                                                 </button>
-                                            
-                                                <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/clientes/borrar', 'id' => $model['IdCliente']]) ?>"
-                                                        data-mensaje="Borrar">
-                                                    <i class="far fa-trash-alt" style="color: Tomato"></i>
-                                                </button>
-                                                    <?php if ($model['Estado'] == 'B'): ?>
-                                                        <button type="button" class="btn btn-default"
-                                                            data-ajax="<?= Url::to(['/clientes/activar', 'id' => $model['IdCliente']]) ?>"
-                                                            data-mensaje="Activar">
-                                                        <i class="fas fa-toggle-on" style="color: indigo" > </i>
-                                                        </button>
-                                                    <?php else: ?>
-                                                        <button type="button" class="btn btn-default"
-                                                            data-ajax="<?= Url::to(['/clientes/darbaja', 'id' => $model['IdCliente']]) ?>"
-                                                            data-mensaje="Dar de Baja">
-                                                        <i class="fas fa-toggle-off" style="color: indigo"></i>
-                                                        </button>
-                                                    <?php endif ?>                                             
+                                            <?php endif ?>                                             
                                        </div>
                                     </td> 
-                                    <?php endif ?>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

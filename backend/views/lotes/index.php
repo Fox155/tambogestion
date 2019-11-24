@@ -21,13 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
+            <!-- <span class="badge badge-danger">1</span> -->
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
+            <!-- <span class="badge badge-danger">2</span> -->
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
 
             <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <!-- <span class="badge badge-danger">3</span> -->
 
-            <?= $form->field($busqueda, 'Check2')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <?= ""//$form->field($busqueda, 'Check2')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -35,12 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="alta--button">
             <div class="alta--button">
                 <?php if (!isset($sucursal['Nombre'])): ?>
+                    <!-- <span class="badge badge-danger">4</span> -->
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/lotes/alta/', 'id' => 0]) ?>" 
                             data-mensaje="Nuevo Lote">
                         Nuevo Lote
                     </button>
                 <?php else: ?>
+                    <!-- <span class="badge badge-danger">4</span> -->
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/lotes/alta/', 'id' => $sucursal['IdSucursal']]) ?>" 
                             data-mensaje="Nuevo Lote">
@@ -52,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="errores"> </div>
         
         <?php if (count($models) > 0): ?>
+        <!-- <span class="badge badge-danger">5</span> -->
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -64,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Estado</th>
                                 <th>Operaciones</th>
                                 <?php if ($busqueda['Check2'] == 'S'): ?>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 <?php endif ?>
                             </tr>
                         </thead>
@@ -82,35 +88,40 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <a class="btn btn-default"
                                                     href="<?= Url::to(['/lotes/detalle', 'id' => $model['IdLote']]) ?>"
                                                     data-mensaje="Detalle">
+                                                    <!-- <span class="badge badge-danger">6</span> -->
                                                 <i class="fas fa-info" style="color: Dodgerblue"></i>
                                             </a>
 
                                             <a class="btn btn-default"
                                                     href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>"
                                                     data-mensaje="Vacas">
+                                                    <!-- <span class="badge badge-danger">7</span> -->
                                                 <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                             </a>
 
-                                        </div>
-                                    </td>
-                                    <?php if ($busqueda['Check2'] == 'S'): ?>
-                                    <td>
-                                        <!-- Acciones -->
-                                        <div class="btn-group" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/lotes/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
                                                         data-mensaje="Editar">
+                                                        <!-- <span class="badge badge-danger">8</span> -->
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/lotes/borrar', 'id' => $model['IdLote']]) ?>"
+                                                        data-modal="<?= Url::to(['/lotes/dar-baja', 'id' => $model['IdLote']]) ?>"
                                                         data-mensaje="Borrar">
+                                                        <!-- <span class="badge badge-danger">9</span> -->
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
 
                                         </div>
                                     </td>
+                                    <?php if ($busqueda['Check2'] == 'S'): ?>
+                                    <!-- <td>
+                                        <div class="btn-group" role="group" aria-label="...">
+                                                
+
+                                        </div>
+                                    </td> -->
                                     <?php endif ?>
                                 </tr>
                             <?php endforeach; ?>

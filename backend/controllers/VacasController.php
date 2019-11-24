@@ -9,6 +9,8 @@ use common\models\Vacas;
 use common\models\GestorLotes;
 use common\models\GestorVacas;
 use common\models\forms\BusquedaForm;
+use common\models\forms\LactanciaForm;
+use common\components\FechaHelper;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\Url;
@@ -67,6 +69,9 @@ class VacasController extends Controller
         $vaca->setScenario(Vacas::_ALTA);
 
         if($vaca->load(Yii::$app->request->post()) /*&& $vaca->validate()*/){
+            $vaca->FechaIngreso = FechaHelper::toDateMysql($vaca->FechaIngreso);
+            $vaca->FechaNac = FechaHelper::toDateMysql($vaca->FechaNac);
+
             $resultado = GestorVacas::Alta($vaca);
 
             Yii::$app->response->format = 'json';
@@ -99,6 +104,7 @@ class VacasController extends Controller
         $vacas->setScenario(Vacas::_MODIFICAR);
 
         if ($vacas->load(Yii::$app->request->post()) && $vacas->validate()) {
+            $vaca->FechaNac = FechaHelper::toDateMysql($vaca->FechaNac);
             $resultado = GestorVacas::Modificar($vacas);
 
             Yii::$app->response->format = 'json';
@@ -110,6 +116,7 @@ class VacasController extends Controller
         } else {
             $vacas->IdVaca = $id;
             $vacas->Dame();
+            $vacas->FechaNac = FechaHelper::toDateLocal($vacas->FechaNac);
                
             $sucursal = new Sucursales();
             $sucursal->IdSucursal = $idS;
@@ -208,7 +215,7 @@ class VacasController extends Controller
         
         $vaca->Dame();
         
-        $lactancias = $vaca->ListarLactancias();
+        $lactancias = $vaca->ListarResumenLactancias();
 
         // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
         //     $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
@@ -217,8 +224,13 @@ class VacasController extends Controller
         // } else {
         //     $vacas =  GestorVacas::Buscar($idS, $idL);
         // }
-        
-        $producciones = $vaca->ListarProduccionesUltLac();
+        // $producciones = array();
+        // foreach ($lactancias as $lactancia){
+        //     $resumen = Vacas::Aspamento($lactancia['IdVaca'],$lactancia['NroLactancia']);
+        //     $producciones[] = $resumen;
+        // }
+
+        $producciones = 0;//$vaca->ListarProduccionesUltLac();
 
         return $this->render('detalle', [
             'titulo' => 'Detalle Vaca',
@@ -227,6 +239,42 @@ class VacasController extends Controller
             'lactancias' => $lactancias,
             'producciones' => $producciones
         ]);
+    }
+
+    public function actionLactancia($id)
+    {
+        $vacas = new Vacas();
+        $vacas->IdVaca = $id;
+        $vacas->Dame();
+
+        $lactancia = new LactanciaForm();
+
+        if($vacas->Estado == 'SECA'){
+            $lactancia->setScenario(LactanciaForm::_ALTA);
+            $titulo = "Nueva Lactancia";
+        }else if ($vacas->Estado == 'LACTANTE'){
+            $lactancia->setScenario(LactanciaForm::_FINALIZA);
+            $titulo = "Finalizar Lactancia";
+        }else{
+            return [];
+        }
+        
+        if ($lactancia->load(Yii::$app->request->post()) && $lactancia->validate()) {
+            $resultado = $vacas->CambiarLote();
+
+            Yii::$app->response->format = 'json';
+            if ($resultado == 'OK') {
+                return ['error' => null];
+            } else {
+                return ['error' => $resultado];
+            }
+        } else {
+            return $this->renderAjax('lactancia', [
+                'titulo' => $titulo,
+                'model' => $vacas,
+                'lactancia' => $lactancia,
+            ]);
+        }
     }
 
 }

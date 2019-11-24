@@ -35,13 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
+            <!-- <span class="badge badge-danger">1</span> -->
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
+            <!-- <span class="badge badge-danger">2</span> -->
             <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
 
             <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Bajas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <!-- <span class="badge badge-danger">3</span> -->
             
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Vendidas/Muertas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <?= $form->field($busqueda, 'Check2')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Incluir Vendidas/Muertas', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <!-- <span class="badge badge-danger">4</span> -->
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -50,12 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
         
             <div class="alta--button">
                 <?php if (!isset($lote['Nombre'])): ?>
+                    <!-- <span class="badge badge-danger">5</span> -->
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => 0]) ?>" 
                             data-mensaje="Nueva Vaca">
                         Nueva Vaca
                     </button>
                 <?php else: ?>
+                    <!-- <span class="badge badge-danger">5</span> -->
                     <button type="button" class="btn btn-primary"
                             data-modal="<?= Url::to(['/vacas/alta/', 'idS' => $sucursal['IdSucursal'], 'idL' => $lote['IdLote']]) ?>" 
                             data-mensaje="Nueva Vaca">
@@ -67,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="errores"> </div>
         
         <?php if (count($models) > 0): ?>
+        <!-- <span class="badge badge-danger">6</span> -->
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -105,30 +112,51 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <a class="btn btn-default"
                                                     href="<?= Url::to(['/vacas/detalle', 'id' => $model['IdVaca']]) ?>"
                                                     data-mensaje="Detalle">
+                                                    <!-- <span class="badge badge-danger">7</span> -->
                                                 <i class="fas fa-info" style="color: Dodgerblue"></i>
                                             </a>
 
                                             <button type="button" class="btn btn-default"
                                                     data-modal="<?= Url::to(['/vacas/estado', 'id' => $model['IdVaca']]) ?>" 
                                                     data-mensaje="Cambiar Estado">
+                                                    <!-- <span class="badge badge-danger">8</span> -->
                                                 <i class="fas fa-file-alt" style="color: Green"></i>
                                             </button>
+
+                                            <?php if (Vacas::ESTADOS[$model['Estado']] == 'Seca'): ?>
+                                                <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/vacas/lactancia', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-mensaje="Nueva Lactancia">
+                                                    <!-- <span class="badge badge-danger">9</span> -->
+                                                    <i class="fas fa-clipboard-list" style="color: Brown"></i>
+                                                </button>
+                                            <?php elseif(Vacas::ESTADOS[$model['Estado']] == 'Lactante'):?>
+                                                <button type="button" class="btn btn-default"
+                                                    data-modal="<?= Url::to(['/vacas/lactancia', 'id' => $model['IdVaca']]) ?>" 
+                                                    data-mensaje="Finalizar Lactancia">
+                                                    <!-- <span class="badge badge-danger">10</span> -->
+                                                    <i class="fas fa-clipboard-list" style="color: Brown"></i>
+                                                </button>
+                                            <?php endif ?>
 
                                             <button type="button" class="btn btn-default"
                                                     data-modal="<?= Url::to(['/vacas/lote', 'id' => $model['IdVaca']]) ?>" 
                                                     data-mensaje="Cambiar de Lote">
-                                                <i class="fas fa-sign-out-alt" style="color: Indigo"></i>
+                                                    <!-- <span class="badge badge-danger">11</span> -->
+                                                <i class="fas fa-sign-out-alt" style="color: Purple"></i>
                                             </button>
 
                                             <button type="button" class="btn btn-default"
                                                     data-modal="<?= Url::to(['/vacas/editar', 'id' => $model['IdVaca'], 'idS' => $sucursal['IdSucursal']]) ?>" 
                                                     data-mensaje="Editar">
+                                                    <!-- <span class="badge badge-danger">12</span> -->
                                                 <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                             </button>
                                             
                                             <button type="button" class="btn btn-default"
                                                     data-ajax="<?= Url::to(['/vacas/borrar', 'id' => $model['IdVaca']]) ?>"
                                                     data-mensaje="Borrar">
+                                                    <!-- <span class="badge badge-danger">13</span> -->
                                                 <i class="far fa-trash-alt" style="color: Tomato"></i>
                                             </button>
                                           

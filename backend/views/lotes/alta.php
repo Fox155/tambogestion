@@ -19,6 +19,7 @@ use yii\web\View;
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
         <?php $form = ActiveForm::begin(['id' => 'lotes-form',]) ?>
@@ -29,15 +30,19 @@ use yii\web\View;
             <?= Html::activeHiddenInput($model, 'IdLote') ?>
 
             <?php if (!isset($model['IdSucursal'])): ?>
-                <?= $form->field($model, 'IdSucursal')->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
+                <!-- <span class="badge badge-danger">2</span> -->
+                <?= $form->field($model, 'IdSucursal', ['inputOptions' => ['autocomplete' => 'off']])->dropDownList(ArrayHelper::map($sucursales, 'IdSucursal', 'Nombre'), ['prompt' => 'Sucursal']) ?>
             <?php endif; ?>
             
-            <?= $form->field($model, 'Nombre') ?>
+            <!-- <span class="badge badge-danger">3</span> -->
+            <?= $form->field($model, 'Nombre', ['inputOptions' => ['autocomplete' => 'off']]) ?>
             
         </div>
         <div class="modal-footer">
+            <!-- <span class="badge badge-danger">4</span> -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
+            <!-- <span class="badge badge-danger">5</span> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

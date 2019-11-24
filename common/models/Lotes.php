@@ -85,4 +85,20 @@ class Lotes extends Model
 
         return $registros;
     }
+
+     /**
+     * tsp_darbaja_lote
+     */
+    public function Darbaja()
+    {
+        $sql = "call tsp_darbaja_lote( :id )";
+
+        $query = Yii::$app->db->createCommand($sql);
+        
+        $query->bindValues([
+            ':id' => $this->IdLote,
+        ]);
+
+        return $query->queryScalar();
+    }
 }

@@ -15,72 +15,95 @@ $this->title = 'Tambo Gestion';
     <div class="col-sm-12" style="padding-bottom: 15px;">
         <!-- Icon Cards-->
         <div class="card-group">
-
-            <div class="card text-white bg-primary o-hidden h-100">
+            <a class="card text-white bg-success" style="height:120px" href="/ventas/0">
               <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-kaaba"></i>
-                </div>
-                <div class="mr-5">Sucursales</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="/sucursales">
-                <span class="float-left">Detalles</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body">
+              <!-- <span class="badge badge-dark">1</span> -->
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-shopping-cart"></i>
                 </div>
-                <div class="mr-5">Ventas</div>
+                <div class="mr-5"><h4>Ventas</h4></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="/ventas/0">
+              <!-- <a class="card-footer text-white clearfix small z-1" href="/ventas/0">
                 <span class="float-left">Detalles</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
-            </div>
+              </a> -->
+            </a>
 
-            <div class="card text-white bg-warning o-hidden h-100">
+            <a class="card text-white bg-primary" style="height:120px" href="/sucursales">
               <div class="card-body">
+              <!-- <span class="badge badge-dark">2</span> -->
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-kaaba"></i>
+                </div>
+                <div class="mr-5"><h4>Sucursales</h4></div>
+              </div>
+              <!-- <a class="card-footer text-white clearfix small z-1" href="/sucursales">
+                <span class="float-left">Detalles</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a> -->
+            </a>
+
+            <a class="card text-white bg-warning" style="height:120px" href="/lotes/0">
+              <div class="card-body">
+              <!-- <span class="badge badge-dark">3</span> -->
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-sitemap"></i>
                 </div>
-                <div class="mr-5">Lotes</div>
+                <div class="mr-5"><h4>Lotes</h4></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="/lotes/0">
+              <!-- <a class="card-footer text-white clearfix small z-1" href="/lotes/0">
                 <span class="float-left">Lotes</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
-            </div>
+              </a> -->
+            </a>
 
-            <div class="card text-white bg-danger o-hidden h-100">
+            <a class="card text-white bg-danger" style="height:120px" href="/clientes">
               <div class="card-body">
+              <!-- <span class="badge badge-dark">4</span> -->
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-user-friends"></i>
                 </div>
-                <div class="mr-5">Clientes</div>
+                <div class="mr-5"><h4>Clientes</h4></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="/clientes">
+              <!-- <a class="card-footer text-white clearfix small z-1" href="/clientes">
                 <span class="float-left">Detalles</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
-            </div>
+              </a> -->
+            </a>
+
+            <a class="card text-white bg-info" style="height:120px" href="/usuarios">
+              <div class="card-body">
+              <!-- <span class="badge badge-dark">5</span> -->
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-id-card"></i>
+                </div>
+                <div class="mr-5"><h4>Usuarios</h4></div>
+              </div>
+            </a>
+
+            <a class="card text-white" style="height:120px; background-color: SeaGreen;" href="/listas-precio">
+              <div class="card-body">
+              <!-- <span class="badge badge-dark">6</span> -->
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-money-check-alt"></i>
+                </div>
+                <div class="mr-5"><h4>Listas de Precios</h4></div>
+              </div>
+            </a>
 
         </div>
 
     </div>
 
-    <div class="col-sm-12" style="padding-bottom: 15px;">
+    <!-- <div class="col-sm-12" style="padding-bottom: 15px;">
       <?php if (isset($model['Nombre'])): ?>
         <div class="card">
             <div class="card-body p-0">
@@ -145,11 +168,11 @@ $this->title = 'Tambo Gestion';
             </div>
         </div>
       <?php endif; ?>
-    </div>
+    </div> -->
 
     
 
-    <div class="col-sm-12" style="padding-bottom: 15px;">
+    <div class="col-sm-6" style="padding-bottom: 15px;">
         <?php if (isset($producciones['Labels'])): ?>
         <div class="card m-10">
             <div class="card-header m-10">
@@ -159,7 +182,7 @@ $this->title = 'Tambo Gestion';
 
             <!-- Highcharts -->
             <div class="card-body">
-
+            <!-- <span class="badge badge-danger">7</span> -->
                 <?= Highcharts::widget([
                     'options' => [
                         'chart' => ['type' => 'column'],
@@ -195,7 +218,7 @@ $this->title = 'Tambo Gestion';
         <?php endif ?>
     </div>
 
-    <div class="col-sm-12" style="padding-bottom: 15px;">
+    <div class="col-sm-6" style="padding-bottom: 15px;">
         <?php if (isset($ventas['Labels'])): ?>
         <div class="card">
             <div class="card-header">
@@ -205,7 +228,7 @@ $this->title = 'Tambo Gestion';
 
             <!-- Highcharts -->
             <div class="card-body">
-
+            <!-- <span class="badge badge-danger">8</span> -->
                 <?= Highcharts::widget([
                     'options' => [
                         'chart' => ['type' => 'column'],

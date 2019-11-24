@@ -18,6 +18,7 @@ use yii\web\View;
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
         <?php $form = ActiveForm::begin(['id' => 'sucursal-form',]) ?>
@@ -27,15 +28,20 @@ use yii\web\View;
 
             <?= Html::activeHiddenInput($model, 'IdSucursal') ?>
             
-            <?= $form->field($model, 'Nombre') ?>
+            <!-- <span class="badge badge-danger">2</span> -->
+            <?= $form->field($model, 'Nombre', ['inputOptions' => ['autocomplete' => 'off']]) ?>
             
-            <?= $form->field($model, 'Telefono') ?>
+            <!-- <span class="badge badge-danger">3</span> -->
+            <?= $form->field($model, 'Telefono', ['inputOptions' => ['autocomplete' => 'off']]) ?>
 
-            <?= $form->field($model, 'Direccion') ?>
+            <!-- <span class="badge badge-danger">4</span> -->
+            <?= $form->field($model, 'Direccion', ['inputOptions' => ['autocomplete' => 'off']]) ?>
         </div>
         <div class="modal-footer">
+            <!-- <span class="badge badge-danger">5</span>    -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
+            <!-- <span class="badge badge-danger">6</span> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

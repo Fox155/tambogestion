@@ -92,6 +92,14 @@ class ListasPrecioController extends Controller
 
     public function actionBorrar($id)
     {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'objeto' => 'la lista',
+            ]);
+        }
+
         Yii::$app->response->format = 'json';
         
         $listasprecio = new ListasPrecio();
@@ -105,16 +113,42 @@ class ListasPrecioController extends Controller
             return ['error' => $resultado];
         }
     }
+
+    public function actionDarBaja($id)
+    {
+        $request = Yii::$app->request;
+
+        if ($request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'direccion' => '/usuarios/dar-baja',
+                'objeto' => 'el usuario',
+            ]);
+        }
+
+        Yii::$app->response->format = 'json';
+        
+        $usuario = new Usuarios();
+        $usuario->IdUsuario = $id;
+
+        $resultado = $usuario->DarBaja();
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
+        }
+    }
     
     public function actionHistorico($id)
     {       
         $listaprecio = new ListasPrecio();
         $listaprecio->IdListaPrecio = $id;
+        $listaprecio->Dame();
 
         $historicos = $listaprecio->Historico();
 
         return $this->renderAjax('historico', [
-            'titulo' => 'Detalle Venta',
+            'titulo' => 'Listado Historico de Precios de la Lista',
             'models' => $historicos,
             'lista' => $listaprecio,
         ]);

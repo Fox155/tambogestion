@@ -18,11 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buscar--form">
             <?php $form = ActiveForm::begin(['layout' => 'inline',]); ?>
 
+            <!-- <span class="badge badge-danger">1</span> -->
             <?= $form->field($busqueda, 'Cadena')->input('text', ['placeholder' => 'Búsqueda']) ?>
 
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?> 
+            <!-- <span class="badge badge-danger">2</span> -->
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-secondary', 'name' => 'pregunta-button']) ?>
 
-            <?= $form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
+            <?="" //$form->field($busqueda, 'Check')->checkbox(array('class' => 'check--buscar-form', 'label' => 'Listar Acciones', 'value' => 'S', 'uncheck' => 'N')); ?> 
 
             <?php ActiveForm::end(); ?>
         </div>
@@ -30,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="alta--button">
         
             <div class="alta--button">
+            <!-- <span class="badge badge-danger">3</span> -->
                 <button type="button" class="btn btn-primary"
                         data-modal="<?= Url::to(['/sucursales/alta']) ?>" 
                         data-mensaje="Nueva Sucursal">
@@ -42,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="errores"> </div>
         
         <?php if (count($models) > 0): ?>
+        <!-- <span class="badge badge-danger">4</span> -->
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -53,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Litros Registrados</th>
                                 <th>Operaciones</th>
                                 <?php if ($busqueda['Check'] == 'S'): ?>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 <?php endif ?>
                             </tr>
                         </thead>
@@ -76,54 +80,64 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/sucursales/alta-registro', 'id' => $model['IdSucursal']]) ?>" 
                                                         data-mensaje="Añadir Registro de Leche">
+                                                        <!-- <span class="badge badge-danger">5</span> -->
                                                     <i class="fas fa-plus-circle" style="color: Tomato"></i>
                                                 </button>
                                             
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/sucursales/detalle', 'id' => $model['IdSucursal']]) ?>"
                                                         data-mensaje="Detalle">
+                                                        <!-- <span class="badge badge-danger">6</span> -->
                                                     <i class="fas fa-info" style="color: Dodgerblue"></i>
                                                 </a>
 
                                                 <a class="btn btn-default"
                                                     href="<?= Url::to(['/ventas', 'id' => $model['IdSucursal']]) ?>"
                                                     data-mensaje="Ventas">
+                                                    <!-- <span class="badge badge-danger">7</span> -->
                                                     <i class="fas fa-shopping-cart" style="color: Green"></i>
                                                 </a>
 
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/lotes', 'id' => $model['IdSucursal']]) ?>"
                                                         data-mensaje="Lotes">
+                                                        <!-- <span class="badge badge-danger">8</span> -->
                                                     <i class="fas fa-sitemap" style="color: Indigo"></i>
                                                 </a>
 
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/vacas', 'idS' => $model['IdSucursal'], 'idL' => 0]) ?>"
                                                         data-mensaje="Vacas">
-                                                    <img src="./cow.ico">
+                                                        <!-- <span class="badge badge-danger">9</span> -->
+                                                    <!-- <img src="./cow.ico"> -->
+                                                    <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                                 </a>
 
-                                        </div>
-                                    </td> 
-                                    <?php if ($busqueda['Check'] == 'S'): ?>
-                                    <td>
-                                        <!-- Acciones -->
-                                        <div class="btn-group" role="group" aria-label="...">
-                  
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/sucursales/editar', 'id' => $model['IdSucursal']]) ?>" 
                                                         data-mensaje="Editar">
+                                                        <!-- <span class="badge badge-danger">10</span> -->
                                                     <i class="fa fa-edit" style="color: Dodgerblue"></i>
                                                 </button>
                                             
                                                 <button type="button" class="btn btn-default"
-                                                        data-ajax="<?= Url::to(['/sucursales/borrar', 'id' => $model['IdSucursal']]) ?>"
+                                                        data-modal="<?= Url::to(['/sucursales/borrar', 'id' => $model['IdSucursal']]) ?>"
                                                         data-mensaje="Borrar">
+                                                        <!-- <span class="badge badge-danger">11</span> -->
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
 
                                         </div>
                                     </td> 
+                                    <?php if ($busqueda['Check'] == 'S'): ?>
+                                    <!-- <td>
+                                        Acciones
+                                        <div class="btn-group" role="group" aria-label="...">
+                  
+                                                
+
+                                        </div>
+                                    </td>  -->
                                     <?php endif ?>
                                 </tr>
                             <?php endforeach; ?>

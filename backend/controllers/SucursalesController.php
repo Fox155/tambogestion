@@ -95,9 +95,11 @@ class SucursalesController extends Controller
 
     public function actionBorrar($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        if (Yii::$app->request->isGet)  {
+            return $this->renderAjax('@app/views/common/confirmar-baja', [
+                'objeto' => 'la sucursal',
+            ]);
+        }
 
         Yii::$app->response->format = 'json';
         
