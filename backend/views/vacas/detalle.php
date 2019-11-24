@@ -39,8 +39,7 @@ HTML;
                                 <tr class="border-0">
                                     <th>Nombre</th>
                                     <th>Lote</th>
-                                    <th>Caravana</th>
-                                    <th>RFID</th>
+                                    <th>Identificadores</th>
                                     <th>Peso</th>
                                     <th>Fecha de Nacimiento</th>
                                     <?php if (count($lactancias) > 0): ?>
@@ -54,8 +53,16 @@ HTML;
                                 <tr>
                                     <td><?= Html::encode($model['Nombre']) ?></td>
                                     <td><?= Html::encode($model['Lote']) ?></td>
-                                    <td><?= Html::encode($model['IdCaravana']) ?></td>
-                                    <td><?= Html::encode($model['IdRFID']) ?></td>
+                                    <td>
+                                        <div style="list-style-type: none;">
+                                            <li>
+                                            Caravana: <?= Html::encode($model['IdCaravana']) ?>
+                                            </li>
+                                            <li>
+                                            RFID: <?= Html::encode($model['IdRFID']) ?>
+                                            </li>
+                                        </div>
+                                    </td>
                                     <td><?= Html::encode($model['Peso']) ?></td>
                                     <td><?= Html::encode(FechaHelper::toDateLocal($model['FechaNac'])) ?></td>
                                     <?php if (count($lactancias) > 0): ?>
@@ -88,20 +95,22 @@ HTML;
                             <table class="table">
                                 <thead class="bg-light">
                                     <tr class="border-0">
-                                        <th>Numero de Lactancia</th>
+                                        <th>Lactancia</th>
                                         <th>Fechas</th>
-                                        <th>Acumulada</th>
-                                        <th>Produccion de Pico</th>
-                                        <th>Dias de la Lactancia</th>
                                         <th>Corregida a 305</th>
+                                        <th>Acumulada</th>
+                                        <th>Promedio</th>
+                                        <th>Pico</th>
+                                        <th>Dias de la Lactancia</th>
+                                        <th>Dias a Pico</th>
                                         <th>Observaciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($lactancias as $i => $lactancia): ?>
                                         <tr>
-                                            <td><?= Html::encode($lactancia['NroLactancia']) ?></td>
-                                            <td>
+                                            <td>Numero: <?= Html::encode($lactancia['NroLactancia']) ?></td>
+                                            <td style="list-style-type: none;">
                                                 <li>
                                                     Inicio: <?= Html::encode(FechaHelper::toDateLocal($lactancia['FechaInicio'])) ?>
                                                 </li>
@@ -113,17 +122,13 @@ HTML;
                                                         Fin: <?= Html::encode(FechaHelper::toDateLocal($lactancia['FechaFin'])) ?>
                                                     </li>
                                                 <?php endif ?>
-                                                <li>
-                                                    Indice: <?= Html::encode($i) ?>
-                                                </li>
-                                                <li>
-                                                    Footer: <?= Html::encode($lactancias[$i]['Footer']) ?>
-                                                </li>
                                             </td>
-                                            <td><?= Html::encode($lactancia['Acumulada']) ?></td>
+                                            <td><?= Html::encode(LecheHelper::corregida($lactancia['Acumulada'], $lactancia['Meses'], $lactancia['Dias'])) ?></td>
+                                            <td><?= Html::encode($lactancia['AcumuladaL']) ?></td>
+                                            <td><?= Html::encode($lactancia['PromedioL']) ?></td>
                                             <td><?= Html::encode($lactancia['Pico']) ?></td>
                                             <td><?= Html::encode($lactancia['Dias']) ?></td>
-                                            <td><?= Html::encode(LecheHelper::corregida($lactancia['Acumulada'], $lactancia['Meses'], $lactancia['Dias'])) ?></td>
+                                            <td><?= Html::encode($lactancia['DiasPico']) ?></td>
                                             <td><?= Html::encode($lactancia['Observaciones']) ?></td> 
                                         </tr>
                                     <?php endforeach; ?>
@@ -145,7 +150,7 @@ HTML;
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-chart-area"></i>
-                        Producciones ultima Lactancia
+                        Producciones de la Ultima Lactancia
                     </div>
 
                     <div class="card-body p-0">
@@ -153,7 +158,7 @@ HTML;
                         <?= Highcharts::widget([
                             'options' => [
                                 'chart' => ['type' => 'areaspline'],
-                                'title' => ['text' => 'Producciones de la Vaca: '.$model['Nombre']],
+                                'title' => ['text' => 'Producciones de la Ultima Lactancia de la Vaca: '.$model['Nombre']],
                                 'yAxis' => [
                                     'title' => ['text' => 'Litros de Leche']
                                 ],
@@ -193,14 +198,14 @@ HTML;
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-chart-area"></i>
-                        Producciones Lactancias
+                        Producciones de todas las Lactancias
                     </div>
 
                     <div class="card-body p-0">
                         <?php 
                             $seriesL = array();
                             foreach($lactancias as $i => $lactancia){
-                                $seriesL[$i]['name'] = 'Valor';
+                                $seriesL[$i]['name'] = 'Lactancia Nro: '.$lactancia['NroLactancia'];
                                 $seriesL[$i]['data'] = $lactancias[$i]['Data'];
                             }
                         ?>
@@ -208,13 +213,9 @@ HTML;
                         <?= Highcharts::widget([
                             'options' => [
                                 'chart' => ['type' => 'areaspline'],
-                                'title' => ['text' => 'Producciones Vitalicias de la Vaca: '.$model['Nombre']],
+                                'title' => ['text' => 'Producciones de todas las Lactancias de la Vaca: '.$model['Nombre']],
                                 'yAxis' => [
                                     'title' => ['text' => 'Litros de Leche']
-                                ],
-                                'xAxis' => [
-                                    'categories' => $lactancias[0]['Labels'],
-                                    'type' => 'datetime'
                                 ],
                                 'series' => $seriesL,
                                 'credits' => [

@@ -147,50 +147,32 @@ class Vacas extends Model
         return $query->queryAll();
     }
 
-    /**
-     * tsp_listar_producciones_ultima_lactancia
-     */
-    public function ListarProduccionesUltLac()
-    {
-        $sql = "call tsp_resumen_producciones_vaca( :id )";
+    // /**
+    //  * tsp_listar_producciones_ultima_lactancia
+    //  */
+    // public function ListarProduccionesUltLac()
+    // {
+    //     $sql = "call tsp_resumen_producciones_vaca( :id )";
 
-        $query = Yii::$app->db->createCommand($sql);
+    //     $query = Yii::$app->db->createCommand($sql);
         
-        $query->bindValues([
-            ':id' => $this->IdVaca,
-        ]);
+    //     $query->bindValues([
+    //         ':id' => $this->IdVaca,
+    //     ]);
 
-        $registros = new RegistroLecheChart();
+    //     $registros = new RegistroLecheChart();
 
-        $registros->attributes = $query->queryOne();
+    //     $registros->attributes = $query->queryOne();
 
-        $registros->Labels = json_decode($registros->Labels);
-        $registros->Data = json_decode($registros->Data);
-        // $registros->Labels = $labels->{'Labels'};
-        // $registros->Data = $data->{'Data'};
+    //     $registros->Labels = json_decode($registros->Labels);
+    //     $registros->Data = json_decode($registros->Data);
 
-        return $registros;
-    }
-
-    /**
-     * tsp_listar_producciones_ultima_lactancia
-     */
-    public function Aspamento($id, $nro)
-    {
-        $sql = "call tsp_resumen_producciones_vaca( :id, :nrolactancia)";
-
-        $query = Yii::$app->db->createCommand($sql);
-        
-        $query->bindValues([
-            ':id' => $id,
-            ':nrolactancia' => $nro,
-        ]);
-
-        return $query->queryOne();
-    }
+    //     return $registros;
+    // }
 
     /**
      * tsp_listar_lactancias
+     * tsp_resumen_producciones_vaca
      */
     public function ListarResumenLactancias()
     {
@@ -218,24 +200,6 @@ class Vacas extends Model
 
             $resumen = $query2->queryOne();
 
-            $lactancia = $lactancia + $resumen;
-
-            // $lactancia['Data'] = 0;
-
-            // $lactancia['Data'] = $resumen['Data'];
-            // $lactancia['Labels'] = $resumen['Labels'];
-            // $lactancia['Footer'] = $resumen['Footer'];
-            // $lactancia['Pico'] = $resumen['Pico'];
-            // $lactancia['FechaPico'] = $resumen['FechaPico'];
-
-            $lactancia[] = $resumen;
-
-            // $lactancia[] = $resumen['Data'];
-            // $lactancia[] = $resumen['Labels'];
-            // $lactancia[] = $resumen['Footer'];
-            // $lactancia[] = $resumen['Pico'];
-            // $lactancia[] = $resumen['FechaPico'];
-
             foreach ($lactancia as $key=>$value)
             {
                 $tmpArr[$key] = $value;
@@ -244,16 +208,9 @@ class Vacas extends Model
             {
                 $tmpArr[$key] = $value;
             }
-
-
             $tmpArr['Labels'] = json_decode($tmpArr['Labels']);
             $tmpArr['Data'] = json_decode($tmpArr['Data']);
             $resArr[] = $tmpArr;
-
-            // $lactancia += [ "Data" => $resumen['Data'] ];
-            // $lactancia += [ "Labels" => $resumen['Labels'] ];
-            // $lactancia += [ "Pico" => $resumen['Pico'] ];
-            // $lactancia += [ "FechaPico" => $resumen['FechaPico'] ];
         }
 
         return $resArr;
