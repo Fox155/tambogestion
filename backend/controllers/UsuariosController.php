@@ -23,10 +23,6 @@ class UsuariosController extends Controller
             return $this->goHome();
         }
 
-        // Guardo también en la sesión los parámetros de Empresa
-        // $empresa = new Empresa();
-        // Yii::$app->session->open();
-
         $usuario = new Usuarios();
         $usuario->setScenario(Usuarios::_LOGIN);
 

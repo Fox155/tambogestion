@@ -71,10 +71,6 @@ class VacasController extends Controller
 
     public function actionAlta($idS, $idL)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-
         $vaca = new Vacas();
         $vaca->IdSucursal = $idS;
         $vaca->setScenario(Vacas::_ALTA);
@@ -220,21 +216,7 @@ class VacasController extends Controller
         $vaca->Dame();
         
         $lactancias = $vaca->ListarResumenLactancias();
-
-        // if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
-        //     $cadena = $busqueda->Cadena ? $busqueda->Cadena : '';
-        //     $incluye = $busqueda->Check ? $busqueda->Check : 'N';
-        //     $vacas = GestorVacas::Buscar($idS, $idL, $incluye, $cadena);
-        // } else {
-        //     $vacas =  GestorVacas::Buscar($idS, $idL);
-        // }
-        // $producciones = array();
-        // foreach ($lactancias as $lactancia){
-        //     $resumen = Vacas::Aspamento($lactancia['IdVaca'],$lactancia['NroLactancia']);
-        //     $producciones[] = $resumen;
-        // }
-
-        $producciones = 0;//$vaca->ListarProduccionesUltLac();
+        $producciones = 0;
 
         return $this->render('detalle', [
             'titulo' => 'Detalle Vaca',

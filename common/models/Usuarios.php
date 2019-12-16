@@ -203,49 +203,8 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         $this->attributes = $query->queryOne();
     }
 
-    // /**
-    //  * Permite cambiar el estado de un usuario a Activo. Devuelve OK o un mensaje de
-    //  * error en Mensaje. xsp_activar_usuario
-    //  */
-    // public function Activar()
-    // {
-    //     $sql = "CALL xsp_activar_usuario ( :token, :id, :IP, :userAgent, :app )";
-        
-    //     $query = Yii::$app->db->createCommand($sql);
-        
-    //     $query->bindValues([
-    //         ':token' => Yii::$app->user->identity->Token,
-    //         ':IP' => Yii::$app->request->userIP,
-    //         ':userAgent' => Yii::$app->request->userAgent,
-    //         ':app' => Yii::$app->id,
-    //         ':id' => $this->IdUsuario
-    //     ]);
-    //     return $query->queryScalar();
-    // }
-
-    // /**
-    //  * Permite cambiar el estado de un usuario a Baja. Devuelve OK o un mensaje de
-    //  * error en Mensaje. xsp_darbaja_usuario
-    //  */
-    // public function DarBaja()
-    // {
-    //     $sql = "CALL xsp_darbaja_usuario ( :token, :id, :IP, :userAgent, :app )";
-        
-    //     $query = Yii::$app->db->createCommand($sql);
-        
-    //     $query->bindValues([
-    //         ':token' => Yii::$app->user->identity->Token,
-    //         ':IP' => Yii::$app->request->userIP,
-    //         ':userAgent' => Yii::$app->request->userAgent,
-    //         ':app' => Yii::$app->id,
-    //         ':id' => $this->IdUsuario
-    //     ]);
-    //     return $query->queryScalar();
-    // }
-
     /**
-     * Permite instanciar un usuario desde la base de datos a partir del token de
-     * sesi�n. xsp_dame_usuario_por_token
+     * tsp_dame_usuario_por_token
      */
     public function DamePorToken()
     {
@@ -320,72 +279,6 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return $query->queryScalar();
     }
 
-    // /**
-    //  * Permite devolver en un resultset la lista de variables de permiso que el
-    //  * usuario tiene habilitados. Se valida con el token de sesi�n.
-    //  * xsp_dame_permisos_usuario
-    //  */
-    // public function DamePermisos()
-    // {
-    //     $sql = 'CALL xsp_dame_permisos_usuario ( :token )';
-
-    //     $query = Yii::$app->db->createCommand($sql);
-
-    //     $query->bindValue(':token', $this->Token);
-
-    //     return $query->queryColumn();
-    // }
-    /**
-     * Permite devolver en un arayy la lista de permisos que el
-     * usuario tiene habilitados. Segun su tipo de usuario.
-     * xsp_dame_permisos_usuario
-     */
-    public function DamePermisos()
-    {
-        $this->Dame();
-        if($this->Tipo == 'Administrador'){
-            return [
-                'Vacas',
-                'Sucursales',
-                'Producciones',
-                'Usuarios',
-            ];
-        }else{//Es Operador
-            return [
-                'Producciones',
-            ];
-        }
-    }
-
-    // /**
-    //  * Permite listar las sesiones de un usuario.
-    //  * xsp_listar_sesiones_usuario
-    //  */
-    // public function ListarSesiones()
-    // {
-    //     $sql = 'CALL xsp_listar_sesiones_usuario ( :idUsuario )';
-
-    //     $query = Yii::$app->db->createCommand($sql);
-
-    //     $query->bindValue(':idUsuario', $this->IdUsuario);
-
-    //     return $query->queryAll();
-    // }
-
-    /**
-     * Permite realizar el login de un usuario indicando la aplicaci�n a la que desea
-     * acceder en pApp= A: Administraci�n, C: Cliente - E: Estudios. Recibe como par�metro la
-     * autenticidad del par Usuario - Password en pEsPassValido [S | N]. Controla que
-     * el usuario no haya superado el l�mite de login's erroneos posibles indicado en
-     * MAXINTPASS, caso contrario se cambia El estado de la cuenta a S: Suspendido. Un
-     * intento exitoso de inicio de sesi�n resetea el contador de intentos fallidos.
-     * Devuelve un mensaje con el resultado del login y un objeto usuario en caso de
-     * login exitoso. xsp_login
-     *
-     * @param App    A: Administraci�n - C: Cliente
-     * @param Pass    Passwrod del usuario
-     * @param Token
-     */
     public function Login($App = '', $Pass = null, $Token = null)
     {
         $hash = $this->DamePassword();
@@ -420,9 +313,6 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         $result = $query->queryOne();
 
         $this->attributes = $result;
-        if ($necesitaRehash && $result['Mensaje'] == 'OK') {
-            // $this->CambiarPassword($this->Token, null, $Pass, 'R');
-        }
 
         return $result;
     }
@@ -452,21 +342,4 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         
         return $query->queryScalar();
     }
-
-    // public function DameTipoUsuario()
-    // {
-    //     $sql = 'CALL tsp_dame_tipo_usuario( :token )';
-        
-    //     $query = Yii::$app->db->createCommand($sql);
-        
-    //     $query->bindValues([
-    //         ':token' => $this->Token
-    //     ]);
-        
-    //     $result = $query->queryScalar();
-
-    //     $this->TipoUsuario = $result;
-
-    //     return $result;
-    // }
 }

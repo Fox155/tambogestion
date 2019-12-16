@@ -17,14 +17,10 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/sb-admin.min.js',
-        // 'js/aspamento.js',
-        // 'js/boot-aspamento.js',
-        // 'js/demo/datatables-demo.js',
     ];
     public $depends = [
         'common\assets\CommonAsset',
         'yii\bootstrap4\BootstrapPluginAsset',
         'kartik\date\DatePickerAsset',
-        // 'phpnt\slimscroll\SlimScrollAsset',
     ];
 }

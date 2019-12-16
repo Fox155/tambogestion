@@ -18,9 +18,6 @@ class BowerAsset extends AssetBundle
 {
     public $sourcePath = '@bower/';
     public $js = [
-        // 'datatables/media/js/dataTables.bootstrap4.min.js',
-        // 'datatables/media/js/jquery.dataTables.js',
-        // 'jquery/src/jquery.js',
     ];
     public $css = [
         'font-awesome/css/all.min.css',

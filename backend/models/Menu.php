@@ -61,9 +61,6 @@ class Menu
         if ($el['admin']) {
             return TiposUsuarioHelper::esAdministrador();
         }
-        // if (array_key_exists('submenu', $el)) {
-        //     return TiposUsuarioHelper::tieneAlgunPermiso(ArrayHelper::map($el['submenu'], 'permiso', 'permiso'));
-        // }
         return true;
     }
 }
