@@ -28,13 +28,14 @@ class GestorLotes
      */
     public function Buscar($IdSucursal, $Incluye = 'N', $Cadena = '')
     {
-        $sql = "call tsp_buscar_lotes( :idsucursal, :idtambo, :incluye, :cadena)";
+        $sql = "call tsp_buscar_lotes( :idsucursal, :idtambo, :idusuario, :incluye, :cadena)";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
             ':idtambo' => Yii::$app->user->identity->IdTambo,
             ':idsucursal' => $IdSucursal,
+            ':idusuario' => Yii::$app->user->identity->IdUsuario,
             ':incluye' => $Incluye,
             ':cadena' => $Cadena,
         ]);

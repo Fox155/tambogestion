@@ -60,6 +60,8 @@ use yii\web\View;
                     ?>
             
                 <?php else: ?>
+                    <?= Html::activeHiddenInput($model, 'IdLote') ?>
+
                     <p> 
                     <!-- <span class="badge badge-danger">13</span> -->
                     Fecha de Ingreso al Lote </p>

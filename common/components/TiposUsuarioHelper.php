@@ -13,93 +13,31 @@ class TiposUsuarioHelper
      *
      * @param array $permisos
      */
-    public static function guardarPermisosTipoUsuarioSesion(array $permisos)
+    public static function guardarTipoUsuarioSesion(string $tipo)
     {
-        Yii::$app->session->set('PermisosTipoUsuario', $permisos);
+        Yii::$app->session->set('TipoUsuario', $tipo);
     }
 
     /**
-     * Verifica si el usuario tiene el permiso. Tira excepción en caso contrario.
+     * Verifica si el usuario tiene el permiso de administradoe. Tira excepción en caso contrario.
      *
-     * @param string $permiso Permiso a verificar
      * @throws HttpException Si no no tiene permiso
      */
-    public static function verificarPermiso(string $permiso)
+    public static function verificarAdministrador()
     {
-        if (!self::tienePermiso($permiso)) {
+        if (!self::esAdministrador()) {
             self::tirarExcepcion();
         }
     }
 
     /**
-     * Verifica si el usuario tiene alguno de los permisos. Tira excepción en caso contrario.
+     * Retorna si el usuario tiene el permiso de administrador.
      *
-     * @param array $permisos Lista de permisos
-     * @throws HttpException Si no no tiene algún permiso
+     * @return bool Es administrador
      */
-    public static function verificarAlgunPermiso(array $permisos)
+    public static function esAdministrador(): bool
     {
-        if (!self::tieneAlgunPermiso($permisos)) {
-            self::tirarExcepcion();
-        }
-    }
-
-    /**
-     * Verifica si el usuario tiene todos los permisos de la lista. Tira excepción en caso contrario.
-     *
-     * @param array $permisos Lista de permisos
-     * @throws HttpException Si no no tiene todos los permisos
-     */
-    public static function verificarTodosPermisos(array $permisos)
-    {
-        if (!self::tieneTodosPermisos($permisos)) {
-            self::tirarExcepcion();
-        }
-    }
-
-    /**
-     * Retorna si el usuario tiene el permiso.
-     *
-     * @param string $permiso
-     * @return bool Tiene permiso
-     */
-    public static function tienePermiso(string $permiso): bool
-    {
-        return in_array($permiso, Yii::$app->session->get('PermisosTipoUsuario'));
-    }
-
-    /**
-     * Retorna si el usuario tiene alguno de los permisos.
-     *
-     * @param array $permisos Lista de permisos
-     * @return bool Tiene alguno de los permisos
-     */
-    public static function tieneAlgunPermiso(array $permisos): bool
-    {
-        foreach ($permisos as $permiso) {
-            if (self::tienePermiso($permiso)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Retorna si el usuario tiene todos los permisos.
-     *
-     * @param array $permisos
-     * @return bool Tiene todos los permisos
-     */
-    public static function tieneTodosPermisos(array $permisos): bool
-    {
-        foreach ($permisos as $permiso) {
-            if (!self::tienePermiso($permiso)) {
-                return false;
-            }
-        }
-
-        return true;
+        return Yii::$app->session->get('TipoUsuario') === 'Administrador';
     }
 
     private static function tirarExcepcion()

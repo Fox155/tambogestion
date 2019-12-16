@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Tambos;
+use common\components\TiposUsuarioHelper;
 
 /**
  * Site controller
@@ -61,8 +62,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->session->get('TipoUsuario') != 'Administrador'){
-            return $this->redirect('/sucursales/detalle');
+        if (!TiposUsuarioHelper::esAdministrador()){
+            return $this->redirect('/sucursales');
         }
 
         $tambo = new Tambos();

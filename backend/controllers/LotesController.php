@@ -10,6 +10,8 @@ use common\models\GestorSucursales;
 use common\models\forms\BusquedaForm;
 use Yii;
 use yii\web\Controller;
+use yii\helpers\Url;
+use common\components\TiposUsuarioHelper;
 
 class LotesController extends Controller
 {
@@ -29,20 +31,25 @@ class LotesController extends Controller
         if($id != 0){
             $sucursal->IdSucursal = $id;
             $sucursal->Dame();
+            $anterior = [
+                'label' => "Sucursales",
+                'link' => Url::to(['/sucursales'])
+            ];
+        }else{
+            $anterior = [];
         }
 
         return $this->render('index', [
             'models' => $lotes,
             'busqueda' => $busqueda,
-            'sucursal' => $sucursal
+            'sucursal' => $sucursal,
+            'anterior' => $anterior,
         ]);
     }
 
     public function actionAlta($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
 
         $lotes = new Lotes();
         // $lotes->IdSucursal = $id;
@@ -76,9 +83,7 @@ class LotesController extends Controller
 
     public function actionEditar($id, $idL)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
         
         $lote = new Lotes();
         $lote->IdSucursal = $id;
@@ -107,9 +112,7 @@ class LotesController extends Controller
 
     public function actionBorrar($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
 
         Yii::$app->response->format = 'json';
         
@@ -127,6 +130,8 @@ class LotesController extends Controller
 
     public function actionDarBaja($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+        
         $request = Yii::$app->request;
 
         if ($request->isGet)  {

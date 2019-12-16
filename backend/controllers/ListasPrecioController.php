@@ -6,6 +6,7 @@ use common\models\Usuarios;
 use common\models\ListasPrecio;
 use common\models\GestorListasPrecio;
 use common\models\forms\BusquedaForm;
+use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -14,6 +15,8 @@ class ListasPrecioController extends Controller
 {
     public function actionIndex()
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $busqueda = new BusquedaForm();
 
         $gestor = new GestorListasPrecio();
@@ -34,9 +37,7 @@ class ListasPrecioController extends Controller
 
     public function actionAlta()
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
 
         $listasprecio = new ListasPrecio();
 
@@ -61,9 +62,7 @@ class ListasPrecioController extends Controller
 
     public function actionEditar($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
         
         $listasprecio = new ListasPrecio();
 
@@ -92,6 +91,8 @@ class ListasPrecioController extends Controller
 
     public function actionBorrar($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $request = Yii::$app->request;
 
         if ($request->isGet)  {
@@ -116,6 +117,8 @@ class ListasPrecioController extends Controller
 
     public function actionDarBaja($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $request = Yii::$app->request;
 
         if ($request->isGet)  {
@@ -140,7 +143,9 @@ class ListasPrecioController extends Controller
     }
     
     public function actionHistorico($id)
-    {       
+    {     
+        TiposUsuarioHelper::verificarAdministrador();
+
         $listaprecio = new ListasPrecio();
         $listaprecio->IdListaPrecio = $id;
         $listaprecio->Dame();

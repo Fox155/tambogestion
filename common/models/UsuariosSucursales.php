@@ -34,20 +34,20 @@ class UsuariosSucursales extends Model
         ];
     }
 
-    /**
-     * Permite instanciar un tambo desde la base de datos.
-     * tsp_dame_tambo
-     */
-    public function Dame()
-    {
-        $sql = 'CALL tsp_dame_tambo( :id )';
+    // /**
+    //  * Permite instanciar un tambo desde la base de datos.
+    //  * tsp_dame_tambo
+    //  */
+    // public function Dame()
+    // {
+    //     $sql = 'CALL tsp_dame_tambo( :id )';
         
-        $query = Yii::$app->db->createCommand($sql);
+    //     $query = Yii::$app->db->createCommand($sql);
     
-        $query->bindValues([
-            ':id' => $this->IdTambo
-        ]);
+    //     $query->bindValues([
+    //         ':id' => $this->IdTambo
+    //     ]);
         
-        $this->attributes = $query->queryOne();
-    }
+    //     $this->attributes = $query->queryOne();
+    // }
 }

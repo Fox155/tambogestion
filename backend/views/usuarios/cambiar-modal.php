@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Usuarios;
+use common\models\forms\CambiarPasswordForm;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -22,12 +23,10 @@ use yii\web\View;
             <!-- <span class="badge badge-danger">1</span> -->
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'usuario-form',]) ?>
+        <?php $form = ActiveForm::begin(['id' => 'cambiar-pass-form',]) ?>
 
         <div class="modal-body">
             <div id="errores-modal"> </div>
-
-            <?= Html::activeHiddenInput($model, 'IdUsuario') ?>
 
             <!-- <span class="badge badge-danger">2</span> -->
             <?= $form->field($model, 'PasswordOld', ['inputOptions' => ['placeholder' => 'Antigua Contraseña'],])->passwordInput(['autofocus' => true]) ?>

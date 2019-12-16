@@ -73,6 +73,7 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
     {
         return [
             ['Email','email'],
+            ['IdsSucursales', 'each', 'rule' => ['integer']],
             [['Usuario', 'Password'], 'required', 'on' => self::_LOGIN],
             [['IdTipoUsuario', 'Usuario', 'Email', 'Password', 'IdsSucursales'], 'required', 'on' => self::_ALTA],
             [['IdUsuario', 'IdTipoUsuario', 'Email', 'IdsSucursales'], 'required', 'on' => self::_MODIFICAR],
@@ -278,81 +279,46 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return $query->queryScalar();
     }
 
-//     /**
-//      * Permite cambiar la contrase�a por el hash recibido como par�metro. Al recibir
-//      * un hash no puede controlarse que cumpla con las pol�ticas de contrase�as. El
-//      * token debe ser de un cliente existente, en estado activo. Cuando pModo = U,
-//      * debe pasar el token de sesi�n, el usuario debe existir, estar activo y debe
-//      * ingresar la contrase�a anterior. Devuelve OK o el mensaje de error en Mensaje.
-//      * Cuando pModo = R, se utiliza para rehash. Debe pasar el token de sesi�n, el
-//      * usuario debe existir, estar activo. S�lo actualiza hash en la tabla Usuarios
-//      * sin agregar al historial. Devuelve OK o el mensaje de error en Mensaje.
-//      * xsp_cambiar_password
-//      *
-//      * @param Token
-//      * @param OldPass
-//      * @param NewPass
-//      * @param Modo    U : Usuario - C: Cliente - R: ReHash
-//      */
-//     public function CambiarPassword($Token = null, $OldPass = null, $NewPass = null, $Modo = 'U')
-//     {
-//         if ($Modo != 'R') {
-//             // Verifico que el password cumpla con las políticas de contraseña
-// //            $esValida = $this->EsPasswordValida($NewPass);
-// //            if ($esValida != 'OK') {
-// //                return $esValida;
-// //            }
+    public function CambiarPassword($Token = null, $OldPass = null, $NewPass = null, $Modo = 'U')
+    {
+        if ($Modo != 'R') {
+            // Verifico que el password anterior sea correcto
+            $hash = $this->DamePassword();
 
-//             // Verifico que el password anterior sea correcto
-//             $hash = $this->DamePassword();
+            if (!(strlen($hash) == 32 && $hash == md5($OldPass)) && !password_verify($OldPass, $hash)) {
+                return 'No se puede cambiar la contraseña. La contraseña anterior es incorrecta.';
+            }
+        }
 
-//             if (!(strlen($hash) == 32 && $hash == md5($OldPass)) && !password_verify($OldPass, $hash)) {
-//                 return 'No se puede cambiar la contraseña. La contraseña anterior es incorrecta.';
-//             }
-//         }
+        $newHash = password_hash($NewPass, PASSWORD_DEFAULT);
 
-//         $newHash = password_hash($NewPass, PASSWORD_DEFAULT);
+        $sql = "CALL tsp_cambiar_password( :modo, :token, :passwordNuevo)";
 
-//         $sql = "CALL xsp_cambiar_password( :modo, :token, :passwordNuevo, :IP, :userAgent, :aplicacion)";
+        $query = Yii::$app->db->createCommand($sql);
 
-//         $query = Yii::$app->db->createCommand($sql);
+        $query->bindValues([
+            ':modo' => $Modo,
+            ':token' => $Token,
+            ':passwordNuevo' => $newHash,
+        ]);
 
-//         $query->bindValues([
-//             ':modo' => $Modo,
-//             ':token' => $Token,
-//             ':passwordNuevo' => $newHash,
-//             ':IP' => Yii::$app->request->userIP,
-//             ':userAgent' => Yii::$app->request->userAgent,
-//             ':aplicacion' => Yii::$app->id,
-//         ]);
+        return $query->queryScalar();
+    }
 
-//         return $query->queryScalar();
-//     }
+    public function RestablecerPassword($Password = '')
+    {
+        $sql = "CALL tsp_restablecer_password( :token, :idusuario, :passwordNuevo)";
 
-    // /**
-    //  * Permite setear DebeCambiarPass en S y setear un nuevo Password, para un usuario indicado.
-	//  * Devuelve OK o el mensaje de error en Mensaje.
-    //  * xsp_restablecer_password
-    //  * 
-    //  * @param Password Contraseña nueva para el usuario
-    //  */
-    // public function RestablecerPassword($Password = '')
-    // {
-    //     $sql = "CALL xsp_restablecer_password( :token, :idusuario, :passwordNuevo, :IP, :userAgent, :aplicacion)";
+        $query = Yii::$app->db->createCommand($sql);
 
-    //     $query = Yii::$app->db->createCommand($sql);
+        $query->bindValues([
+            ':idusuario' => $this->IdUsuario,
+            ':token' => Yii::$app->user->identity->Token,
+            ':passwordNuevo' => password_hash($Password, PASSWORD_DEFAULT),
+        ]);
 
-    //     $query->bindValues([
-    //         ':idusuario' => $this->IdUsuario,
-    //         ':token' => Yii::$app->user->identity->Token,
-    //         ':passwordNuevo' => password_hash($Password, PASSWORD_DEFAULT),
-    //         ':IP' => Yii::$app->request->userIP,
-    //         ':userAgent' => Yii::$app->request->userAgent,
-    //         ':aplicacion' => Yii::$app->id,
-    //     ]);
-
-    //     return $query->queryScalar();
-    // }
+        return $query->queryScalar();
+    }
 
     // /**
     //  * Permite devolver en un resultset la lista de variables de permiso que el
@@ -487,20 +453,20 @@ class Usuarios extends ActiveRecord  implements IdentityInterface
         return $query->queryScalar();
     }
 
-    public function DameTipoUsuario()
-    {
-        $sql = 'CALL tsp_dame_tipo_usuario( :token )';
+    // public function DameTipoUsuario()
+    // {
+    //     $sql = 'CALL tsp_dame_tipo_usuario( :token )';
         
-        $query = Yii::$app->db->createCommand($sql);
+    //     $query = Yii::$app->db->createCommand($sql);
         
-        $query->bindValues([
-            ':token' => $this->Token
-        ]);
+    //     $query->bindValues([
+    //         ':token' => $this->Token
+    //     ]);
         
-        $result = $query->queryScalar();
+    //     $result = $query->queryScalar();
 
-        $this->TipoUsuario = $result;
+    //     $this->TipoUsuario = $result;
 
-        return $result;
-    }
+    //     return $result;
+    // }
 }

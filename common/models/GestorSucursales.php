@@ -32,12 +32,13 @@ class GestorSucursales
      */
     public function Buscar($Cadena = '')
     {
-        $sql = "call tsp_buscar_sucursales( :idtambo, :cadena)";
+        $sql = "call tsp_buscar_sucursales( :idtambo, :idusuario, :cadena)";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
             ':idtambo' => Yii::$app->user->identity->IdTambo,
+            ':idusuario' => Yii::$app->user->identity->IdUsuario,
             ':cadena' => $Cadena,
         ]);
 

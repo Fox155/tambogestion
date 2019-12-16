@@ -13,42 +13,44 @@ class Menu
             'name' => 'Inicio',
             'icon' => 'fas fa-home',
             'href' => '/',
+            'admin' => false,
         ],
         [
             'name' => 'Ventas',
             'icon' => 'fas fa-shopping-cart',
-            'href' => '/ventas/0'
+            'href' => '/ventas/0',
+            'admin' => true,
         ],
         [
             'name' => 'Sucursales',
             'icon' => 'fas fa-kaaba',
-            'href' => '/sucursales'
+            'href' => '/sucursales',
+            'admin' => false,
         ],
         [
             'name' => 'Lotes',
             'icon' => 'fas fa-sitemap',
-            'href' => '/lotes/0'
+            'href' => '/lotes/0',
+            'admin' => false,
         ],
         [
             'name' => 'Clientes',
             'icon' => 'fas fa-user-friends',
-            'href' => '/clientes'
+            'href' => '/clientes',
+            'admin' => true,
         ],
         [
             'name' => 'Usuarios',
             'icon' => 'fas fa-id-card',
             'href' => '/usuarios',
+            'admin' => true,
         ],
         [
             'name' => 'Lista de Precios',
             'icon' => 'fas fa-money-check-alt',
-            'href' => '/listas-precio'
+            'href' => '/listas-precio',
+            'admin' => true,
         ],
-        // [
-        //     'name' => 'Vacas',
-        //     'icon' => 'fas fa-hat-cowboy-side',
-        //     'href' => '/tambogestion/backend/web/vacas/?idS=0&idL=0'
-        // ],
     ];
 
     /**
@@ -56,9 +58,9 @@ class Menu
      */
     public static function renderiza($el)
     {
-        // if (array_key_exists('permiso', $el)) {
-        //     return Yii::$app->session->get('TipoUsuario')==$el['permiso'];
-        // }
+        if ($el['admin']) {
+            return TiposUsuarioHelper::esAdministrador();
+        }
         // if (array_key_exists('submenu', $el)) {
         //     return TiposUsuarioHelper::tieneAlgunPermiso(ArrayHelper::map($el['submenu'], 'permiso', 'permiso'));
         // }

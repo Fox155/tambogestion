@@ -91,7 +91,7 @@ $config = [
                 'matchCallback' => function () {
                     $usuario = Yii::$app->user->identity;
                     $token = Yii::$app->session->get('Token');
-                    return $usuario->Estado == 'A' && $usuario->Token == $token;
+                    return ($usuario->Estado == 'A' || $usuario->Estado == 'C') && $usuario->Token == $token;
                 },
             ],
         ],
@@ -104,7 +104,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['*'],
+        'allowedIPs' => ['190.225.96.41', '186.123.165.221'],
     ];
 }
 

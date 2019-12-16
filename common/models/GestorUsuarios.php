@@ -11,7 +11,9 @@ class GestorUsuarios
      */
     public function Alta(Usuarios $usuario)
     {
-        $sql = "call tsp_alta_usuario( :token, :idtipo, :usuario, :pass, :email)";
+        // $integerIDs = array_map('intval', explode(',', $usuario->IdsSucursales));
+
+        $sql = "call tsp_alta_usuario( :token, :idtipo, :usuario, :pass, :email, :idssucursales)";
 
         $query = Yii::$app->db->createCommand($sql);
         
@@ -21,6 +23,7 @@ class GestorUsuarios
             ':usuario' => $usuario->Usuario,
             ':email' => $usuario->Email,
             ':pass' => md5($usuario->Password),
+            ':idssucursales' => json_encode($usuario->IdsSucursales, JSON_NUMERIC_CHECK),
         ]);
 
         return $query->queryScalar();

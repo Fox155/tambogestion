@@ -7,12 +7,18 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\components\TiposUsuarioHelper;
 
 /* @var $this View */
 /* @var $form ActiveForm */
 /* @var $models Lotes */
 /* @var $sucursal Sucursales */
-$this->title = isset($sucursal['Nombre']) ? 'Lotes de la Sucursal: ' . $sucursal['Nombre'] : 'Lotes';
+if (isset($sucursal['Nombre'])){
+    $this->params['breadcrumbs'][] = $anterior;
+    $this->title = 'Lotes de la Sucursal: ' . $sucursal['Nombre'];
+}else{
+    $this->title ='Lotes';
+}
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="alta--button">
+            <?php if (TiposUsuarioHelper::esAdministrador()): ?>
             <div class="alta--button">
                 <?php if (!isset($sucursal['Nombre'])): ?>
                     <!-- <span class="badge badge-danger">4</span> -->
@@ -53,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </button>
                 <?php endif;?>
             </div>
+            <?php endif ?>
 
         <div id="errores"> </div>
         
@@ -99,6 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                             </a>
 
+                                            <?php if (TiposUsuarioHelper::esAdministrador()): ?>
                                             <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/lotes/editar', 'id' => $model['IdSucursal'], 'idL' => $model['IdLote']]) ?>" 
                                                         data-mensaje="Editar">
@@ -112,6 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <!-- <span class="badge badge-danger">9</span> -->
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
+                                            <?php endif ?>
 
                                         </div>
                                     </td>

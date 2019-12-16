@@ -8,6 +8,7 @@ use common\models\GestorClientes;
 use common\models\ListasPrecio;
 use common\models\GestorListasPrecio;
 use common\models\forms\BusquedaForm;
+use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -16,6 +17,8 @@ class ClientesController extends Controller
 {
     public function actionIndex()
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $busqueda = new BusquedaForm();
 
         $gestor = new GestorClientes();
@@ -36,9 +39,7 @@ class ClientesController extends Controller
 
     public function actionAlta()
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
 
         $clientes = new Clientes();
         $clientes->setScenario(Clientes::_ALTA);
@@ -65,6 +66,7 @@ class ClientesController extends Controller
 
     public function actionEditar($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
        
         $clientes = new Clientes();
         $clientes ->setScenario(Clientes::_MODIFICAR);
@@ -92,24 +94,28 @@ class ClientesController extends Controller
         }
     }
 
-    public function actionBorrar($id)
-    {
-        Yii::$app->response->format = 'json';
+    // public function actionBorrar($id)
+    // {
+    //     TiposUsuarioHelper::verificarAdministrador();
+
+    //     Yii::$app->response->format = 'json';
         
-        $clientes = new Clientes();
-        $clientes->IdCliente= $id;
+    //     $clientes = new Clientes();
+    //     $clientes->IdCliente= $id;
 
-        $resultado = GestorClientes::Borrar($clientes);
+    //     $resultado = GestorClientes::Borrar($clientes);
 
-        if ($resultado == 'OK') {
-            return ['error' => null];
-        } else {
-            return ['error' => $resultado];
-        }
-    }
+    //     if ($resultado == 'OK') {
+    //         return ['error' => null];
+    //     } else {
+    //         return ['error' => $resultado];
+    //     }
+    // }
     
     public function actionDarbaja($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $request = Yii::$app->request;
 
         if ($request->isGet)  {
@@ -132,24 +138,23 @@ class ClientesController extends Controller
         }
     }
 
-        public function actionActivar($id)
-        {
-            Yii::$app->response->format = 'json';
-            
-            $clientes = new Clientes();
-            $clientes->IdCliente= $id;
-    
-            $resultado = Clientes::Activar($clientes);
-    
-            if ($resultado == 'OK') {
-                return ['error' => null];
-            } else {
-                return ['error' => $resultado];
+    public function actionActivar($id)
+    {
+        TiposUsuarioHelper::verificarAdministrador();
+
+        Yii::$app->response->format = 'json';
+        
+        $clientes = new Clientes();
+        $clientes->IdCliente= $id;
+
+        $resultado = Clientes::Activar($clientes);
+
+        if ($resultado == 'OK') {
+            return ['error' => null];
+        } else {
+            return ['error' => $resultado];
         }    
-
-        }
-    
-
+    }
 }
 
 ?>

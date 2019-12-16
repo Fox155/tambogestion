@@ -11,6 +11,7 @@ use common\models\GestorVacas;
 use common\models\forms\BusquedaForm;
 use common\models\forms\LactanciaForm;
 use common\components\FechaHelper;
+use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\Url;
@@ -38,14 +39,24 @@ class VacasController extends Controller
         if($idL != 0){
             $lote->IdLote = $idL;
             $lote->Dame();
+            $anterior = array();
             $anterior = [
-                'label' => "Lotes de la sucursal: " . $sucursal->Nombre,
-                'link' => Url::to(['/lotes', 'id' => $idS])
+                [
+                    'label' => "Sucursales",
+                    'link' => Url::to(['/sucursales'])
+                ],
+                [
+                    'label' => "Lotes de la sucursal: " . $sucursal->Nombre,
+                    'link' => Url::to(['/lotes', 'id' => $idS])
+                ],
             ];
         }else{
+            $anterior = array();
             $anterior = [
-                'label' => "Sucursales",
-                'link' => Url::to(['/sucursales'])
+                [
+                    'label' => "Sucursales",
+                    'link' => Url::to(['/sucursales'])
+                ]
             ];
         }
 
@@ -98,7 +109,6 @@ class VacasController extends Controller
 
     public function actionEditar($id,$idS)
     {
-       
         $vacas = new Vacas();
         $vacas->IdSucursal = $idS;
         $vacas->setScenario(Vacas::_MODIFICAR);
@@ -133,7 +143,6 @@ class VacasController extends Controller
 
     public function actionEstado($id)
     {
-       
         $vacas = new Vacas();
         $vacas->IdVaca = $id;
         $vacas->setScenario(Vacas::_ESTADO);
@@ -159,7 +168,6 @@ class VacasController extends Controller
 
     public function actionLote($id)
     {
-       
         $vacas = new Vacas();
         $vacas->IdVaca = $id;
         $vacas->setScenario(Vacas::_LOTE);
@@ -188,10 +196,6 @@ class VacasController extends Controller
 
     public function actionBorrar($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-
         Yii::$app->response->format = 'json';
         
         $vaca= new Vacas();
@@ -251,16 +255,18 @@ class VacasController extends Controller
 
         if($vacas->Estado == 'SECA'){
             $lactancia->setScenario(LactanciaForm::_ALTA);
+            $vacas->Estado = 'LACTANTE';
             $titulo = "Nueva Lactancia";
         }else if ($vacas->Estado == 'LACTANTE'){
             $lactancia->setScenario(LactanciaForm::_FINALIZA);
+            $vacas->Estado = 'SECA';
             $titulo = "Finalizar Lactancia";
         }else{
             return [];
         }
         
         if ($lactancia->load(Yii::$app->request->post()) && $lactancia->validate()) {
-            $resultado = $vacas->CambiarLote();
+            $resultado = $vacas->CambiarEstado();
 
             Yii::$app->response->format = 'json';
             if ($resultado == 'OK') {

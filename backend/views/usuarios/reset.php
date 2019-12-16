@@ -15,7 +15,7 @@ use yii\web\View;
     <div class="modal-content">
 
         <div class="modal-header">
-            <h5 class="modal-title"><?= $titulo ?>: <?= $model['Usuario'] ?></h5>
+            <h5 class="modal-title"><?= $titulo ?>: <?= $usuario['Usuario'] ?></h5>
             <button type="button" class="close" onclick="Main.modalCerrar()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -27,17 +27,18 @@ use yii\web\View;
         <div class="modal-body">
             <div id="errores-modal"> </div>
 
-            <?= Html::activeHiddenInput($model, 'IdUsuario') ?>
-
             <!-- <span class="badge badge-danger">2</span> -->
             <?= $form->field($model, 'PasswordNew')->passwordInput() ?>
 
+            <!-- <span class="badge badge-danger">3</span> -->
+            <?= $form->field($model, 'PasswordRep')->passwordInput() ?>
+
         </div>
         <div class="modal-footer">
-            <!-- <span class="badge badge-danger">3</span> -->
+            <!-- <span class="badge badge-danger">4</span> -->
             <button type="button" class="btn btn-default" onclick="Main.modalCerrar()">Cerrar</button>
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-primary',]) ?>  
-            <!-- <span class="badge badge-danger">4</span> -->
+            <!-- <span class="badge badge-danger">5</span> -->
         </div>
         <?php ActiveForm::end(); ?>
     </div>

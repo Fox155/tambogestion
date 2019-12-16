@@ -26,8 +26,9 @@ if(isset($sucursal['Nombre']) && isset($lote['Nombre'])){
         $this->title =  'Vacas';
     }
 }
-
-$this->params['breadcrumbs'][] = $anterior;
+foreach ($anterior as $ante){
+    $this->params['breadcrumbs'][] = $ante;
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

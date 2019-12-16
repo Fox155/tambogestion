@@ -172,7 +172,7 @@ class Vacas extends Model
 
     /**
      * tsp_listar_lactancias
-     * tsp_resumen_producciones_vaca
+     * tsp_resumen_producciones_lactancia
      */
     public function ListarResumenLactancias()
     {

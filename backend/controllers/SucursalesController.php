@@ -10,6 +10,7 @@ use common\models\GestorUsuarios;
 use common\models\RegistrosLeche;
 use common\models\forms\BusquedaForm;
 use common\components\FechaHelper;
+use common\components\TiposUsuarioHelper;
 use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
@@ -37,9 +38,7 @@ class SucursalesController extends Controller
 
     public function actionAlta()
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
 
         $sucursal = new Sucursales();
 
@@ -64,9 +63,7 @@ class SucursalesController extends Controller
 
     public function actionEditar($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+        TiposUsuarioHelper::verificarAdministrador();
         
         $sucursal = new Sucursales();
 
@@ -95,6 +92,8 @@ class SucursalesController extends Controller
 
     public function actionBorrar($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         if (Yii::$app->request->isGet)  {
             return $this->renderAjax('@app/views/common/confirmar-baja', [
                 'objeto' => 'la sucursal',
@@ -117,10 +116,6 @@ class SucursalesController extends Controller
     
     public function actionDetalle($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-        
         $sucursal = new Sucursales();
         $sucursal->IdSucursal = $id;
         $sucursal->Dame();
@@ -159,6 +154,7 @@ class SucursalesController extends Controller
         $sucursal->IdSucursal = $id;
 
         if($registro->load(Yii::$app->request->post()) && $registro->validate()){
+            $registro->Fecha = FechaHelper::toDateMysql($registro->Fecha);
             $resultado = $sucursal->AltaRegistro($registro);
 
             Yii::$app->response->format = 'json';
@@ -179,10 +175,6 @@ class SucursalesController extends Controller
 
     public function actionBorrarRegistro($id)
     {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-
         Yii::$app->response->format = 'json';
         
         $registro = new RegistrosLeche();
@@ -198,16 +190,13 @@ class SucursalesController extends Controller
     }
 
     public function actionEditarRegistro($id)
-    {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
-        
+    {   
         $registro = new RegistrosLeche();
 
         $registro->setScenario(RegistrosLeche::_MODIFICAR);
 
         if ($registro->load(Yii::$app->request->post()) && $registro->validate()) {
+            $registro->Fecha = FechaHelper::toDateMysql($registro->Fecha);
             $resultado = Sucursales::ModificarRegistro($registro);
 
             Yii::$app->response->format = 'json';
@@ -227,57 +216,57 @@ class SucursalesController extends Controller
         }
     }
 
-    public function actionAsignarUsuario($id)
-    {
-        $usuario = new UsuariosSucursales();
-        $usuario->setScenario(UsuariosSucursales::_ALTA);
-        $usuario->IdSucursal = $id;
+    // public function actionAsignarUsuario($id)
+    // {
+    //     $usuario = new UsuariosSucursales();
+    //     $usuario->setScenario(UsuariosSucursales::_ALTA);
+    //     $usuario->IdSucursal = $id;
 
-        $sucursal = new Sucursales();
-        $sucursal->IdSucursal = $id;
+    //     $sucursal = new Sucursales();
+    //     $sucursal->IdSucursal = $id;
 
-        if($usuario->load(Yii::$app->request->post()) && $usuario->validate()){
-            $resultado = $sucursal->AsignarUsuario($usuario);
+    //     if($usuario->load(Yii::$app->request->post()) && $usuario->validate()){
+    //         $resultado = $sucursal->AsignarUsuario($usuario);
 
-            Yii::$app->response->format = 'json';
-            if (substr($resultado, 0, 2) == 'OK') {
-                return ['error' => null];
-            } else {
-                return ['error' => $resultado];
-            }
-        }else {
-            $sucursal->Dame();
+    //         Yii::$app->response->format = 'json';
+    //         if (substr($resultado, 0, 2) == 'OK') {
+    //             return ['error' => null];
+    //         } else {
+    //             return ['error' => $resultado];
+    //         }
+    //     }else {
+    //         $sucursal->Dame();
 
-            $usuarios = GestorUsuarios::Buscar();
+    //         $usuarios = GestorUsuarios::Buscar();
 
-            return $this->renderAjax('asignar-usuario', [
-                'titulo' => 'Asignar Usuario a la Sucursal: '.$sucursal->Nombre,
-                'model' => $usuario,
-                'usuarios' => $usuarios,
-            ]);
-        }
-    }
+    //         return $this->renderAjax('asignar-usuario', [
+    //             'titulo' => 'Asignar Usuario a la Sucursal: '.$sucursal->Nombre,
+    //             'model' => $usuario,
+    //             'usuarios' => $usuarios,
+    //         ]);
+    //     }
+    // }
 
-    public function actionDesasignarUsuario($idU, $idS)
-    {
-        // if(Yii::$app->user->identity->IdTambo!='Administrador'){
-        //     return;
-        // }
+    // public function actionDesasignarUsuario($idU, $idS)
+    // {
+    //     // if(Yii::$app->user->identity->IdTambo!='Administrador'){
+    //     //     return;
+    //     // }
 
-        Yii::$app->response->format = 'json';
+    //     Yii::$app->response->format = 'json';
         
-        $usuario = new UsuariosSucursales();
-        $usuario->IdUsuario = $idU;
-        $usuario->IdSucursal = $idS;
+    //     $usuario = new UsuariosSucursales();
+    //     $usuario->IdUsuario = $idU;
+    //     $usuario->IdSucursal = $idS;
 
-        $resultado = Sucursales::DesasignarUsuario($usuario);
+    //     $resultado = Sucursales::DesasignarUsuario($usuario);
 
-        if ($resultado == 'OK') {
-            return ['error' => null];
-        } else {
-            return ['error' => $resultado];
-        }
-    }
+    //     if ($resultado == 'OK') {
+    //         return ['error' => null];
+    //     } else {
+    //         return ['error' => $resultado];
+    //     }
+    // }
 }
 
 ?>

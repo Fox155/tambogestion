@@ -15,6 +15,13 @@ $this->title = 'Cambiar Contraseña';
     <div class="card-header">Cambiar Contraseña</div>
     <div class="card-body">
       <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <?php
+          foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+              echo '<div class="alert alert-' . $key . ' alert-dismissable">'
+              . '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'
+              . $message . '</div>';
+          }
+        ?>
 
         <!-- <span class="badge badge-danger">1</span> -->
         <?= $form->field($model, 'PasswordOld', ['inputOptions' => ['placeholder' => 'Antigua Contraseña'],])->passwordInput(['autofocus' => true]) ?>
@@ -31,4 +38,4 @@ $this->title = 'Cambiar Contraseña';
       <?php ActiveForm::end(); ?>
     </div>
   </div>
-</div>    
+</div>

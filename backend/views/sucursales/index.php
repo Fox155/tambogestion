@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\components\TiposUsuarioHelper;
 // use nullref\datatable\DataTable;
 
 /* @var $this View */
@@ -31,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="alta--button">
         
+            <?php if (TiposUsuarioHelper::esAdministrador()): ?>
             <div class="alta--button">
             <!-- <span class="badge badge-danger">3</span> -->
                 <button type="button" class="btn btn-primary"
@@ -39,8 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     Nueva Sucursal
                 </button>
             </div>
+            <?php endif ?>
 
         </div>
+
 
         <div id="errores"> </div>
         
@@ -91,12 +95,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <i class="fas fa-info" style="color: Dodgerblue"></i>
                                                 </a>
 
+                                                <?php if (TiposUsuarioHelper::esAdministrador()): ?>
                                                 <a class="btn btn-default"
                                                     href="<?= Url::to(['/ventas', 'id' => $model['IdSucursal']]) ?>"
                                                     data-mensaje="Ventas">
                                                     <!-- <span class="badge badge-danger">7</span> -->
                                                     <i class="fas fa-shopping-cart" style="color: Green"></i>
                                                 </a>
+                                                <?php endif ?>
 
                                                 <a class="btn btn-default"
                                                         href="<?= Url::to(['/lotes', 'id' => $model['IdSucursal']]) ?>"
@@ -113,6 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <i class="fas fa-hat-cowboy-side" style="color: Brown"></i>
                                                 </a>
 
+                                                <!-- TiposUsuarioHelper::esAdministrador() -->
+                                                <?php if (TiposUsuarioHelper::esAdministrador()): ?>
                                                 <button type="button" class="btn btn-default"
                                                         data-modal="<?= Url::to(['/sucursales/editar', 'id' => $model['IdSucursal']]) ?>" 
                                                         data-mensaje="Editar">
@@ -126,6 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <!-- <span class="badge badge-danger">11</span> -->
                                                     <i class="far fa-trash-alt" style="color: Tomato"></i>
                                                 </button>
+                                                <?php endif ?>
 
                                         </div>
                                     </td> 

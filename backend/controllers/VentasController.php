@@ -16,11 +16,14 @@ use Yii;
 use yii\web\Controller;
 use yii\data\Pagination;
 use common\components\FechaHelper;
+use common\components\TiposUsuarioHelper;
 
 class VentasController extends Controller
 {
     public function actionIndex($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $busqueda = new BusquedaForm();
 
         if ($busqueda->load(Yii::$app->request->post()) && $busqueda->validate()) {
@@ -48,6 +51,8 @@ class VentasController extends Controller
 
     public function actionAlta($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $venta = new Ventas();
         $venta->setScenario(Ventas::_ALTA);
 
@@ -81,6 +86,8 @@ class VentasController extends Controller
 
     public function actionEditar($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $venta = new Ventas();
         $venta ->setScenario(Ventas::_MODIFICAR);
 
@@ -109,6 +116,8 @@ class VentasController extends Controller
 
     public function actionBorrar($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         Yii::$app->response->format = 'json';
         
         $venta = new Ventas();
@@ -125,6 +134,8 @@ class VentasController extends Controller
     
     public function actionDarBaja($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         if (Yii::$app->request->isGet)  {
             return $this->renderAjax('@app/views/common/confirmar-baja', [
                 'objeto' => 'la venta',
@@ -146,7 +157,9 @@ class VentasController extends Controller
     }
 
     public function actionDetalle($id)
-    {       
+    {      
+        TiposUsuarioHelper::verificarAdministrador();
+
         $venta = new Ventas();
         $venta->IdVenta = $id;
         $venta->Dame();
@@ -171,6 +184,8 @@ class VentasController extends Controller
 
     public function actionAltaPago($id)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $pago = new Pagos();
         $pago->setScenario(Pagos::_ALTA);
         $pago->IdVenta = $id;
@@ -199,6 +214,8 @@ class VentasController extends Controller
 
     public function actionBorrarPago($idV, $nro)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         Yii::$app->response->format = 'json';
         
         $pago = new Pagos();
@@ -218,6 +235,8 @@ class VentasController extends Controller
 
     public function actionEditarPago($idV, $nro)
     {
+        TiposUsuarioHelper::verificarAdministrador();
+
         $pago = new Pagos();
 
         $pago->setScenario(Pagos::_MODIFICAR);
@@ -245,7 +264,5 @@ class VentasController extends Controller
             ]);
         }
     }
-
 }
-
 ?>
