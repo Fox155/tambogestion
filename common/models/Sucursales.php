@@ -16,9 +16,13 @@ class Sucursales extends Model
     // DatosJSON
     public $Direccion;
     public $Telefono;
+
+    // Auth
+    public $ApiKey;
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
+    const _AUTH = 'auth';
  
     public function rules()
     {
@@ -27,6 +31,7 @@ class Sucursales extends Model
                 'required', 'on' => self::_ALTA],
             [['IdSucursal', 'Nombre', 'Direccion', 'Telefono'],
                 'required', 'on' => self::_MODIFICAR],
+            [['ApiKey'], 'required', 'on' => self::_AUTH],
             [$this->attributes(), 'safe']
         ];
     }
@@ -170,5 +175,18 @@ class Sucursales extends Model
         ]);
 
         return $query->queryScalar();
+    }
+
+    public function DamePorApiKey()
+    {
+        $sql = 'CALL tsp_dame_sucursal_por_apikey( :apikey )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':apikey' => $this->ApiKey
+        ]);
+        
+        $this->attributes = $query->queryOne();
     }
 }

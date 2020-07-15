@@ -24,12 +24,14 @@ class Vacas extends Model
     public $IdSucursal;
     public $Sucursal;
     public $Estado;
+    public $NroLactancia;
 
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
     const _ESTADO = 'estado';
     const _LOTE = 'lote';
+    const _AUTH = 'auth';
 
     const ESTADOS_LISTAR = [
         'VAQUILLONA' => 'Vaquillona',
@@ -76,6 +78,7 @@ class Vacas extends Model
                 'required', 'on' => self::_MODIFICAR],
             [['IdVaca', 'Estado'], 'required', 'on' => self::_ESTADO],
             [['IdVaca', 'IdLote'], 'required', 'on' => self::_LOTE],
+            [['IdRFID'], 'required', 'on' => self::_AUTH],
             [$this->attributes(), 'safe']
         ];
     }
@@ -92,6 +95,19 @@ class Vacas extends Model
     
         $query->bindValues([
             ':id' => $this->IdVaca
+        ]);
+        
+        $this->attributes = $query->queryOne();
+    }
+
+    public function DamePorRFID()
+    {
+        $sql = 'CALL tsp_dame_vaca_por_rfid( :id )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':id' => $this->IdRFID
         ]);
         
         $this->attributes = $query->queryOne();
@@ -166,14 +182,25 @@ class Vacas extends Model
         $resArr = array();
         foreach ($lactancias as $lactancia){
             $tmpArr = array();
-            $sql = "call tsp_resumen_producciones_vaca( :id, :nrolactancia)";
+            $sql2 = "call tsp_resumen_producciones_vaca( :id, :nrolactancia)";
 
-            $query2 = Yii::$app->db->createCommand($sql);
+            $query2 = Yii::$app->db->createCommand($sql2);
             
             $query2->bindValues([
                 ':id' => $this->IdVaca,
                 ':nrolactancia' => $lactancia['NroLactancia'],
             ]);
+
+            $sql3 = "call tsp_resumen_producciones_vaca_extra( :id, :nrolactancia)";
+
+            $query3 = Yii::$app->db->createCommand($sql3);
+            
+            $query3->bindValues([
+                ':id' => $this->IdVaca,
+                ':nrolactancia' => $lactancia['NroLactancia'],
+            ]);
+
+            $resumen3 = $query3->queryOne();
 
             $resumen = $query2->queryOne();
 
@@ -182,6 +209,10 @@ class Vacas extends Model
                 $tmpArr[$key] = $value;
             }
             foreach ($resumen as $key=>$value)
+            {
+                $tmpArr[$key] = $value;
+            }
+            foreach ($resumen3 as $key=>$value)
             {
                 $tmpArr[$key] = $value;
             }

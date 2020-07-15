@@ -1,4 +1,5 @@
 <?php
+
 namespace common\components;
 
 use InvalidArgumentException;
@@ -33,7 +34,7 @@ class FechaHelper
             throw new InvalidArgumentException("La fecha {$fecha} es inválida.");
         }
 
-        return date("Y-m-d", $unixTimestamp);
+        return date("Y-m-d H:i:s", $unixTimestamp);
     }
 
     public static function toDateLocal($fecha)
@@ -57,6 +58,6 @@ class FechaHelper
 
     private static function formatoSalidaDatetimeLocal(bool $incluyeSegundos): string
     {
-        return $incluyeSegundos ? 'd/m/Y H:i:s': 'd/m/Y H:i';
+        return $incluyeSegundos ? 'd/m/Y H:i:s' : 'd/m/Y H:i';
     }
 }

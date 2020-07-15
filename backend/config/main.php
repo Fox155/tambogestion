@@ -12,8 +12,16 @@ $config = [
     'language' => 'es',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
-    'modules' => [],
+    'bootstrap' => ['backend\modules\api\Bootstrap', 'log'],
+    'modules' => [
+        'api' => [
+            'class' => 'backend\modules\api\Api',
+        ],
+        'gridview' => [
+            'class' => 'kartik\grid\Module',
+            // other module settings
+        ]
+    ],
     'components' => [
         'assetManager' => [
             'linkAssets' => true,
@@ -63,7 +71,7 @@ $config = [
                 '<controller>/index' => '<controller>',
             ],
         ],
-        
+
     ],
     'as access' => [
         'class' => 'yii\filters\AccessControl',
@@ -104,7 +112,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['190.225.96.41', '186.123.165.221'],
+        'allowedIPs' => ['190.225.96.41', '186.123.165.221', '191.103.110.95'],
     ];
 }
 
