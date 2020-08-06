@@ -52,7 +52,10 @@ class LotesController extends Controller
         TiposUsuarioHelper::verificarAdministrador();
 
         $lotes = new Lotes();
-        // $lotes->IdSucursal = $id;
+        $lotes->IdSucursal = $id;
+        if($id != 0){
+            $lotes->IdSucursal = $id;
+        }
 
         $lotes->setScenario(Lotes::_ALTA);
 
@@ -66,11 +69,9 @@ class LotesController extends Controller
                 return ['error' => $resultado];
             }
         }else {
-            $sucursales = 0;
+            $sucursales = [];
             if($id == 0){
                 $sucursales = GestorSucursales::Buscar();
-            }else{
-                $lotes->IdSucursal = $id;
             }
 
             return $this->renderAjax('alta', [

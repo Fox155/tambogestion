@@ -288,4 +288,8 @@ var Main = {
                     $('#errores').html(html);
                 });
     },
+    topFuntion: function(){
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
 }

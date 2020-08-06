@@ -20,7 +20,8 @@ class GestorSucursales
             ':nombre' => $sucursal->Nombre,
             ':datos' => json_encode([
                 'Telefono' => $sucursal->Telefono,
-                'Direccion' => $sucursal->Direccion
+                'Direccion' => $sucursal->Direccion,
+                'ApiKey' => Yii::$app->security->generateRandomString(300),
             ]),
         ]);
 
@@ -59,7 +60,8 @@ class GestorSucursales
             ':nombre' => $sucursal->Nombre,
             ':datos' => json_encode([
                 'Telefono' => $sucursal->Telefono,
-                'Direccion' => $sucursal->Direccion
+                'Direccion' => $sucursal->Direccion,
+                'ApiKey' => $sucursal->ApiKey,
             ]),
         ]);
 

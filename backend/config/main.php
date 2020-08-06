@@ -82,6 +82,7 @@ $config = [
             [
                 'allow' => true,
                 'actions' => ['login', 'error'],
+                'roles' => ['?'],
             ],
             /**
              *  Debug
@@ -103,6 +104,16 @@ $config = [
                 },
             ],
         ],
+        // Función que se ejecuta cuando el request es denegado.
+        'denyCallback' => function ($rule, $action) {
+            if (!Yii::$app->user->isGuest) {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash('danger', 'Ocurrió un problema con su sesión.');
+                Yii::$app->user->returnUrl = Yii::$app->request->referrer;
+                return $action->controller->redirect(Yii::$app->user->loginUrl);
+            }
+            return $action->controller->redirect(Yii::$app->user->loginUrl);
+        },
     ],
     'params' => $params,
 ];
@@ -112,7 +123,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['190.225.96.41', '186.123.165.221', '191.103.110.95'],
+        'allowedIPs' => ['191.103.110.95', '191.103.111.114', '181.80.5.139	'],
     ];
 }
 

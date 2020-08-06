@@ -9,14 +9,18 @@ class GestorClientes
     /**
      * tsp_alta_cliente
      */
-    public function Alta(Clientes $cliente)
+    public function Alta(Clientes $cliente, $IdTambo = 0)
     {
         $sql = "call tsp_alta_cliente( :idtambo, :idlistaprecio, :apellido, :nombre, :tipodoc, :nrodoc, :datos, :observaciones)";
 
         $query = Yii::$app->db->createCommand($sql);
+
+        if (Yii::$app->session->get('IdTambo')) {
+            $IdTambo = Yii::$app->session->get('IdTambo');
+        }
         
         $query->bindValues([
-            ':idtambo' => Yii::$app->user->identity->IdTambo,
+            ':idtambo' => $IdTambo,
             ':idlistaprecio' => $cliente->IdListaPrecio , 
             ':apellido' => $cliente->Apellido, 
             ':nombre' => $cliente->Nombre , 
@@ -35,14 +39,18 @@ class GestorClientes
     /**
      * tsp_buscar_cliente
      */
-    public function Buscar($Incluye = 'N', $Cadena = '')
+    public function Buscar($Incluye = 'N', $Cadena = '', $IdTambo = null)
     {
         $sql = "call tsp_buscar_clientes( :idtambo,:cadena,:incluye)";
 
         $query = Yii::$app->db->createCommand($sql);
+
+        if (Yii::$app->session->get('IdTambo')) {
+            $IdTambo = Yii::$app->session->get('IdTambo');
+        }
         
         $query->bindValues([
-            ':idtambo' => Yii::$app->user->identity->IdTambo,
+            ':idtambo' => $IdTambo,
             ':incluye' => $Incluye,
             ':cadena' => $Cadena,
         ]);

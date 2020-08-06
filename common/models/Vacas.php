@@ -25,7 +25,6 @@ class Vacas extends Model
     public $Sucursal;
     public $Estado;
     public $NroLactancia;
-
     
     const _ALTA = 'alta';
     const _MODIFICAR = 'modificar';
@@ -54,7 +53,6 @@ class Vacas extends Model
 
     const ESTADOS_ALTA = [
         'SECA' => 'Seca',
-        'LACTANTE' => 'Lactante',
         'VAQUILLONA' => 'Vaquillona',
     ];
 
@@ -125,6 +123,38 @@ class Vacas extends Model
         $query->bindValues([
             ':id' => $this->IdVaca,
             ':estado' => $this->Estado
+        ]);
+        
+        return $query->queryScalar();
+    }
+
+    /**
+     * tsp_cambiar_estado_vaca
+     */
+    public function NuevaLactancia($Fecha = null, $Observaciones = null)
+    {
+        $sql = 'CALL tsp_alta_lactancia( :id, :fecha, :observaciones )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+            ':fecha' => $Fecha,
+            ':observaciones' => $Observaciones,
+        ]);
+        
+        return $query->queryScalar();
+    }
+
+    public function FinalizarLactancia($Fecha = null)
+    {
+        $sql = 'CALL tsp_finalizar_lactancia( :id, :fecha )';
+        
+        $query = Yii::$app->db->createCommand($sql);
+    
+        $query->bindValues([
+            ':id' => $this->IdVaca,
+            ':fecha' => $Fecha,
         ]);
         
         return $query->queryScalar();
@@ -212,13 +242,15 @@ class Vacas extends Model
             {
                 $tmpArr[$key] = $value;
             }
-            foreach ($resumen3 as $key=>$value)
-            {
-                $tmpArr[$key] = $value;
+            if ($resumen3){
+                foreach ($resumen3 as $key=>$value)
+                {
+                    $tmpArr[$key] = $value;
+                }
+                $tmpArr['Labels'] = json_decode($tmpArr['Labels']);
+                $tmpArr['Data'] = json_decode($tmpArr['Data']);
+                $resArr[] = $tmpArr;
             }
-            $tmpArr['Labels'] = json_decode($tmpArr['Labels']);
-            $tmpArr['Data'] = json_decode($tmpArr['Data']);
-            $resArr[] = $tmpArr;
         }
 
         return $resArr;

@@ -9,14 +9,18 @@ class GestorListasPrecio
     /**
      * tsp_alta_listaprecio
      */
-    public function Alta(ListasPrecio $listaprecio)
+    public function Alta(ListasPrecio $listaprecio, $IdTambo = 0)
     {
         $sql = "call tsp_alta_listaprecio( :idtambo, :lista , :precio)";
 
         $query = Yii::$app->db->createCommand($sql);
-        
+
+        if (Yii::$app->session->get('IdTambo')) {
+            $IdTambo = Yii::$app->session->get('IdTambo');
+        }
+
         $query->bindValues([
-            ':idtambo' => Yii::$app->user->identity->IdTambo,
+            ':idtambo' => $IdTambo,
             ':lista' => $listaprecio->Lista,
             ':precio' => $listaprecio->Precio,
         ]);
@@ -27,14 +31,18 @@ class GestorListasPrecio
     /**
      * tsp_buscar_listaprecio
      */
-    public function Buscar($Incluye = 'N', $Cadena = '')
+    public function Buscar($Incluye = 'N', $Cadena = '', $IdTambo = 0)
     {
         $sql = "call tsp_buscar_listaprecio( :idtambo, :incluye, :cadena)";
 
         $query = Yii::$app->db->createCommand($sql);
-        
+
+        if (Yii::$app->session->get('IdTambo')) {
+            $IdTambo = Yii::$app->session->get('IdTambo');
+        }
+
         $query->bindValues([
-            ':idtambo' => Yii::$app->user->identity->IdTambo,
+            ':idtambo' => $IdTambo,
             ':incluye' => $Incluye,
             ':cadena' => $Cadena,
         ]);
@@ -50,7 +58,7 @@ class GestorListasPrecio
         $sql = "call tsp_modificar_listaprecio( :idlistaprecio, :lista , :precio)";
 
         $query = Yii::$app->db->createCommand($sql);
-        
+
         $query->bindValues([
             ':idlistaprecio' => $listaprecio->IdListaPrecio,
             ':lista' => $listaprecio->Lista,
@@ -68,7 +76,7 @@ class GestorListasPrecio
         $sql = "call tsp_borrar_listaprecio(:listaprecio)";
 
         $query = Yii::$app->db->createCommand($sql);
-        
+
         $query->bindValues([
             ':listaprecio' => $listaprecio->IdListaPrecio,
         ]);

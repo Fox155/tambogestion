@@ -21,6 +21,7 @@ class CommonAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap4\BootstrapAsset',
         'yii\bootstrap4\BootstrapPluginAsset',
+        'common\assets\NpmAsset',
         'common\assets\BowerAsset',
     ];
 }

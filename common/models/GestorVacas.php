@@ -75,16 +75,16 @@ class GestorVacas
     }
 
     /**
-     * tsp_borrar_lote
+     * tsp_borrar_vaca
      */
-    public function Borrar(Lotes $lote)
+    public function Borrar(Vacas $vaca)
     {
-        $sql = "call tsp_borrar_lote(:idlote)";
+        $sql = "call tsp_borrar_vaca(:idvaca)";
 
         $query = Yii::$app->db->createCommand($sql);
         
         $query->bindValues([
-            ':idlote' => $lote->IdLote,
+            ':idvaca' => $vaca->IdVaca,
         ]);
 
         return $query->queryScalar();

@@ -32,14 +32,18 @@ class GestorUsuarios
     /**
      * tsp_buscar_usuarios
      */
-    public function Buscar($Tipo = 0 ,$Estado = 'A', $Cadena = '')
+    public function Buscar($Tipo = 0 ,$Estado = 'A', $Cadena = '', $IdTambo = 0)
     {
         $sql = "call tsp_buscar_usuarios( :idtambo, :cadena, :estado, :tipo)";
 
         $query = Yii::$app->db->createCommand($sql);
+
+        if (Yii::$app->session->get('IdTambo')) {
+            $IdTambo = Yii::$app->session->get('IdTambo');
+        }
         
         $query->bindValues([
-            ':idtambo' => Yii::$app->session->get('IdTambo'),
+            ':idtambo' => $IdTambo,
             ':tipo' => $Tipo,
             ':estado' => $Estado,
             ':cadena' => $Cadena,

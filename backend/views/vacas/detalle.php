@@ -14,6 +14,10 @@ use kartik\date\DatePicker;
 /* @var $this View */
 /* @var $form ActiveForm */
 $this->title = 'Detalle de la Vaca: ' . $model['Nombre'];
+
+foreach ($anterior as $ante){
+    $this->params['breadcrumbs'][] = $ante;
+}
 $this->params['breadcrumbs'][] = $this->title;
 
 $layoutDatePicker = <<< HTML
@@ -186,8 +190,8 @@ HTML;
                     </div>
                 </div>
             <?php else: ?>
-                <p><strong>La Vaca no tuvo lactancias registradas.</strong></p>
             <?php endif; ?>
+                <!-- <p><strong>La Vaca no tuvo lactancias registradas.</strong></p> -->
         </div>
 
         <!-- Historico -->
@@ -235,8 +239,8 @@ HTML;
                     </div>
                 </div>
             <?php else: ?>
-                <p><strong>La Vaca no tuvo lactancias registradas.</strong></p>
             <?php endif; ?>
+                <!-- <p><strong>La Vaca no tuvo lactancias registradas.</strong></p> -->
         </div>
 
 </div>

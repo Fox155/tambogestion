@@ -29,7 +29,7 @@ use yii\helpers\ArrayHelper;
 
             <?= Html::activeHiddenInput($model, 'IdVaca') ?>
 
-            <?php if ( $lactancia->getScenario() == LactanciaForm::_ALTA): ?>
+            <?php if ($lactancia->getScenario() == LactanciaForm::_ALTA): ?>
                 <p> 
                 <!-- <span class="badge badge-danger">2</span> -->
                 Fecha de Inicio de la Lactancia </p>

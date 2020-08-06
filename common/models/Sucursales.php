@@ -62,7 +62,7 @@ class Sucursales extends Model
      */
     public function ListarLotes()
     {
-        $sql = "call tsp_listar_lotes_Sucursal( :idsucursal)";
+        $sql = "call tsp_listar_lotes_sucursal( :idsucursal)";
 
         $query = Yii::$app->db->createCommand($sql);
         

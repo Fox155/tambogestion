@@ -132,7 +132,8 @@ class SucursalesController extends Controller
 
         $resumen = $sucursal->ResumenRegistrosLeche(10);
 
-        $usuarios = $sucursal->BuscarUsuarios();
+        // $usuarios = $sucursal->BuscarUsuarios();
+        $usuarios = [];
 
         return $this->render('detalle', [
             'titulo' => 'Detalle Sucursal',

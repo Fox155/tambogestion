@@ -29,6 +29,7 @@
         "kartik-v/yii2-widget-sidenav": "@dev",
         "miloschuman/yii2-highcharts-widget": "^7.1",
         "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-export": "dev-master",
         "kartik-v/yii2-field-range": "dev-master"
     },
     "require-dev": {
